@@ -76,7 +76,7 @@ export default function HamburgerMenu() {
       </SheetTrigger>
       <SheetContent side="left" >
         <Link to="/">
-          <Image src='/src/assets/las-logo.png' height={48} width={48} alt="Logo TSN Lastra a Signa" className="h-6 w-6" />
+          <Image src='/assets/las-logo.png' height={48} width={48} alt="Logo TSN Lastra a Signa" className="h-6 w-6" />
           <span className="sr-only">Logo TSN Lastra a Signa</span>
         </Link>
         <div className="grid gap-2 py-6">

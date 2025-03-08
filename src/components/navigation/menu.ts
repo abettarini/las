@@ -88,7 +88,7 @@ const attivitaIstituzionale: MenuItem[] = [
 ];
 
 const mainMenu: MenuItem[] = [
-    {title: 'Attività Istituzionale', image: "/src/assets/logo-uits.jpeg", href: '/', description: 'Attività istituzionali.', heading: 'UITS', submenu: attivitaIstituzionale},
+    {title: 'Attività Istituzionale', image: "/assets/logo-uits.jpeg", href: '/', description: 'Attività istituzionali.', heading: 'UITS', submenu: attivitaIstituzionale},
     {title: 'Struttura', submenu: struttura},
     {title: 'Servizi', href: '/#servizi'},
     {title: 'News', href: '/#news'},

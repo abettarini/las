@@ -16,9 +16,9 @@ const scrollToSection = (id: string): void => {
 };
 
 const banners: BannerProps[] = [
-  { id: "1", title: "Armeria Innocenti", imageUrl: "/src/assets/armeria-innocenti.png", ctaText: "Visita", link: "https://armeriainnocenti.it/" },
-  { id: "2", title: "Extrema Ratio", imageUrl: "/src/assets/extrema-ratio.png", ctaText: "Visita", link: "https://extremaratio.com/" },
-  { id: "3", title: "Armeria Paoletti", imageUrl: "/src/assets/armeria-paoletti.png", ctaText: "Visita", link: "https://armeriapaoletti.it/" },
+  { id: "1", title: "Armeria Innocenti", imageUrl: "/assets/armeria-innocenti.png", ctaText: "Visita", link: "https://armeriainnocenti.it/" },
+  { id: "2", title: "Extrema Ratio", imageUrl: "/assets/extrema-ratio.png", ctaText: "Visita", link: "https://extremaratio.com/" },
+  { id: "3", title: "Armeria Paoletti", imageUrl: "/assets/armeria-paoletti.png", ctaText: "Visita", link: "https://armeriapaoletti.it/" },
 ]
 
 const Home: React.FC = () => {
