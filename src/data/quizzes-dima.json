@@ -1,0 +1,1050 @@
+{
+  "groups": {
+    "general": [
+      {
+        "id": "8BZWQCEd",
+        "title": "Quali tra i porti d'arma sotto elencati necessitano del \"dimostrato bisogno\"",
+        "options": [
+          "porto di pistola per difesa personale",
+          "porto di fucile per uso caccia",
+          "porto di fucile per uso tiro a volo",
+          "porto di fucile per difesa personale",
+          "nullaosta per l'acquisto/presa in carico armi"
+        ],
+        "correctAnswers": [
+          "porto di pistola per difesa personale",
+          "porto di fucile per difesa personale"
+        ]
+      },
+      {
+        "id": "BrdBCvSF",
+        "title": "L'autorizzazione per il porto per difesa personale va richiesta a:",
+        "options": [
+          "Questura",
+          "Prefettura",
+          "Commissariato",
+          "Carabinieri"
+        ],
+        "correctAnswers": [
+          "Prefettura"
+        ]
+      },
+      {
+        "id": "z85qpcGG",
+        "title": "Per quanti anni sono valide le licenze di porto d'armi?",
+        "options": [
+          "dipende dal tipo di porto d'armi",
+          "per 10 anni",
+          "per sempre"
+        ],
+        "correctAnswers": [
+          "dipende dal tipo di porto d'armi"
+        ]
+      },
+      {
+        "id": "41MKYdKI",
+        "title": "Quali tra i porti d'arma sotto elencati necessitano del ''dimostrato bisogno\"",
+        "options": [
+          "porto di pistola per difesa personale",
+          "porto di fucile per uso caccia",
+          "porto di fucile per uso tiro a volo",
+          "porto di fucile per difesa personale",
+          "nullaosta per l'acquisto/presa in carico armi"
+        ],
+        "correctAnswers": [
+          "porto di pistola per difesa personale",
+          "porto di fucile per difesa personale"
+        ]
+      },
+      {
+        "id": "gVI2Jroa",
+        "title": "Una volta ottenuto il porto d'armi richiesto potro procedere all'acquisto di armi e munizioni, Sonoprevisti dei limiti?",
+        "options": [
+          "si",
+          "no"
+        ],
+        "correctAnswers": [
+          "si"
+        ],
+        "additionalQuestions": [
+          {
+            "title": "Se avete risposto si, specificare le quantità per:",
+            "trigger": "si",
+            "questions": [
+              {
+                "id": "armi-comuni",
+                "label": "armi comuni",
+                "type": "number",
+                "correctAnswers": [
+                  3
+                ]
+              },
+              {
+                "id": "armi-sportive",
+                "label": "armi sportive",
+                "type": "number",
+                "correctAnswers": [
+                  12
+                ]
+              },
+              {
+                "id": "armi-da-caccia",
+                "label": "armi da caccia",
+                "type": "selection",
+                "correctAnswers": [
+                  "Infinite"
+                ],
+                "options": [
+                  "3",
+                  "12",
+                  "36",
+                  "200",
+                  "1500",
+                  "Infinite"
+                ]
+              },
+              {
+                "id": "munizioni-per-pistola",
+                "label": "munizioni per pistola",
+                "type": "number",
+                "correctAnswers": [
+                  200
+                ]
+              },
+              {
+                "id": "munizioni-per-fucile",
+                "label": "munizioni per fucile",
+                "type": "number",
+                "correctAnswers": [
+                  1500
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "iUFgpGBk",
+        "title": "Ad ogni acquisto dovrò provvedere alla denuncia dell'arma/munizioni, quanto tempo ho per provvedere a detto obbligo?",
+        "options": [
+          "entro 72 ore",
+          "il più presto possibile",
+          "quando ho tempo entro il mese"
+        ],
+        "correctAnswers": [
+          "entro 72 ore"
+        ]
+      },
+      {
+        "id": "xl1hTKRj",
+        "title": "Per quanto riguarda le munizioni, dopo averle consumate tutte o in parte, conseguentemente all'acquisto di reintegro devo provvedere alla denuncia?",
+        "options": [
+          "sempre",
+          "solo se aumento la quantità precedentemente denunciata",
+          "no se rimango entro il limite massimo consentito"
+        ],
+        "correctAnswers": [
+          "solo se aumento la quantità precedentemente denunciata",
+          "no se rimango entro il limite massimo consentito"
+        ]
+      },
+      {
+        "id": "UnOGEBEd",
+        "title": "Con la mia licenza di porto d'armi quali armi potrò TRASPORTARE?",
+        "options": [
+          "nessuna",
+          "tutte",
+          "solo quelle sportive"
+        ],
+        "correctAnswers": [
+          "tutte"
+        ]
+      },
+      {
+        "id": "RiEUJFEU",
+        "title": "Con la mia licenza di porto d'armi quali armi potrò PORTARE?",
+        "options": [
+          "tutte",
+          "nessuna",
+          "solo quelle oggetto di licenza"
+        ],
+        "correctAnswers": [
+          "solo quelle oggetto di licenza"
+        ]
+      },
+      {
+        "id": "zeZbgPAM",
+        "title": "Chi detiene un'arma è obbligato a munirsi di una cassaforte?",
+        "options": [
+          "si",
+          "solo se ne detiene più di tre",
+          "no ma deve adottare tutte le cautele per fare in modo che le stesse non siano sottratte o utilizzate da persone inesperti/incapaci"
+        ],
+        "correctAnswers": [
+          "no ma deve adottare tutte le cautele per fare in modo che le stesse non siano sottratte o utilizzate da persone inesperti/incapaci"
+        ]
+      },
+      {
+        "id": "fUgVjKBR",
+        "title": "Ai fini della sicurezza quale cosa non va mai fatta?",
+        "options": [
+          "mostrare e far toccare ad altri la nostra arma",
+          "sparare in presenza di altre persone",
+          "toccare il grilletto di un'arma senza aver intenzione di sparare"
+        ],
+        "correctAnswers": [
+          "toccare il grilletto di un'arma senza aver intenzione di sparare"
+        ]
+      },
+      {
+        "id": "TxAql7B6",
+        "title": "Contrassegna con le norme di prudenza che ritieni siano molto imoprtanti",
+        "options": [
+          "non puntare mai l'arma verso qualcosa diverso dal nostro bersaglio",
+          "considerare sempre l'arma come carica",
+          "essere sempre certi che vicino o dietro il nostro bersaglio non ci sia nessuno",
+          "non premere mai il grilletto se non abbiamo intenzione di sparare",
+          "non permettere che altri tocchino la nostra arma senza il nostro consenso"
+        ],
+        "correctAnswers": [
+          "non puntare mai l'arma verso qualcosa diverso dal nostro bersaglio",
+          "considerare sempre l'arma come carica",
+          "essere sempre certi che vicino o dietro il nostro bersaglio non ci sia nessuno",
+          "non premere mai il grilletto se non abbiamo intenzione di sparare",
+          "non permettere che altri tocchino la nostra arma senza il nostro consenso"
+        ]
+      },
+      {
+        "id": "EMPdSdef",
+        "title": "Solitamente il calibro di un'arma è direttamente riferito alla misura espressa in millimetri del diametro interno della canna, per una tipologia di armi questo non avviene, per quali di queste",
+        "options": [
+          "Revolver",
+          "fucili a canna liscia",
+          "pistole semiautomatiche"
+        ],
+        "correctAnswers": [
+          "fucili a canna liscia"
+        ]
+      },
+      {
+        "id": "owwRT2jr",
+        "title": "Indica la procedura corretta per scaricare l'arma semiautomatica:",
+        "options": [
+          "si toglie prima il serbatoio (caricatore) e poi la eventuale cartuccia dalla canna",
+          "si toglie prima la cartuccia dalla canna e poi il serbatoio",
+          "si toglie solo il serbatoio"
+        ],
+        "correctAnswers": [
+          "si toglie prima il serbatoio (caricatore) e poi la eventuale cartuccia dalla canna"
+        ]
+      },
+      {
+        "id": "U6EITMKp",
+        "title": "Le rigature della canna servono a:",
+        "options": [
+          "rigare il proiettile al fine di renderlo riconoscibile",
+          "stabilizzare il proiettile facendolo ruotare intorno al proprio asse",
+          "aumentare la potenza del proiettile"
+        ],
+        "correctAnswers": [
+          "stabilizzare il proiettile facendolo ruotare intorno al proprio asse"
+        ]
+      },
+      {
+        "id": "S8r9KtJR",
+        "title": "Durante il maneggio l'arma va rivolta:",
+        "options": [
+          "verso l'alto",
+          "verso il basso",
+          "nella direzione che in quel momento si ritiene essere la più sicura"
+        ],
+        "correctAnswers": [
+          "nella direzione che in quel momento si ritiene essere la più sicura"
+        ]
+      },
+      {
+        "id": "FFw5qrCt",
+        "title": "Solitamente i congegni di mira in un'arma rigata sono costituita da:",
+        "options": [
+          "il mirino",
+          "la tacca di mira e il mirino",
+          "un puntatore laser"
+        ],
+        "correctAnswers": [
+          "la tacca di mira e il mirino"
+        ]
+      },
+      {
+        "id": "gxybPb7K",
+        "title": "Quando durante l'uso, un'arma semiautomatica rimane aperta?",
+        "options": [
+          "dopo aver sparato 5 colpi",
+          "dopo ogni colpo esploso",
+          "dopo aver esploso l'ultimo colpo"
+        ],
+        "correctAnswers": [
+          "dopo aver esploso l'ultimo colpo"
+        ]
+      },
+      {
+        "id": "8r6A0ayk",
+        "title": "Cosa differenzia la canna di una pistola semiautomatica da quella di un revolver:",
+        "options": [
+          "la presenza delle rigature",
+          "la presenza della camera di cartuccia",
+          "la lunghezza"
+        ],
+        "correctAnswers": [
+          "la presenza della camera di cartuccia"
+        ]
+      },
+      {
+        "id": "zPiKlR4q",
+        "title": "La sicura automatica garantisce che:",
+        "options": [
+          "l'arma non possa sparare",
+          "l'arma sparerà solamente se verrà premuto il grilletto",
+          "l'arma spara solo se impugnata correttamente"
+        ],
+        "correctAnswers": [
+          "l'arma sparerà solamente se verrà premuto il grilletto"
+        ]
+      },
+      {
+        "id": "qiNlP94e",
+        "title": "Si definisce arma a doppia azione quando:",
+        "options": [
+          "per sparare bisogna premere il grilletto due volte",
+          "premendo il grilletto si provoca anche l'armamento del cane",
+          "la partenza del primo colpo provoca anche lo sparo del secondo"
+        ],
+        "correctAnswers": [
+          "premendo il grilletto si provoca anche l'armamento del cane"
+        ]
+      },
+      {
+        "id": "GYEAdWcO",
+        "title": "Nel tiro di precisione occorre mettere a fuoco:",
+        "options": [
+          "la tacca di mira",
+          "il mirino",
+          "il bersaglio"
+        ],
+        "correctAnswers": [
+          "il mirino"
+        ]
+      },
+      {
+        "id": "tap9UokP",
+        "title": "Sono definiti \"labbri\"",
+        "options": [
+          "restringimenti della parte superiore dei serbatoi",
+          "la parte superiore dei bossoli",
+          "parte superiore delle slitte applicazione sistemi di puntamento"
+        ],
+        "correctAnswers": []
+      },
+      {
+        "id": "MqNDBpZC",
+        "title": "Quando può essere considerata un'arma \"scarica\"?",
+        "options": [
+          "dopo aver accertato che sia priva di cartucce",
+          "mai, l'arma si deve considerare sempre carica",
+          "appena controllata la camera di cartuccia"
+        ],
+        "correctAnswers": [
+          "dopo aver accertato che sia priva di cartucce",
+          "appena controllata la camera di cartuccia"
+        ]
+      },
+      {
+        "id": "uWrtb6y9",
+        "title": "Durante l'accertamento dello stato dell'arma, cosa non sì deve mai fare?",
+        "options": [
+          "posizionare il dito sul grilletto",
+          "tenere l'arma con la mano forte",
+          "arretrare il carrello dopo aver tolto il serbatoio"
+        ],
+        "correctAnswers": [
+          "posizionare il dito sul grilletto"
+        ]
+      },
+      {
+        "id": "MzQQnsP2",
+        "title": "Durante le fasi del tiro cosa provoca l'errore maggiore e più frequente?",
+        "options": [
+          "la respirazione scorretta",
+          "una mira imprecisa",
+          "l'arretramento scorretto del grilletto"
+        ],
+        "correctAnswers": [
+          "una mira imprecisa"
+        ]
+      },
+      {
+        "id": "G8elRJHs",
+        "title": "Nella pistola semiautomatica dove è collocato l'estrattore?",
+        "options": [
+          "nel fusto",
+          "nel carrello",
+          "sotto l'asta guida-molla"
+        ],
+        "correctAnswers": [
+          "nel carrello"
+        ]
+      },
+      {
+        "id": "GoOkjwr4",
+        "title": "Nella pistola semiautomatica dove è collocato l'espulsore?",
+        "options": [
+          "nel carrello",
+          "nel fusto",
+          "sotto l'asta guida-molla"
+        ],
+        "correctAnswers": [
+          "sotto l'asta guida-molla"
+        ]
+      },
+      {
+        "id": "bEAJo1Ut",
+        "title": "La parete interna della canna di un'arma è detta?",
+        "options": [
+          "vivo di culatta",
+          "anima",
+          "vivo di volata"
+        ],
+        "correctAnswers": [
+          "anima"
+        ]
+      },
+      {
+        "id": "O4zUe8IY",
+        "title": "La carabina a otturatore girevole-scorrevole è un'arma a ripetizione di tipo?",
+        "options": [
+          "semiautomatica",
+          "automatica",
+          "ordinaria o manuale"
+        ],
+        "correctAnswers": [
+          "ordinaria o manuale"
+        ]
+      },
+      {
+        "id": "Xvf7bUJz",
+        "title": "Quando è possibile mettere il dito sul grilletto?",
+        "options": [
+          "mentre si smonta l'arma",
+          "quando si è in procinto di sparare e si è sicuri del bersaglio",
+          "durante il controllo della camera di cartuccia"
+        ],
+        "correctAnswers": [
+          "quando si è in procinto di sparare e si è sicuri del bersaglio"
+        ]
+      },
+      {
+        "id": "bVGnt0Hv",
+        "title": "Nella piazzola di tiro di un poligono TSN quando è possibile maneggiare l'arma con la luce rossa accesa",
+        "options": [
+          "quando abbiamo terminato tutte le cartucce nella scatola",
+          "quando l'arma è visibilmente scarica",
+          "mai"
+        ],
+        "correctAnswers": [
+          "mai"
+        ]
+      },
+      {
+        "id": "NbsoEokp",
+        "title": "Indicare la sequenza corretta dell'accertamento dello stato arma (priva di cartucces)",
+        "options": [
+          "puntare l'arma verso la zona più sicura, non mettere il dito sul grilletto, arretrare e bloccare il carrello in apertura, accertamento visivo della camera di cartuccia (vuota), mandare il carrello in chiusura, togliere il serbatoio ( detto anche caricatore )",
+          "puntare l'arma verso la zona più sicura, non mettere il dito sul grilletto, togliere il serbatoio, arretrare e bloccare il carrello in apertura, accertamento visivo della camera di cartuccia (vuota).",
+          "puntare l'arma verso la zona più sicura, togliere il serbatoio ( detto anche caricatore ), effettuare uno scatto di prova, arretrare e bloccare il carrello in apertura, accertamento visivo della camera di cartuccia (vuota)."
+        ],
+        "correctAnswers": [
+          "puntare l'arma verso la zona più sicura, non mettere il dito sul grilletto, togliere il serbatoio, arretrare e bloccare il carrello in apertura, accertamento visivo della camera di cartuccia (vuota)."
+        ]
+      },
+      {
+        "id": "P72yQudI",
+        "title": "Durante la fase di caricamento della pistola il carrello deve essere rilasciato?",
+        "options": [
+          "accompagnandolo dolcemente in chiusura",
+          "arretrandolo e rilasciandolo senza accompagnarlo",
+          "rilasciandolo dopo aver estratto il serbatoio"
+        ],
+        "correctAnswers": [
+          "arretrandolo e rilasciandolo senza accompagnarlo"
+        ]
+      },
+      {
+        "id": "ZIIufCpn",
+        "title": "Perché impugnando la pistola con due mani il pollice non deve mai essere posizionato dietro il carrello?",
+        "options": [
+          "perché risulterebbe un tiro impreciso",
+          "perché si rischierebbe il ferimento del pollice e un malfunzionamento dell'arma",
+          "perché non si vedrebbero i congegni di mira"
+        ],
+        "correctAnswers": [
+          "perché si rischierebbe il ferimento del pollice e un malfunzionamento dell'arma"
+        ]
+      },
+      {
+        "id": "EA6VsX3z",
+        "title": "Nel cosiddetto tiro a \"zona\", come devono essere posizionati (collimati) i congegni di mira sul bersaglio di precisione?",
+        "options": [
+          "a filo con il cerchio nero",
+          "al centro perfetto del bersaglio",
+          "lasciando una porzione di \"bianco\" tra il cerchio nero e la sommità dei congegni di mira"
+        ],
+        "correctAnswers": [
+          "a filo con il cerchio nero"
+        ]
+      },
+      {
+        "id": "6DSLS1AJ",
+        "title": "Durante la trazione del grilletto occorre?",
+        "options": [
+          "aumentare la forza progressivamente sull'impugnatura",
+          "esercitare una forza costante sul grilletto",
+          "aumentare la forza progressivamente sul grilletto"
+        ],
+        "correctAnswers": [
+          "esercitare una forza costante sul grilletto"
+        ]
+      },
+      {
+        "id": "eToZvsnd",
+        "title": "Come deve essere posizionato il calciolo del fucile durante il tiro?",
+        "options": [
+          "distante dalla spalla per evitare il rinculo",
+          "sotto l'ascella",
+          "premuto contro l'incavo della spalla forte"
+        ],
+        "correctAnswers": [
+          "premuto contro l'incavo della spalla forte"
+        ]
+      },
+      {
+        "id": "8yBLrSxw",
+        "title": "Chi detiene armi è obbligato a munirsi di un impianto antifurto?",
+        "options": [
+          "si",
+          "solo se ne detiene più di tre",
+          "no, pur essendo raccomandabile specialmente se si ha una collezione, comunque si devono adottare tutte le cautele per fare in modo che le stesse non siano sottratte o utilizzate da inesperti/incapaci"
+        ],
+        "correctAnswers": [
+          "no, pur essendo raccomandabile specialmente se si ha una collezione, comunque si devono adottare tutte le cautele per fare in modo che le stesse non siano sottratte o utilizzate da inesperti/incapaci"
+        ]
+      },
+      {
+        "id": "rB60uKm3",
+        "title": "Chi è in possesso di porto d'armi per uso caccia può portare l'arma carica...",
+        "options": [
+          "da casa al luogo di caccia",
+          "solo in zona di caccia consentita",
+          "da casa al luogo di caccia ma solamente utilizzando un mezzo di trasporto proprio"
+        ],
+        "correctAnswers": [
+          "solo in zona di caccia consentita"
+        ]
+      },
+      {
+        "id": "ubgqP1g8",
+        "title": "Il diploma maneggio armi rilasciato dal TSN consente?",
+        "options": [
+          "di acquistare armi",
+          "di ottenere una licenza di porto d'armi o nulla osta all'acquisto di un'arma avendone i requisiti",
+          "di trasportare un'arma da casa al poligono"
+        ],
+        "correctAnswers": [
+          "di ottenere una licenza di porto d'armi o nulla osta all'acquisto di un'arma avendone i requisiti"
+        ]
+      },
+      {
+        "id": "YrnJ7ec1",
+        "title": "È possibile utilizzare le armi detenute in collezione?",
+        "options": [
+          "no",
+          "sì ma rispettando le particolari prescrizioni previste",
+          "si come le altre detenute"
+        ],
+        "correctAnswers": [
+          "sì ma rispettando le particolari prescrizioni previste"
+        ]
+      },
+      {
+        "id": "CBN7AyWu",
+        "title": "Come si aziona la sicura automatica?",
+        "options": [
+          "con il pollice della mano forte",
+          "solo con un dito della mano debole",
+          "si attiva indipendentemente dalla volontà del tiratore"
+        ],
+        "correctAnswers": []
+      },
+      {
+        "id": "h8J0iFl0",
+        "title": "A cosa serve l'espulsore?",
+        "options": [
+          "a favorire la fuoriuscita del bossolo durante l'arretramento del carrello",
+          "a facilitare l'inserimento del bossolo nella canna",
+          "a scaricare il serbatoio della pistola"
+        ],
+        "correctAnswers": [
+          "a favorire la fuoriuscita del bossolo durante l'arretramento del carrello"
+        ]
+      },
+      {
+        "id": "9Xy1yTe4",
+        "title": "A cosa serve l'estrattore",
+        "options": [
+          "serve a estrarre le cartucce dal serbatoio",
+          "impegna il fondello del bossolo durante il ciclo di sparo",
+          "serve a estrarre il serbatoio dal fusto della pistola"
+        ],
+        "correctAnswers": [
+          "impegna il fondello del bossolo durante il ciclo di sparo"
+        ]
+      },
+      {
+        "id": "nOWMh8QV",
+        "title": "Dove è posto l'elevatore?",
+        "options": [
+          "nel meccanismo di scatto del revolver",
+          "nella tacca di mira regolabile",
+          "nel serbatoio"
+        ],
+        "correctAnswers": [
+          "nel serbatoio"
+        ]
+      },
+      {
+        "id": "0vCbBweW",
+        "title": "Quale di questi elementi non fa parte del revolver (cane, canna, serbatoio)",
+        "options": [
+          "cane",
+          "serbatoio",
+          "canna"
+        ],
+        "correctAnswers": [
+          "serbatoio"
+        ]
+      },
+      {
+        "id": "bAlTSmAM",
+        "title": "Per evitare il cosiddetto errore di \"mungitura\" cosa si deve fare?",
+        "options": [
+          "applicare sempre la stessa forza sull'impugnatura",
+          "applicare una forza pulsante sull'impugnatura",
+          "mantenere sempre la stessa pressione sul grilletto"
+        ],
+        "correctAnswers": [
+          "mantenere sempre la stessa pressione sul grilletto"
+        ]
+      },
+      {
+        "id": "YOTd5Lni",
+        "title": "Il revolver può avere dei congegni di sicura?",
+        "options": [
+          "no",
+          "solo sicure automatiche",
+          "sicure automatiche e a chiave"
+        ],
+        "correctAnswers": []
+      },
+      {
+        "id": "2Y7ZxSyH",
+        "title": "Il fucile a pompa, a parità di calibro, è più potente di altri fucili ad anima liscia?",
+        "options": [
+          "si",
+          "dipende dal tipo di caricamento della cartuccia",
+          "no"
+        ],
+        "correctAnswers": [
+          "dipende dal tipo di caricamento della cartuccia"
+        ]
+      },
+      {
+        "id": "BwUh9qZv",
+        "title": "Dove è collocata la chiave di apertura in un fucile basculante ad anima liscia?",
+        "options": [
+          "sotto Pastina",
+          "sulla bascula",
+          "sul calcio"
+        ],
+        "correctAnswers": []
+      },
+      {
+        "id": "i0kwUHAU",
+        "title": "La caratteristica del sistema \"striker\" (domanda molto tecnica)",
+        "options": [
+          "assenza del percussore",
+          "ha il cane interno",
+          "assenza di cane"
+        ],
+        "correctAnswers": [
+          "assenza di cane"
+        ]
+      },
+      {
+        "id": "pgeAyGS1",
+        "title": "Dove è ricavato il \"foro di vampa\"?",
+        "options": [
+          "nel fondello del bossolo",
+          "nella parte anteriore della canna",
+          "nell'otturatore"
+        ],
+        "correctAnswers": [
+          "nel fondello del bossolo"
+        ]
+      },
+      {
+        "id": "HbPpGCPs",
+        "title": "Quale è la caratteristica delle cartucce a percussione anulare",
+        "options": [
+          "utilizzano il sistema Berdan",
+          "sono prive della capsula",
+          "utilizzano il sistema Boxer"
+        ],
+        "correctAnswers": [
+          "sono prive della capsula"
+        ]
+      },
+      {
+        "id": "9ki7bVQG",
+        "title": "Indicare la differenza tra munizioni a \"palla asciutta\" e quelle \"spezzate\"?",
+        "options": [
+          "la prima è a palla unica la seconda è composta da più palle di varie graniture",
+          "indicano la stessa cartuccia con un nome diverso",
+          "la prima è una cartuccia integra la seconda una cartuccia deteriorata"
+        ],
+        "correctAnswers": [
+          "la prima è a palla unica la seconda è composta da più palle di varie graniture"
+        ]
+      },
+      {
+        "id": "VqCJQicL",
+        "title": "Cosa si deve verificare principalmente nell'interno delle canne?",
+        "options": [
+          "che non ci siano residui di sparo",
+          "che siano ben oliate",
+          "che non ci siano ostruzioni"
+        ],
+        "correctAnswers": [
+          "che non ci siano ostruzioni"
+        ]
+      },
+      {
+        "id": "QwXPInoh",
+        "title": "I revolver hanno il percussore?",
+        "options": [
+          "no mai",
+          "solo se hanno l'hammer block",
+          "si sempre"
+        ],
+        "correctAnswers": [
+          "si sempre"
+        ]
+      },
+      {
+        "id": "Nuh8kK4N",
+        "title": "Perché avviene il fenomeno del \"rinculo\"?",
+        "options": [
+          "perché il tiratore stringe troppo l'arma",
+          "perché la cartuccia sparata non è adeguata all'arma",
+          "perché all'atto dello sparo si sviluppa una forza uguale e contraria"
+        ],
+        "correctAnswers": [
+          "perché all'atto dello sparo si sviluppa una forza uguale e contraria"
+        ]
+      },
+      {
+        "id": "you0JY24",
+        "title": "Perché avviene il fenomeno del \"rilevamento\"?",
+        "options": [
+          "a causa della palla che abbandona la canna durante lo sparo",
+          "avviene quando il baricentro dell'arma è spostato in basso",
+          "perché il tiratore impugna l'arma debolmente"
+        ],
+        "correctAnswers": [
+          "a causa della palla che abbandona la canna durante lo sparo"
+        ]
+      },
+      {
+        "id": "czMBCPT6",
+        "title": "Quale forza tende a far cadere il proiettile a terra durante la sua traiettoria?",
+        "options": [
+          "la rotazione sul suo asse",
+          "la resistenza dell'aria",
+          "la forza di gravità"
+        ],
+        "correctAnswers": [
+          "la forza di gravità"
+        ]
+      },
+      {
+        "id": "KVXTY6I8",
+        "title": "Dopo la pulizia il serbatoio deve essere oliato?",
+        "options": [
+          "no",
+          "si",
+          "solo nelle armi antiche"
+        ],
+        "correctAnswers": [
+          "si"
+        ]
+      },
+      {
+        "id": "w98VlO0D",
+        "title": "Perché è sconsigliato lo scatto di prova?",
+        "options": [
+          "perché rovina i congegni di scatto",
+          "perché può provocare spari accidentali",
+          "perché si accorcia il percussore"
+        ],
+        "correctAnswers": [
+          "perché può provocare spari accidentali"
+        ]
+      },
+      {
+        "id": "azMxTJCY",
+        "title": "Quante munizioni per arma corta posso detenere?",
+        "options": [
+          "150",
+          "200",
+          "1.000"
+        ],
+        "correctAnswers": [
+          "200"
+        ]
+      },
+      {
+        "id": "RgoNGn1H",
+        "title": "Quando devono essere denunciati i caricatori per arma corta?",
+        "options": [
+          "Quando ne deteniamo in numero superiore a 10",
+          "Quando il caricatore può contenere più di 20 colpi",
+          "Dopo averli acquistati"
+        ],
+        "correctAnswers": [
+          "Quando il caricatore può contenere più di 20 colpi"
+        ]
+      },
+      {
+        "id": "L9AOqFbG",
+        "title": "Quando non siamo presenti in casa, come dobbiamo custodire le Armi?",
+        "options": [
+          "Nasconderle in luogo sicuro",
+          "Scaricarle e richiuderle in un armadio",
+          "Riporlo in un armadio chiudibile con chiave da noi conservata"
+        ],
+        "correctAnswers": [
+          "Nasconderle in luogo sicuro"
+        ]
+      },
+      {
+        "id": "pI86MGLr",
+        "title": "Se trasporto un'arma comune in macchina posso abbandonarla per recarmi in un negozio?",
+        "options": [
+          "No",
+          "Certamente",
+          "Si se rimane qualcuno in macchina"
+        ],
+        "correctAnswers": [
+          "No"
+        ]
+      },
+      {
+        "id": "kOd2VjTm",
+        "title": "Quale è la differenza sostanziale tra porto e trasporto di un'Arma?",
+        "options": [
+          "Il modo in cui l'arma verrà utilizzata",
+          "Il pronto utilizzo dell'Arma",
+          "Il fatto di avere con sé anche le munizioni"
+        ],
+        "correctAnswers": [
+          "Il pronto utilizzo dell'Arma"
+        ]
+      },
+      {
+        "id": "L3LgNtmx",
+        "title": "Quanti sono i componenti che costituiscono una cartuccia a percussione",
+        "options": [
+          "5",
+          "4",
+          "6"
+        ],
+        "correctAnswers": [
+          "4"
+        ]
+      },
+      {
+        "id": "LrY5jFQE",
+        "title": "Quante Armi posso trasportare in una volta?",
+        "options": [
+          "Quelle denunciate",
+          "Solo 6",
+          "in numero non limitato ma le corte divise da quelle lunghe"
+        ],
+        "correctAnswers": [
+          "Solo 6"
+        ]
+      },
+      {
+        "id": "2DhRROVJ",
+        "title": "Le armi comuni da sparo possono essere comodate a chi ha un porto d'armi da",
+        "options": [
+          "No",
+          "Si",
+          "Si ma in caso di comune accordo"
+        ],
+        "correctAnswers": [
+          "No"
+        ]
+      },
+      {
+        "id": "3jdYJEM4",
+        "title": "Quali sono gli organi di mira di un'Arma corta?",
+        "options": [
+          "Bindella e Mirino",
+          "Mirino e tacca di Mira",
+          "Diottra"
+        ],
+        "correctAnswers": [
+          "Mirino e tacca di Mira"
+        ]
+      },
+      {
+        "id": "ijkT9YnI",
+        "title": "Quante armi antiche da sparo si possono detenere?",
+        "options": [
+          "illimitate",
+          "8",
+          "in numero uguale alle armi bianche"
+        ],
+        "correctAnswers": []
+      },
+      {
+        "id": "L0kwPxLE",
+        "title": "Il titolare di un porto d'Armi da difesa può trasportare un'Arma sportiva lunga?",
+        "options": [
+          "si",
+          "no",
+          "sì ma solo per andare a caccia"
+        ],
+        "correctAnswers": [
+          "si"
+        ]
+      },
+      {
+        "id": "pf2WiawN",
+        "title": "Un'Arma semiautomatica può sparare senza il caricatore inserito?",
+        "options": [
+          "Si",
+          "No",
+          "Si ma solo se in percussione anulare"
+        ],
+        "correctAnswers": [
+          "Si"
+        ]
+      },
+      {
+        "id": "rrv9sbwv",
+        "title": "Un obiettore di coscienza può ottenere un porto d'Armi?",
+        "options": [
+          "mai",
+          "Si ma con una particolare procedura",
+          "Si ma pagando una sovrattassa"
+        ],
+        "correctAnswers": [
+          "Si ma con una particolare procedura"
+        ]
+      },
+      {
+        "id": "MH7hhvLa",
+        "title": "Il possesso di un porto d'Arma può essere definito un titolo di acquisto per armi di ogni tipo?",
+        "options": [
+          "No",
+          "Solo per Armi ma non per munizioni",
+          "Si"
+        ],
+        "correctAnswers": [
+          "Si"
+        ]
+      },
+      {
+        "id": "mkeIbIyU",
+        "title": "In una Pistola semiautomatica dove possiamo trovare l'estrattore?",
+        "options": [
+          "Sulla canna",
+          "Sul carrello",
+          "Sul Fusto"
+        ],
+        "correctAnswers": [
+          "Sul carrello"
+        ]
+      },
+      {
+        "id": "BrwgmnLH",
+        "title": "Cosa significa sparare in doppia azione?",
+        "options": [
+          "Che sparato il primo colpo la pistola spara il secondo da sola",
+          "che premendo il grilletto si arma il cane che fa esplodere il colpo",
+          "che prima di sparare è necessario compiere l'azione di inserimento del caricatore"
+        ],
+        "correctAnswers": [
+          "che premendo il grilletto si arma il cane che fa esplodere il colpo"
+        ]
+      },
+      {
+        "id": "huDApXyk",
+        "title": "Quante sono le armi comuni da sparo detenibili?",
+        "options": [
+          "3",
+          "illimitate",
+          "una in meno rispetto a quelle sportive"
+        ],
+        "correctAnswers": [
+          "3"
+        ]
+      },
+      {
+        "id": "FDxotkEC",
+        "title": "E' sufficiente presentare un certificato Anamnestico per ottenere il Porto d'Armi?",
+        "options": [
+          "No in quanto l'anamnestico non è un certificato medico",
+          "Si",
+          "Si ma se visitato dal medico di Base"
+        ],
+        "correctAnswers": [
+          "No in quanto l'anamnestico non è un certificato medico"
+        ]
+      },
+      {
+        "id": "D8w60uxh",
+        "title": "Si può seguitare a detenere armi in assenza di Porto d'Armi o Nulla Osta?",
+        "options": [
+          "No",
+          "Si ma solo se in possesso di apposito certificato del medico valevole per 5 anni in corso",
+          "Si, ma solo per difesa abitativa"
+        ],
+        "correctAnswers": [
+          "Si ma solo se in possesso di apposito certificato del medico valevole per 5 anni in corso"
+        ]
+      },
+      {
+        "id": "LfPnLAFp",
+        "title": "In che tipo Arma la camera di cartuccia non è presente nella canna?",
+        "options": [
+          "nelle armi a canna liscia",
+          "nelle armi a canna rigata",
+          "nelle armi a tamburo (Revolver)"
+        ],
+        "correctAnswers": [
+          "nelle armi a tamburo (Revolver)"
+        ]
+      }
+    ]
+  }
+}
