@@ -1,5 +1,6 @@
 // src/components/Iscrizioni.tsx
 import { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import TableOfContents from './table-of-contents';
 
 
@@ -206,6 +207,11 @@ export default function Iscrizioni2() {
         });
       }, []);
     return (
+    <>
+      <Helmet>
+        <title>Iscrizioni - TSN Lastra a Signa</title>
+        <meta name="description" content="Informazioni su come iscriversi al nostro poligono." />
+      </Helmet>
       <div className="mx-auto mt-8 px-0">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-1 order-2 lg:order-1">
@@ -222,6 +228,7 @@ export default function Iscrizioni2() {
           </div>
         </div>
       </div>
+    </>
     );
   }
   

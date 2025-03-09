@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { useLocation } from 'react-router-dom';
 import AdBanner, { BannerProps } from '../components/ad-banner';
 import ContactForm from '../components/ContactForm';
@@ -34,6 +35,9 @@ const Home: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <meta property="og:title" content="Home" />
+      </Helmet>
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden bg-background">
         <div className="container mx-auto px-4">
