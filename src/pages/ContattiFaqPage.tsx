@@ -1,10 +1,13 @@
-const ContattiPage: React.FC = () => {
+import Contatti from "../components/contatti/contatti";
+import FAQ from "../components/faq/faq";
+
+const ContattiFaqPage: React.FC = () => {
 	return (
 		<>
-			<h1>Contatti</h1>
-			<p>Questo è il contenuto della pagina di contatti.</p>
+            <Contatti />
+            <FAQ />
 		</>
 	);
 }
 
-export default ContattiPage;
+export default ContattiFaqPage;

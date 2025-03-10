@@ -2,10 +2,9 @@ import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useLocation } from 'react-router-dom';
 import AdBanner, { BannerProps } from '../components/ad-banner';
-import ContactForm from '../components/ContactForm';
+import Contatti from '../components/contatti/contatti';
 import NewsList from '../components/news/news-list';
 import ServiceCard, { services } from '../components/ServiceCard';
-import StreetMap from '../components/street-map';
 import { Button } from '../components/ui/button';
 import { contents } from '../data/news';
 
@@ -107,18 +106,7 @@ Troverete un punto di ritrovo dove poter scambiare idee, nozioni ed esperienze i
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-12" id="contatti">
-        <h2 className="text-3xl font-bold mb-8 text-center">Contatti</h2>
-        <div className="flex flex-col lg:flex-row bg-white">
-        {/* Map Section */}
-          <div className="flex-1">
-            <ContactForm />
-          </div>
-          <div className="flex-1 p-6">
-            <StreetMap />
-            </div>
-        </div>
-      </section>
+      <Contatti />
 
       {/* Ad Banners */}
       <section className="py-12" id="banner">

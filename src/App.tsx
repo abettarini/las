@@ -16,6 +16,7 @@ const LazyQuizPage = lazy(() => import('./pages/QuizPage'));
 const LazyStoriaPage = lazy(() => import('./components/Storia'));
 const LazyConsiglioDirettivoPage = lazy(() => import('./components/ConsiglioDirettivo'));
 const LazyStrutturaIndicazioniPage = lazy(() => import('./pages/StrutturaIndicazioniPage'));
+const LazyContattiFaqPage = lazy(() => import('./pages/ContattiFaqPage'));
 
 const App: React.FC = () => {
   return (
@@ -37,7 +38,7 @@ const App: React.FC = () => {
         {/* Header */}
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="container flex h-16 items-center">
-          <Link to="#" className="hidden lg:flex">
+          <Link to="/" className="hidden lg:flex">
             <Image src='/assets/las-logo.png' height={32} width={32} alt="Logo TSN Lastra a Signa" />
             <span className="sr-only">Acme Inc</span>
           </Link>
@@ -56,6 +57,7 @@ const App: React.FC = () => {
             <Route path="/chisiamo/storia" element={<div className="flex-1 p-6"><LazyStoriaPage /></div>} />
             <Route path="/chisiamo/consiglio-direttivo" element={<div className="flex-1 p-6"><LazyConsiglioDirettivoPage /></div>} />
             <Route path="/struttura/dove-siamo" element={<div className="flex-1 p-6"><LazyStrutturaIndicazioniPage /></div>} />
+            <Route path="/contatti-faq" element={<div className="flex-1 p-6"><LazyContattiFaqPage /></div>} />
           </Routes>
         </main>
         <Footer />

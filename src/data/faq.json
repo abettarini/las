@@ -1,0 +1,34 @@
+[
+    {
+        "question": "Qual è l'orario di apertura?",
+        "answer": "Siamo aperti dal Martedì alla Domenica con orari specifici per ogni giorno."
+    },
+    {
+        "question": "Dove si trova il poligono?",
+        "answer": "Il poligono si trova in Via del Tiro a Segno, 1, 50055 Lastra a Signa (FI)."
+    },
+    {
+        "question": "Come posso contattarvi?",
+        "answer": "Puoi contattarci via email a info@poligonolastra.it o telefonicamente al +39 055 8722638."
+    },
+    {
+        "question": "Sono iscritto ad un altra sezione U.I.T.S. posso utilizzare la vostra struttura?",
+        "answer": "Se si è tesserati preso un altra sezione U.I.T.S., ci si può associare presso la nostra struttura, pagando la sola quota associativa di 55 euro. La nostra sezione essendo gemellata con quella di Colle Valdelsa permette ai suoi soci di utilizzare la nostra struttura direttamente."
+    },
+    {
+        "question": "Per utilizzare la vostra struttura è necessario possedere un porto d'armi?",
+        "answer": "Per frequentare il poligono è sufficiente iscriveresi alla sezione e ottenere presso lo stesso il diploma di abilitazione al maneggio delle armi oppure frequentare un corso interno per l'abilitazione al maneggio delle armi. Possedere il porto d'armi non è strettamente necessario."
+    },
+    {
+        "question": "Per utilizzare la vostra struttura è necessario possedere un arma e le munizioni?",
+        "answer": "I soci possono utilizzare le proprie armi e munizioni ma possono anche affittare le armi del poligono e comprare le munizioni presso lo stesso."
+    },
+    {
+        "question": "Se il mio porto d'armi è scaduto o dal mio congedo militare sono passati più di 10 anni, devo rifare l'abilitazione al maneggio delle armi?",
+        "answer": "Si"
+    },
+    {
+        "question": "Prova",
+        "answer": "Si"
+    }
+]
