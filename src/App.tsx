@@ -10,12 +10,12 @@ import { QuizProvider } from './context/quiz-context';
 import './index.css';
 import { metaConfig } from './metaConfig';
 import Home from './pages/HomePage';
-import StrutturaIndicazioniPage from './pages/StrutturaIndicazioniPage';
 
 const LazyIscrizioni = lazy(() => import('./components/Iscrizioni'));
 const LazyQuizPage = lazy(() => import('./pages/QuizPage'));
 const LazyStoriaPage = lazy(() => import('./components/Storia'));
 const LazyConsiglioDirettivoPage = lazy(() => import('./components/ConsiglioDirettivo'));
+const LazyStrutturaIndicazioniPage = lazy(() => import('./pages/StrutturaIndicazioniPage'));
 
 const App: React.FC = () => {
   return (
@@ -55,7 +55,7 @@ const App: React.FC = () => {
             <Route path="/quiz" element={<QuizProvider><LazyQuizPage numQuestions={15} /></QuizProvider>} />
             <Route path="/chisiamo/storia" element={<div className="flex-1 p-6"><LazyStoriaPage /></div>} />
             <Route path="/chisiamo/consiglio-direttivo" element={<div className="flex-1 p-6"><LazyConsiglioDirettivoPage /></div>} />
-            <Route path="/struttura/dove-siamo" element={<div className="flex-1 p-6"><StrutturaIndicazioniPage /></div>} />
+            <Route path="/struttura/dove-siamo" element={<div className="flex-1 p-6"><LazyStrutturaIndicazioniPage /></div>} />
           </Routes>
         </main>
         <Footer />
