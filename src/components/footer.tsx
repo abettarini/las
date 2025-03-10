@@ -1,6 +1,7 @@
 import { SiFacebook, SiInstagram } from '@icons-pack/react-simple-icons';
 import { Mail, Phone, Printer } from 'lucide-react';
 import ConsentBanner from './consent-banner/consent-banner';
+import { OrariApertura } from './OrariApertura';
 
 const Footer = () => {
     return (
@@ -31,15 +32,7 @@ const Footer = () => {
                   </span>
                 </p>
               </div>
-              <div>
-                <h3 className="font-bold mb-4">Orari</h3>
-                <p className="text-muted-foreground">
-                  Martedì: 9:30 - 12:45, 15:30 - 18:45<br />
-                  Venerdì: 9:30 - 12:45, 15:30 - 18:45<br />
-                  Sabato: 9:30 - 12:45, 15:30 - 18:45<br />
-                  Domenica: 9:30 - 12:45<br />
-                </p>
-              </div>
+              <OrariApertura />
               <div>
                 <h3 className="font-bold mb-4">Social</h3>
                 <div className="flex gap-4">

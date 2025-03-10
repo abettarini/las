@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet';
 import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import ConsiglioDirettivoPage from './components/ConsiglioDirettivo';
 import Iscrizioni2 from './components/Iscrizioni2';
+import { BadgeOrariApertura } from './components/OrariApertura';
 import StoriaPage from './components/Storia';
 import Footer from './components/footer';
 import HamburgerMenu from './components/navigation/hamburger';
@@ -39,8 +40,10 @@ const App: React.FC = () => {
             <Image src='/assets/las-logo.png' height={32} width={32} alt="Logo TSN Lastra a Signa" />
             <span className="sr-only">Acme Inc</span>
           </Link>
-            <MainNavigation />
             <HamburgerMenu />
+            <MainNavigation />
+            <div className="flex-1" />
+            <BadgeOrariApertura />
           </div>
         </header>
 

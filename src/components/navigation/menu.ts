@@ -94,7 +94,7 @@ const mainMenu: MenuItem[] = [
     {title: 'News', href: '/#news'},
     {title: 'Iscrizioni', submenu: iscrizioni},
     {title: 'Chi siamo', submenu: chisiamo},
-    {title: 'Contatti', href: '/#contatti'}
+    {title: 'Contatti e FAQ', href: '/#contatti'}
 ];
 
 export default mainMenu;
