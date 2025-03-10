@@ -1,9 +1,7 @@
+import { lazy } from "react";
 import { Helmet } from 'react-helmet';
 import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import ConsiglioDirettivoPage from './components/ConsiglioDirettivo';
-import Iscrizioni2 from './components/Iscrizioni2';
 import { BadgeOrariApertura } from './components/OrariApertura';
-import StoriaPage from './components/Storia';
 import Footer from './components/footer';
 import HamburgerMenu from './components/navigation/hamburger';
 import { MainNavigation } from './components/navigation/main-nav';
@@ -12,9 +10,12 @@ import { QuizProvider } from './context/quiz-context';
 import './index.css';
 import { metaConfig } from './metaConfig';
 import Home from './pages/HomePage';
-import QuizPage from './pages/QuizPage';
 import StrutturaIndicazioniPage from './pages/StrutturaIndicazioniPage';
 
+const LazyIscrizioni = lazy(() => import('./components/Iscrizioni'));
+const LazyQuizPage = lazy(() => import('./pages/QuizPage'));
+const LazyStoriaPage = lazy(() => import('./components/Storia'));
+const LazyConsiglioDirettivoPage = lazy(() => import('./components/ConsiglioDirettivo'));
 
 const App: React.FC = () => {
   return (
@@ -50,10 +51,10 @@ const App: React.FC = () => {
         <main className="container mx-auto px-0 py-4" id="main">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/iscrizioni" element={<Iscrizioni2 />} />
-            <Route path="/quiz" element={<QuizProvider><QuizPage numQuestions={15} /></QuizProvider>} />
-            <Route path="/chisiamo/storia" element={<div className="flex-1 p-6"><StoriaPage /></div>} />
-            <Route path="/chisiamo/consiglio-direttivo" element={<div className="flex-1 p-6"><ConsiglioDirettivoPage /></div>} />
+            <Route path="/iscrizioni" element={<LazyIscrizioni />} />
+            <Route path="/quiz" element={<QuizProvider><LazyQuizPage numQuestions={15} /></QuizProvider>} />
+            <Route path="/chisiamo/storia" element={<div className="flex-1 p-6"><LazyStoriaPage /></div>} />
+            <Route path="/chisiamo/consiglio-direttivo" element={<div className="flex-1 p-6"><LazyConsiglioDirettivoPage /></div>} />
             <Route path="/struttura/dove-siamo" element={<div className="flex-1 p-6"><StrutturaIndicazioniPage /></div>} />
           </Routes>
         </main>

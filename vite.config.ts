@@ -1,11 +1,15 @@
-import react from '@vitejs/plugin-react'
-import { defineConfig, UserConfig } from 'vite'
-import { VitePWA } from 'vite-plugin-pwa'
+import react from '@vitejs/plugin-react';
+import { defineConfig, UserConfig } from 'vite';
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
+import { VitePWA } from 'vite-plugin-pwa';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
+    ViteImageOptimizer({
+      // Your configuration options go here 
+    }),
     VitePWA({ 
       registerType: 'autoUpdate',
       injectRegister: 'auto',

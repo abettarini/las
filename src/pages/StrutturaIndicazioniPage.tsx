@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { BannerProps } from '../components/ad-banner';
 import StreetMap from '../components/street-map';
 
 const scrollToSection = (id: string): void => {
@@ -9,12 +8,6 @@ const scrollToSection = (id: string): void => {
     element.scrollIntoView({ behavior: 'smooth' });
   }
 };
-
-const banners: BannerProps[] = [
-  { id: "1", title: "Armeria Innocenti", imageUrl: "/assets/armeria-innocenti.png", ctaText: "Visita", link: "https://armeriainnocenti.it/" },
-  { id: "2", title: "Extrema Ratio", imageUrl: "/assets/extrema-ratio.png", ctaText: "Visita", link: "https://extremaratio.com/" },
-  { id: "3", title: "Armeria Paoletti", imageUrl: "/assets/armeria-paoletti.png", ctaText: "Visita", link: "https://armeriapaoletti.it/" },
-]
 
 const StrutturaIndicazioniPage: React.FC = () => {
   const location = useLocation();

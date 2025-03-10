@@ -21,6 +21,7 @@ export default function AdBanner(banner: BannerProps) {
             alt={banner.title}
             width={328}
             height={132}
+            loading="lazy"
         />
         </div>
         <p className="text-sm text-muted-foreground mb-0">{banner.description}</p>
