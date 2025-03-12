@@ -1,5 +1,6 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig, UserConfig } from 'vite';
+import { imagetools } from 'vite-imagetools';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import { VitePWA } from 'vite-plugin-pwa';
 
@@ -7,6 +8,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 export default defineConfig({
   plugins: [
     react(),
+    imagetools(),
     ViteImageOptimizer({
       jpeg: {
         // https://sharp.pixelplumbing.com/api-output#jpeg
@@ -32,12 +34,13 @@ export default defineConfig({
         theme_color: '#ffffff',
         icons: [
           {
-            src: 'pwa-192x192.png',
+            // src: 'pwa-192x192.png',
+            src: '/assets/las-logo.png?w=192;format=png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: 'pwa-512x512.png',
+            src: '/assets/las-logo.png?w=512;format=png',
             sizes: '512x512',
             type: 'image/png'
           }

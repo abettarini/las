@@ -47,10 +47,10 @@ const ConsentBannerComponent = ({ position = 'left', showAs = 'button' }: Consen
                   Personalizza
                 </Button>
                 <div className="flex flex-row flex-end space-x-2">
-                <Button onClick={handleAccept} className="flex flex-end">
+                <Button onClick={handleAccept} className="flex flex-end" role="button" aria-label="Accetta">
                   Accetta
                 </Button>
-                <Button onClick={handleAccept} className="flex flex-end">
+                <Button onClick={handleAccept} className="flex flex-end" role="button" aria-label="Rifiuta">
                   Rifiuta
                 </Button>
                 </div>
