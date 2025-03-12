@@ -16,11 +16,11 @@ export type Content = {
 const getIcon = (type: Content['type']) => {
   switch (type) {
     case 'article':
-      return <FileText className="w-5 h-5" />
+      return <FileText className="w-5 h-5" aria-label='Articolo'/>
     case 'video':
-      return <Video className="w-5 h-5" />
+      return <Video className="w-5 h-5" aria-label='Video'/>
     case 'book':
-      return <Book className="w-5 h-5" />
+      return <Book className="w-5 h-5" aria-label='Libro'/>
   }
 }
 

@@ -133,7 +133,7 @@ const MenuItemComponent: React.FC<{ item: MenuItem; depth?: number }> = ({ item,
 
 export function MainNavigation() {
   return (
-    <NavigationMenu className="hidden md:flex">
+    <NavigationMenu className="hidden md:flex" role="navigation">
       <NavigationMenuList>
         {mainMenu.map((item) => (
           <MenuItemComponent key={item.title} item={item} />

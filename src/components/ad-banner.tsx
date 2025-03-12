@@ -25,7 +25,7 @@ export default function AdBanner(banner: BannerProps) {
         />
         </div>
         <p className="text-sm text-muted-foreground mb-0">{banner.description}</p>
-        <Link to={banner.link}>
+        <Link to={banner.link} aria-label={banner.title}>
           <Button variant="outline" className="w-full">
             {banner.ctaText}
           </Button>

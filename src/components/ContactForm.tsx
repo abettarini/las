@@ -96,7 +96,7 @@ const ContactForm: React.FC = () => {
               <FormItem>
                 <FormLabel htmlFor="name">Nome</FormLabel>
                 <FormControl>
-                  <Input placeholder="Il tuo nome" {...field} />
+                  <Input id="name" placeholder="Il tuo nome" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -110,7 +110,7 @@ const ContactForm: React.FC = () => {
               <FormItem>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="La tua email" {...field} />
+                  <Input id="email" type="email" placeholder="La tua email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -124,7 +124,7 @@ const ContactForm: React.FC = () => {
               <FormItem>
                 <FormLabel htmlFor="phone">Telefono</FormLabel>
                 <FormControl>
-                  <Input type="tel" placeholder="Il tuo numero di telefono" {...field} />
+                  <Input id="phone" type="tel" placeholder="Il tuo numero di telefono" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -138,7 +138,7 @@ const ContactForm: React.FC = () => {
               <FormItem>
                 <FormLabel htmlFor="message">Messaggio</FormLabel>
                 <FormControl>
-                  <textarea
+                  <textarea id="message" rows={8} cols={50}
                     className="flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 min-h-[100px]"
                     placeholder="Il tuo messaggio..."
                     {...field}

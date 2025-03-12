@@ -24,7 +24,7 @@ const Contact: React.FC = () => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
-          <Marker position={position}>
+          <Marker position={position} alt="TSN Lastra a Signa">
             <Popup>
               La nostra struttura si trova qui.
             </Popup>
