@@ -32,7 +32,7 @@ const ConsentBannerComponent = ({ position = 'left', showAs = 'button' }: Consen
               <div className="flex items-center space-x-2 mb-2">
                 <label htmlFor="consent-duration" className="text-sm">Ricorda la mia scelta per:</label>
                 <Select value={consentDuration} onValueChange={(value: ConsentDuration) => setConsentDuration(value)}>
-                  <SelectTrigger id="consent-duration" className="w-[140px]">
+                  <SelectTrigger id="consent-duration" aria-label="Durata del consenso" className="w-[140px]">
                     <SelectValue placeholder="Seleziona durata" />
                   </SelectTrigger>
                   <SelectContent>
