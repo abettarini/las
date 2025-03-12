@@ -1,6 +1,6 @@
+import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { Button } from "./ui/button"
 import {
@@ -94,7 +94,7 @@ const ContactForm: React.FC = () => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nome</FormLabel>
+                <FormLabel htmlFor="name">Nome</FormLabel>
                 <FormControl>
                   <Input placeholder="Il tuo nome" {...field} />
                 </FormControl>
@@ -108,7 +108,7 @@ const ContactForm: React.FC = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel htmlFor="email">Email</FormLabel>
                 <FormControl>
                   <Input type="email" placeholder="La tua email" {...field} />
                 </FormControl>
@@ -122,7 +122,7 @@ const ContactForm: React.FC = () => {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Telefono</FormLabel>
+                <FormLabel htmlFor="phone">Telefono</FormLabel>
                 <FormControl>
                   <Input type="tel" placeholder="Il tuo numero di telefono" {...field} />
                 </FormControl>
@@ -136,7 +136,7 @@ const ContactForm: React.FC = () => {
             name="message"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Messaggio</FormLabel>
+                <FormLabel htmlFor="message">Messaggio</FormLabel>
                 <FormControl>
                   <textarea
                     className="flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 min-h-[100px]"
@@ -149,7 +149,7 @@ const ContactForm: React.FC = () => {
             )}
           />
 
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
+          <Button type="submit" className="w-full" disabled={isSubmitting} >
             {isSubmitting ? "Invio in corso..." : "Invia messaggio"}
           </Button>
         </form>
