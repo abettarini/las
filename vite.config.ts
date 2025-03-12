@@ -8,6 +8,14 @@ export default defineConfig({
   plugins: [
     react(),
     ViteImageOptimizer({
+      jpeg: {
+        // https://sharp.pixelplumbing.com/api-output#jpeg
+        quality: 30,
+      },
+      jpg: {
+        // https://sharp.pixelplumbing.com/api-output#jpeg
+        quality: 30,
+      },
       // Your configuration options go here 
     }),
     VitePWA({ 
@@ -15,7 +23,7 @@ export default defineConfig({
       injectRegister: 'auto',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,}']
       },
       manifest: {
         name: 'TSN Lastra a Signa',

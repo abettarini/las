@@ -6,6 +6,7 @@ import Contatti from '../components/contatti/contatti';
 import NewsList from '../components/news/news-list';
 import ServiceCard, { services } from '../components/ServiceCard';
 import { Button } from '../components/ui/button';
+import { Image } from '../components/ui/image';
 import { contents } from '../data/news';
 
 const scrollToSection = (id: string): void => {
@@ -79,10 +80,7 @@ Troverete un punto di ritrovo dove poter scambiare idee, nozioni ed esperienze i
             <div className="relative h-[400px] bg-muted rounded-lg overflow-hidden">
               <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
                 {/* Placeholder for hero image */}
-                <div className="text-center">
-                  <p className="text-lg">Immagine del Poligono</p>
-                  <p className="text-sm">(Inserire foto della struttura)</p>
-                </div>
+                <Image width={700} height={400} src="/assets/poligono.jpg" alt="Hero Image" className="object-cover object-center"/>
               </div>
             </div>
           </div>
