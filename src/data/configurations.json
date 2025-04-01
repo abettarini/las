@@ -63,7 +63,7 @@
                         ]
                     }
                 },
-                "Cinghialino Corrente": {
+                "Conghialino Corrente": {
                     "availableDays": {
                         "Tuesday": [
                             "09:00",
@@ -199,7 +199,7 @@
                         ]
                     }
                 },
-                "Cinghialino Corrente": {
+                "Conghialino Corrente": {
                     "availableDays": {
                         "Tuesday": [
                             "09:00",
@@ -278,7 +278,9 @@
                     }
                 ]
             }
-        },
+        }
+    },
+    "calendar": {
         "chiusureFestive": [
             {
                 "data": "01-01",
@@ -416,7 +418,7 @@
                 "unit": "hours"
             }
         },
-        "Cinghialino Corrente": {
+        "Conghialino Corrente": {
             "maxBookings": 8,
             "recommendations": "Abbigliamento adeguato e rispetto delle regole del campo.",
             "minAdvanceBooking": {

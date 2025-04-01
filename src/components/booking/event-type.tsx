@@ -47,9 +47,9 @@ interface AperturaEccezionale {
 // Utilizzo della configurazione dal file JSON
 const eventTypes: Record<EventType, EventTypeConfig> = configData.eventTypes as Record<EventType, EventTypeConfig>;
 const seasonConfigurations: Record<string, SeasonConfig> = configData.orari as Record<string, SeasonConfig>;
-const chiusureFestive: ChiusuraFestiva[] = configData.orari.chiusureFestive as ChiusuraFestiva[];
-const chiusureSpeciali: ChiusuraSpeciale[] = configData.orari.chiusureSpeciali as ChiusuraSpeciale[];
-const apertureEccezionali: AperturaEccezionale[] = configData.orari.apertureEccezionali as AperturaEccezionale[] || [];
+const chiusureFestive: ChiusuraFestiva[] = configData.calendar.chiusureFestive as ChiusuraFestiva[];
+const chiusureSpeciali: ChiusuraSpeciale[] = configData.calendar.chiusureSpeciali as ChiusuraSpeciale[];
+const apertureEccezionali: AperturaEccezionale[] = configData.calendar.apertureEccezionali as AperturaEccezionale[] || [];
 
 /**
  * Determina se una data è all'interno di un intervallo stagionale
@@ -94,10 +94,7 @@ export const getCurrentSeasonId = (date: Date = new Date()): string => {
     // Verifica che la stagione abbia le proprietà startDate e endDate
     if (seasonConfigurations[season] &&
         seasonConfigurations[season].startDate &&
-        seasonConfigurations[season].endDate &&
-        season !== 'chiusureFestive' &&
-        season !== 'chiusureSpeciali' &&
-        season !== 'apertureEccezionali') {
+        seasonConfigurations[season].endDate) {
 
       const startDate = seasonConfigurations[season].startDate;
       const endDate = seasonConfigurations[season].endDate;
@@ -112,10 +109,7 @@ export const getCurrentSeasonId = (date: Date = new Date()): string => {
   for (const season of Object.keys(seasonConfigurations)) {
     if (seasonConfigurations[season] &&
         seasonConfigurations[season].startDate &&
-        seasonConfigurations[season].endDate &&
-        season !== 'chiusureFestive' &&
-        season !== 'chiusureSpeciali' &&
-        season !== 'apertureEccezionali') {
+        seasonConfigurations[season].endDate) {
       return season;
     }
   }

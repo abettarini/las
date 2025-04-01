@@ -138,7 +138,6 @@ const OrariPage: React.FC = () => {
       </div>
 
       {Object.keys(seasonConfigurations)
-        .filter(key => key !== 'chiusureFestive' && key !== 'chiusureSpeciali' && key !== 'apertureEccezionali')
         .map((seasonId, index) => {
           const season = seasonConfigurations[seasonId];
           const seasonName = seasonId === 'orarioEstivo' ? 'Orario Estivo' : 'Orario Invernale';

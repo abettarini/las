@@ -10,6 +10,7 @@ import { QuizProvider } from './context/quiz-context';
 import './index.css';
 import { metaConfig } from './metaConfig';
 import Home from './pages/HomePage';
+import ImpiantiPage from "./pages/ImpiantiPage";
 
 const LazyIscrizioni = lazy(() => import('./components/Iscrizioni'));
 const LazyQuizPage = lazy(() => import('./pages/QuizPage'));
@@ -59,6 +60,7 @@ const App: React.FC = () => {
             <Route path="/quiz" element={<QuizProvider><LazyQuizPage numQuestions={15} /></QuizProvider>} />
             <Route path="/chisiamo/storia" element={<div className="flex-1 p-6"><LazyStoriaPage /></div>} />
             <Route path="/chisiamo/consiglio-direttivo" element={<div className="flex-1 p-6"><LazyConsiglioDirettivoPage /></div>} />
+            <Route path="/struttura/impianti" element={<div className="flex-1 p-6"><ImpiantiPage /></div>} />
             <Route path="/struttura/dove-siamo" element={<div className="flex-1 p-6"><LazyStrutturaIndicazioniPage /></div>} />
             <Route path="/contatti-faq" element={<div className="flex-1 p-6"><LazyContattiFaqPage /></div>} />
             <Route path="/prenotazioni" element={<div className="flex-1 p-6"><LazyBookingPage /></div>} />
