@@ -1,6 +1,6 @@
+import { Button } from '@/components/ui/button';
 import { Award, Calendar, Info, LucideIcon, Megaphone, MessageCircle, Newspaper, Shield, Target, Users } from 'lucide-react';
 import { Label } from 'react-aria-components';
-import { Button } from './ui/button';
 
 type IconType = 'news' | 'event' | 'info' | 'megaphone' | 'target' | 'shield' | 'users' | 'award' | 'communication';
 

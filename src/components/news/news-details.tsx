@@ -1,5 +1,5 @@
+import { Button } from '@/components/ui/button'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { Button } from '../ui/button'
 import { Content } from './news-list'
 
 type NewsDetailsProps = {

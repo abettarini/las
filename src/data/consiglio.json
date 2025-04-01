@@ -1,0 +1,25 @@
+{
+    "consiglio": {
+        "presidente": "Riccardo Carli",
+        "vice_presidente": "Michele Bianchi",
+        "segretario": "Giuseppe Rossi",
+        "consiglieri": [
+            "Marco Bianchi",
+            "Francesco Rossi",
+            "Simone Verdi",
+            "Rosa Neri"
+        ],
+        "collegio_probiviri": [
+            "Alessandro Ajax",
+            "Giuseppe Pellaio"
+        ],
+        "collegio_revisori": [
+            "Giangio Fangio",
+            "Ricky One"
+        ],
+        "rappresentanti": {
+            "Atleti": "Rocky Marciano",
+            "Tecnici": "Fazio Fazi"
+        }
+    }
+}

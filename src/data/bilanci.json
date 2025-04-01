@@ -1,0 +1,106 @@
+{
+    "anni": [
+        {
+            "anno": "2023",
+            "bilancio_preventivo": {
+                "titolo": "Bilancio Preventivo 2023",
+                "link": "/assets/documenti/bilancio_preventivo_2023.pdf"
+            },
+            "bilancio_consuntivo": {
+                "titolo": "Bilancio Consuntivo 2023",
+                "link": "/assets/documenti/bilancio_consuntivo_2023.pdf"
+            },
+            "verbali": [
+                {
+                    "data": "2023-12-15",
+                    "titolo": "Verbale Assemblea Ordinaria",
+                    "link": "/assets/documenti/verbale_assemblea_ordinaria_2023_12_15.pdf"
+                },
+                {
+                    "data": "2023-06-20",
+                    "titolo": "Verbale Assemblea Straordinaria",
+                    "link": "/assets/documenti/verbale_assemblea_straordinaria_2023_06_20.pdf"
+                },
+                {
+                    "data": "2023-03-10",
+                    "titolo": "Verbale Assemblea Ordinaria",
+                    "link": "/assets/documenti/verbale_assemblea_ordinaria_2023_03_10.pdf"
+                }
+            ]
+        },
+        {
+            "anno": "2022",
+            "bilancio_preventivo": {
+                "titolo": "Bilancio Preventivo 2022",
+                "link": "/assets/documenti/bilancio_preventivo_2022.pdf"
+            },
+            "bilancio_consuntivo": {
+                "titolo": "Bilancio Consuntivo 2022",
+                "link": "/assets/documenti/bilancio_consuntivo_2022.pdf"
+            },
+            "verbali": [
+                {
+                    "data": "2022-12-10",
+                    "titolo": "Verbale Assemblea Ordinaria",
+                    "link": "/assets/documenti/verbale_assemblea_ordinaria_2022_12_10.pdf"
+                },
+                {
+                    "data": "2022-05-15",
+                    "titolo": "Verbale Assemblea Ordinaria",
+                    "link": "/assets/documenti/verbale_assemblea_ordinaria_2022_05_15.pdf"
+                }
+            ]
+        },
+        {
+            "anno": "2021",
+            "bilancio_preventivo": {
+                "titolo": "Bilancio Preventivo 2021",
+                "link": "/assets/documenti/bilancio_preventivo_2021.pdf"
+            },
+            "bilancio_consuntivo": {
+                "titolo": "Bilancio Consuntivo 2021",
+                "link": "/assets/documenti/bilancio_consuntivo_2021.pdf"
+            },
+            "verbali": [
+                {
+                    "data": "2021-12-12",
+                    "titolo": "Verbale Assemblea Ordinaria",
+                    "link": "/assets/documenti/verbale_assemblea_ordinaria_2021_12_12.pdf"
+                },
+                {
+                    "data": "2021-06-05",
+                    "titolo": "Verbale Assemblea Straordinaria",
+                    "link": "/assets/documenti/verbale_assemblea_straordinaria_2021_06_05.pdf"
+                },
+                {
+                    "data": "2021-03-20",
+                    "titolo": "Verbale Assemblea Ordinaria",
+                    "link": "/assets/documenti/verbale_assemblea_ordinaria_2021_03_20.pdf"
+                }
+            ]
+        },
+        {
+            "anno": "2020",
+            "bilancio_preventivo": {
+                "titolo": "Bilancio Preventivo 2020",
+                "link": "/assets/documenti/bilancio_preventivo_2020.pdf"
+            },
+            "bilancio_consuntivo": {
+                "titolo": "Bilancio Consuntivo 2020",
+                "link": "/assets/documenti/bilancio_consuntivo_2020.pdf"
+            },
+            "verbali": [
+                {
+                    "data": "2020-12-18",
+                    "titolo": "Verbale Assemblea Ordinaria",
+                    "link": "/assets/documenti/verbale_assemblea_ordinaria_2020_12_18.pdf"
+                },
+                {
+                    "data": "2020-03-15",
+                    "titolo": "Verbale Assemblea Ordinaria",
+                    "link": "/assets/documenti/verbale_assemblea_ordinaria_2020_03_15.pdf"
+                }
+            ]
+        }
+    ]
+}

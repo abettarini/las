@@ -9,7 +9,7 @@ import {
   type CheckboxProps as AriaCheckboxProps,
 } from "react-aria-components"
 
-import { cn } from "../../lib/utils"
+import { cn } from "@/lib/utils"
 
 import { FieldError, Label, labelVariants } from "./field"
 

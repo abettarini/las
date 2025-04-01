@@ -1,10 +1,9 @@
 "use client"
 
+import { Image } from '@/components/ui/image';
 import * as React from "react";
 import { NavLink } from "react-router-dom";
-import { Image } from '../ui/image';
 
-import { cn } from "../../lib/utils";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -13,7 +12,8 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "../ui/navigation-menu";
+} from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
 import mainMenu, { MenuItem } from "./menu";
 
 const struttura: { title: string; href: string; description: string }[] = [
@@ -56,7 +56,7 @@ const chisiamo: { title: string; href: string; description: string }[] = [
     {
         title: "Bilanci",
         href: "/chisiamo/bilanci",
-        description: "Bilanci annuali della struttura."
+        description: "Bilanci preventivi, consuntivi e verbali di assemblea."
     },
 ];
 

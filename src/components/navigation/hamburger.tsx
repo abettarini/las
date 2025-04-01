@@ -1,21 +1,21 @@
 "use client"
 
-import { ChevronRightIcon, Menu } from "lucide-react"
-import * as React from "react"
-import { Link } from "react-router-dom"
-import { cn } from "../../lib/utils"
-import { Button } from "../ui/button"
+import { Button } from "@/components/ui/button"
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "../ui/collapsible"
-import { Image } from '../ui/image'
+} from "@/components/ui/collapsible"
+import { Image } from '@/components/ui/image'
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
-} from "../ui/sheet"
+} from "@/components/ui/sheet"
+import { cn } from "@/lib/utils"
+import { ChevronRightIcon, Menu } from "lucide-react"
+import * as React from "react"
+import { Link } from "react-router-dom"
 import mainMenu, { MenuItem } from "./menu"
 
 

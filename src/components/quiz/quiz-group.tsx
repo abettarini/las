@@ -1,7 +1,7 @@
+import { cn } from '@/lib/utils';
 import React from 'react';
 import { AdditionalSection, Quiz } from '../../context/quiz-context';
 import { useQuizContext } from '../../hooks/use-quiz-context';
-import { cn } from '../../lib/utils';
 import { QuizCheckboxes } from './components/checkboxes';
 import { QuizInput } from './components/input';
 import { QuizRadioGroup } from './components/radio-group';

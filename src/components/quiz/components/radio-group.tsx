@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { shuffle } from "../../../lib/utils";
-import { Label } from "../../ui/label";
-import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
+import { Label } from "../@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "../@/components/ui/radio-group";
+import { shuffle } from "../@/lib/utils";
 
 export interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label: string;

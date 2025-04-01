@@ -1,6 +1,6 @@
+import { Button } from '@/components/ui/button';
+import { Image } from "@/components/ui/image";
 import { Link } from 'react-router-dom';
-import { Button } from './ui/button';
-import { Image } from "./ui/image";
 export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   imageUrl: string;

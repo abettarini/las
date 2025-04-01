@@ -7,7 +7,7 @@ import {
   composeRenderProps,
 } from "react-aria-components"
 
-import { cn } from "../../lib/utils"
+import { cn } from "@/lib/utils"
 
 const PopoverTrigger = AriaDialogTrigger
 

@@ -1,6 +1,6 @@
+import { Button } from '@/components/ui/button'
 import { Award, LucideIcon, Shield, Target, Users } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { Button } from './ui/button'
 
 type IconType = 'target' | 'shield' | 'users' | 'award'
 

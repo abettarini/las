@@ -1,8 +1,8 @@
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Cookie } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Button } from "../ui/button";
-import { Card, CardContent } from "../ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import ConsentSettingsForm from './consent-settings-form';
 import { ConsentBannerProvider } from './context/consent-banner-context';
 import { useConsentBannerContext } from './hooks/use-consent-banner-context';

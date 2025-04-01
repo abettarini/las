@@ -14,9 +14,12 @@ import Home from './pages/HomePage';
 const LazyIscrizioni = lazy(() => import('./components/Iscrizioni'));
 const LazyQuizPage = lazy(() => import('./pages/QuizPage'));
 const LazyStoriaPage = lazy(() => import('./components/Storia'));
-const LazyConsiglioDirettivoPage = lazy(() => import('./components/ConsiglioDirettivo'));
+const LazyConsiglioDirettivoPage = lazy(() => import('./pages/ConsiglioDirettivoPage'));
 const LazyStrutturaIndicazioniPage = lazy(() => import('./pages/StrutturaIndicazioniPage'));
 const LazyContattiFaqPage = lazy(() => import('./pages/ContattiFaqPage'));
+const LazyBilanciPage = lazy(() => import('./pages/BilanciPage'));
+const LazyBookingPage = lazy(() => import('./pages/BookingPage'));
+const LazyOrariPage = lazy(() => import('./pages/OrariPage'));
 
 const App: React.FC = () => {
   return (
@@ -58,6 +61,9 @@ const App: React.FC = () => {
             <Route path="/chisiamo/consiglio-direttivo" element={<div className="flex-1 p-6"><LazyConsiglioDirettivoPage /></div>} />
             <Route path="/struttura/dove-siamo" element={<div className="flex-1 p-6"><LazyStrutturaIndicazioniPage /></div>} />
             <Route path="/contatti-faq" element={<div className="flex-1 p-6"><LazyContattiFaqPage /></div>} />
+            <Route path="/prenotazioni" element={<div className="flex-1 p-6"><LazyBookingPage /></div>} />
+            <Route path="/struttura/orari" element={<div className="flex-1 p-6"><LazyOrariPage /></div>} />
+            <Route path="/chisiamo/bilanci" element={<div className="flex-1 p-6"><LazyBilanciPage /></div>} />
           </Routes>
         </main>
         <Footer />

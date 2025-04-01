@@ -1,6 +1,6 @@
+import { Button } from '@/components/ui/button'
 import { Book, FileText, Video } from 'lucide-react'
 import { useState } from 'react'
-import { Button } from '../ui/button'
 import NewsCard from './news-card'
 import NewsDetails from './news-details'
 

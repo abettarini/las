@@ -1,9 +1,9 @@
 // src/components/Iscrizioni.tsx
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { ChevronUp } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Button } from './ui/button';
-import { ScrollArea } from './ui/scroll-area';
 
 interface TOCItem {
     title: string;

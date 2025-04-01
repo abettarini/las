@@ -13,7 +13,7 @@ import {
   composeRenderProps,
 } from "react-aria-components"
 
-import { cn } from "../../lib/utils"
+import { cn } from "@/lib/utils"
 
 const labelVariants = cva([
   "text-sm font-medium leading-none",

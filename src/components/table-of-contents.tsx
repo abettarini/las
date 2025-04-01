@@ -1,8 +1,8 @@
 'use client'
 
+import { Button } from "@/components/ui/button";
 import { ChevronUp } from 'lucide-react';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button } from "./ui/button";
 
 interface TOCItem {
   title: string;

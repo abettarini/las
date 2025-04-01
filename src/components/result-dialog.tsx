@@ -1,8 +1,8 @@
+import { CardContent } from '@/components/ui/card';
+import { ChartConfig, ChartContainer } from '@/components/ui/chart';
+import { Dialog, DialogContent, DialogFooter, DialogTrigger } from '@/components/ui/dialog';
 import React from 'react';
 import { Label, PolarGrid, PolarRadiusAxis, RadialBar, RadialBarChart } from 'recharts';
-import { CardContent } from './ui/card';
-import { ChartConfig, ChartContainer } from './ui/chart';
-import { Dialog, DialogContent, DialogFooter, DialogTrigger } from './ui/dialog';
 
 interface ResultsDialogProps {
   finalResults: { score: number; totalQuestions: number; totalIncorrect: number };

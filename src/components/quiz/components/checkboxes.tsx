@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Checkbox, CheckboxGroup } from "../../ui/checkbox";
+import { Checkbox, CheckboxGroup } from "../@/components/ui/checkbox";
 
 export interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label: string;
