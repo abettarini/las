@@ -1,6 +1,8 @@
 // OpeningHours.tsx
 
-import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Phone, PhoneOff } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import configData from '../data/configurations.json';
 import {
@@ -11,6 +13,7 @@ import {
   isSpecialClosure,
   seasonConfigurations
 } from './booking/event-type';
+import OrariModal from './orari/orari-modal';
 
 type OpeningHoursType = {
     [day: string]: { start: string; end: string }[];
@@ -23,6 +26,8 @@ const BadgeApertura: React.FC = () => {
   const [closureReason, setClosureReason] = useState<string | null>(null);
   const [isExceptional, setIsExceptional] = useState(false);
   const [exceptionalReason, setExceptionalReason] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const phoneNumber = "+390558722638"; // Numero di telefono del poligono
 
   useEffect(() => {
     // Aggiorniamo gli orari di apertura in tempo reale
@@ -124,27 +129,94 @@ const BadgeApertura: React.FC = () => {
     }
   }, [openingHours, isClosed]);
 
+  // Renderizza il badge in base allo stato
+  const renderBadge = () => {
+    // Se è un'apertura eccezionale, trattiamola come "Siamo aperti"
+    if (isExceptional) {
+      return {
+        icon: <Phone className="h-4 w-4 mr-2" />,
+        text: "Chiama",
+        className: "bg-green-600 hover:bg-green-700",
+        action: () => window.location.href = `tel:${phoneNumber}`,
+        tooltipText: `Chiama il poligono: ${phoneNumber}`,
+        tooltipExtra: exceptionalReason
+      };
+    }
+
+    switch (status) {
+      case 'Siamo aperti':
+        return {
+          icon: <Phone className="h-4 w-4 mr-2" />,
+          text: "Chiama",
+          className: "bg-green-600 hover:bg-green-700",
+          action: () => window.location.href = `tel:${phoneNumber}`,
+          tooltipText: `Chiama il poligono: ${phoneNumber}`
+        };
+      case 'Tra poco chiude':
+        return {
+          icon: <Phone className="h-4 w-4 mr-2" />,
+          text: "Chiama",
+          className: "bg-amber-500 hover:bg-amber-600",
+          action: () => window.location.href = `tel:${phoneNumber}`,
+          tooltipText: `Chiama il poligono: ${phoneNumber}`,
+          tooltipExtra: "Il poligono chiuderà a breve"
+        };
+      case 'Apre tra poco':
+        return {
+          icon: <PhoneOff className="h-4 w-4 mr-2" />,
+          text: "Orari",
+          className: "bg-amber-500 hover:bg-amber-600",
+          action: () => setIsModalOpen(true),
+          tooltipText: "Il poligono aprirà a breve",
+          tooltipExtra: "Clicca per vedere gli orari"
+        };
+      case 'Siamo chiusi':
+      default:
+        return {
+          icon: <PhoneOff className="h-4 w-4 mr-2" />,
+          text: "Orari",
+          className: "bg-red-600 hover:bg-red-700",
+          action: () => setIsModalOpen(true),
+          tooltipText: "Il poligono è chiuso",
+          tooltipExtra: closureReason,
+          tooltipFooter: "Clicca per vedere gli orari"
+        };
+    }
+  };
+
+  const badge = renderBadge();
+
   return (
     <div className="flex justify-end">
-      {closureReason ? (
-        <div className="relative group">
-          <Badge className="bg-red-500">Siamo chiusi</Badge>
-          <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg p-2 text-sm hidden group-hover:block z-10">
-            {closureReason}
-          </div>
-        </div>
-      ) : isExceptional ? (
-        <div className="relative group">
-          <Badge className="bg-purple-500">Apertura straordinaria</Badge>
-          <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg p-2 text-sm hidden group-hover:block z-10">
-            {exceptionalReason}
-          </div>
-        </div>
-      ) : (
-        <Badge className={`${status === 'Siamo aperti' ? 'bg-green-500' : status === 'Siamo chiusi' ? 'bg-red-500' : 'bg-yellow-500'}`}>
-          {status}
-        </Badge>
-      )}
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="default"
+              size="sm"
+              className={`${badge.className} text-white`}
+              onClick={badge.action}
+              aria-label={badge.text}
+            >
+              {badge.icon}
+              {badge.text}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <div>
+              <p>{badge.tooltipText}</p>
+              {badge.tooltipExtra && <p className="text-xs text-muted-foreground mt-1">{badge.tooltipExtra}</p>}
+              {badge.tooltipFooter && <p className="text-xs mt-1">{badge.tooltipFooter}</p>}
+            </div>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
+      {/* Modale degli orari */}
+      <OrariModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };

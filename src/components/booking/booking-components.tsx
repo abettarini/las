@@ -171,6 +171,31 @@ const BookingComponent: React.FC = () => {
   const [submitSuccess, setSubmitSuccess] = useState<boolean>(false);
   const [bookingId, setBookingId] = useState<string | null>(null);
 
+  // Funzione per verificare la disponibilità dell'orario selezionato
+  const checkTimeAvailability = async (date: string, time: string): Promise<boolean> => {
+    try {
+      const response = await fetch('https://api.yourwebsite.com/booking/check-availability', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ date, time }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        console.error('Errore durante la verifica della disponibilità:', result.message);
+        return false;
+      }
+
+      return result.isAvailable;
+    } catch (error) {
+      console.error('Errore durante la verifica della disponibilità:', error);
+      return false;
+    }
+  };
+
   // Funzione per gestire l'invio del form
   const onSubmit = async (data: BookingFormValues) => {
     try {
@@ -178,10 +203,21 @@ const BookingComponent: React.FC = () => {
       setSubmitError(null);
       setSubmitSuccess(false);
 
+      // Formatta la data in formato ISO
+      const formattedDate = formatDateToISO(data.date);
+
+      // Verifica la disponibilità dell'orario prima di inviare la prenotazione
+      const isAvailable = await checkTimeAvailability(formattedDate, data.time);
+
+      if (!isAvailable) {
+        setSubmitError('L\'orario selezionato non è più disponibile. Seleziona un altro orario.');
+        return;
+      }
+
       // Prepara i dati da inviare
       const bookingData = {
         ...data,
-        date: formatDateToISO(data.date),
+        date: formattedDate,
         seasonId
       };
 
