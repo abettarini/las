@@ -18,12 +18,6 @@ import mainMenu, { MenuItem } from "./menu";
 
 const struttura: { title: string; href: string; description: string }[] = [
   {
-    title: "Dove siamo",
-    href: "/struttura/dove-siamo",
-    description:
-      "Indicazioni per raggiungere la nostra struttura.",
-  },
-  {
     title: "Orari",
     href: "/struttura/orari",
     description:

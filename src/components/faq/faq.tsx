@@ -10,12 +10,11 @@ import {
 
 const FAQ: React.FC = () => {
   return (
-    <section className="py-12" id="faq">
-        <h2 className="text-3xl font-bold mb-8 text-center">Domande Frequenti</h2>
+    <section id="faq">
         <Accordion
       type="single"
       collapsible
-      className="my-4 w-full space-y-2"
+      className="w-full space-y-2"
     >
       {faqData.map(({ question, answer }, index) => (
         <AccordionItem
