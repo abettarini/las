@@ -1,9 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import { it } from 'date-fns/locale';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import Turnstile from 'react-turnstile';
 import * as z from 'zod';
 import {
   EventSchedule,
@@ -14,6 +15,7 @@ import {
   getCurrentSeasonId,
   getEventSchedule,
   getEventTypeConfig,
+  getEventTypeLabel,
   getMinBookingDate,
   isExceptionalOpening,
   isHolidayClosure,
@@ -49,6 +51,10 @@ const bookingFormSchema = z.object({
   privacyConsent: z.literal(true, {
     errorMap: () => ({ message: "Devi accettare l'informativa sulla privacy per continuare" }),
   }),
+  // Campo honey-pot nascosto - dovrebbe rimanere vuoto
+  website: z.string().max(0, "Errore di validazione").optional(),
+  // Token di Turnstile
+  cfTurnstileResponse: z.string().min(1, "Verifica di sicurezza richiesta"),
 });
 
 // Tipo derivato dallo schema Zod
@@ -65,6 +71,9 @@ const BookingComponent: React.FC = () => {
   const [currentEventSchedule, setCurrentEventSchedule] = useState<EventSchedule | null>(null);
   const [seasonId, setSeasonId] = useState<string>(currentSeasonId);
 
+  // Riferimento per il componente Turnstile
+  const turnstileRef = useRef<any>(null);
+
   // Inizializzazione di React Hook Form con Zod
   const form = useForm<BookingFormValues>({
     resolver: zodResolver(bookingFormSchema),
@@ -75,6 +84,8 @@ const BookingComponent: React.FC = () => {
       email: "",
       phone: "",
       privacyConsent: false,
+      website: "", // Campo honey-pot
+      cfTurnstileResponse: "",
     },
   });
 
@@ -136,20 +147,132 @@ const BookingComponent: React.FC = () => {
     return date.toISOString().split('T')[0];
   };
 
-  // Funzione per gestire l'invio del form
-  const onSubmit = (data: BookingFormValues) => {
-    // Logica per inviare i dati al service worker di Cloudflare
-    console.log({
-      ...data,
-      date: formatDateToISO(data.date),
-      seasonId
+  // Stato per controllare se Turnstile è stato validato
+  const [isTurnstileVerified, setIsTurnstileVerified] = useState<boolean>(false);
+
+  // Funzione per gestire il callback di Turnstile
+  const handleTurnstileVerify = (token: string) => {
+    form.setValue('cfTurnstileResponse', token);
+    setIsTurnstileVerified(true);
+  };
+
+  // Funzione per gestire l'errore di Turnstile
+  const handleTurnstileError = () => {
+    form.setError('cfTurnstileResponse', {
+      type: 'manual',
+      message: 'Verifica di sicurezza fallita, riprova'
     });
+    setIsTurnstileVerified(false);
+  };
+
+  // Stato per gestire il caricamento e gli errori
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitSuccess, setSubmitSuccess] = useState<boolean>(false);
+  const [bookingId, setBookingId] = useState<string | null>(null);
+
+  // Funzione per gestire l'invio del form
+  const onSubmit = async (data: BookingFormValues) => {
+    try {
+      setIsSubmitting(true);
+      setSubmitError(null);
+      setSubmitSuccess(false);
+
+      // Prepara i dati da inviare
+      const bookingData = {
+        ...data,
+        date: formatDateToISO(data.date),
+        seasonId
+      };
+
+      // Invia i dati al service worker di Cloudflare
+      const response = await fetch('https://api.yourwebsite.com/booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bookingData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Si è verificato un errore durante l\'invio della prenotazione');
+      }
+
+      // Gestisci la risposta di successo
+      setSubmitSuccess(true);
+      setBookingId(result.bookingId);
+
+      // Reset del form
+      form.reset({
+        eventType: defaultEventType,
+        name: "",
+        surname: "",
+        email: "",
+        phone: "",
+        privacyConsent: false,
+        website: "",
+        cfTurnstileResponse: "",
+      });
+
+      // Reset del token Turnstile
+      if (turnstileRef.current) {
+        turnstileRef.current.reset();
+      }
+      setIsTurnstileVerified(false);
+
+    } catch (error) {
+      console.error('Errore durante l\'invio della prenotazione:', error);
+      setSubmitError(error instanceof Error ? error.message : 'Si è verificato un errore sconosciuto');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 bg-white shadow-md rounded-lg max-w-6xl mx-auto">
-        <h2 className="text-2xl font-bold mb-6 text-center">Prenotazione</h2>
+      {submitSuccess ? (
+        <div className="p-6 bg-white shadow-md rounded-lg max-w-6xl mx-auto">
+          <div className="text-center">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold mb-2 text-green-700">Prenotazione Confermata!</h2>
+            <p className="text-lg mb-4">Grazie per aver prenotato con noi.</p>
+            {bookingId && (
+              <p className="mb-4 text-gray-600">
+                Il tuo numero di prenotazione è: <span className="font-semibold">{bookingId}</span>
+              </p>
+            )}
+            <p className="text-gray-600 mb-6">
+              Abbiamo inviato una email di conferma all'indirizzo fornito con tutti i dettagli della prenotazione.
+            </p>
+            <Button
+              type="button"
+              onClick={() => {
+                setSubmitSuccess(false);
+                setBookingId(null);
+              }}
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              Effettua una nuova prenotazione
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 bg-white shadow-md rounded-lg max-w-6xl mx-auto">
+          <h2 className="text-2xl font-bold mb-6 text-center">Prenotazione</h2>
+
+          {/* Messaggio di errore */}
+          {submitError && (
+            <div className="mb-6 bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded">
+              <p className="font-bold">Si è verificato un errore</p>
+              <p>{submitError}</p>
+            </div>
+          )}
 
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Colonna sinistra: Tipo evento e dati personali */}
@@ -166,12 +289,14 @@ const BookingComponent: React.FC = () => {
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Seleziona tipo evento" />
+                        <SelectValue placeholder="Seleziona tipo evento">
+                          {field.value ? getEventTypeLabel(field.value as EventType) : "Seleziona tipo evento"}
+                        </SelectValue>
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       {Object.keys(eventTypes).map((type) => (
-                        <SelectItem key={type} value={type}>{type}</SelectItem>
+                        <SelectItem key={type} value={type}>{getEventTypeLabel(type as EventType)}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -376,6 +501,22 @@ const BookingComponent: React.FC = () => {
           </div>
         </div>
 
+        {/* Campo honey-pot nascosto */}
+        <div style={{ display: 'none' }}>
+          <FormField
+            control={form.control}
+            name="website"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Website (non compilare questo campo)</FormLabel>
+                <FormControl>
+                  <Input {...field} autoComplete="off" />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        </div>
+
         {/* Checkbox per la privacy */}
         <div className="mt-8 border-t pt-6">
           <FormField
@@ -385,8 +526,17 @@ const BookingComponent: React.FC = () => {
               <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                 <FormControl>
                   <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
+                    isSelected={field.value}
+                    onChange={(e) => {
+                      const isSelected = e;
+                      field.onChange(isSelected);
+                      console.log('Checkbox cambiata:', isSelected);
+                      // Se la checkbox è selezionata, rimuovi l'errore
+                      if (isSelected) {
+                        console.log('Checkbox selezionata');
+                        form.clearErrors("privacyConsent");
+                      }
+                    }}
                   />
                 </FormControl>
                 <div className="space-y-1 leading-none">
@@ -400,16 +550,74 @@ const BookingComponent: React.FC = () => {
           />
         </div>
 
-        {/* Bottone di invio posizionato dopo entrambe le colonne */}
+        {/* Cloudflare Turnstile e bottone di invio */}
+        <div className="mt-6">
+          <FormField
+            control={form.control}
+            name="cfTurnstileResponse"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <div className="flex flex-col items-center">
+                    {/* Mostra Turnstile solo se il bottone non è ancora visibile */}
+                    {!isTurnstileVerified && (
+                      <div className="mb-4">
+                        <Turnstile
+                          ref={turnstileRef}
+                          sitekey="0x4AAAAAABDYSKm0qzHLkKyu"
+                          onVerify={handleTurnstileVerify}
+                          onError={handleTurnstileError}
+                          theme="light"
+                          language="it"
+                        />
+                      </div>
+                    )}
+
+                    {/* Messaggio di verifica completata */}
+                    {isTurnstileVerified && (
+                      <div className="mb-4 text-green-600 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        Verifica completata
+                      </div>
+                    )}
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        {/* Bottone di invio posizionato dopo entrambe le colonne - visibile solo dopo la verifica */}
         <div className="mt-8">
-          <Button
-            type="submit"
-            className="w-full md:w-1/2 mx-auto block"
-          >
-            Prenota
-          </Button>
+          {isTurnstileVerified ? (
+            <Button
+              type="submit"
+              className="w-full md:w-1/2 mx-auto block"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <div className="flex items-center justify-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Invio in corso...
+                </div>
+              ) : (
+                "Prenota"
+              )}
+            </Button>
+          ) : (
+            <div className="text-center text-gray-500 text-sm">
+              Completa la verifica di sicurezza per procedere
+            </div>
+          )}
         </div>
       </form>
+      )}
     </Form>
   );
 };

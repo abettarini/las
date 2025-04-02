@@ -5,6 +5,7 @@ import configData from '../../data/configurations.json';
 type EventType = keyof typeof configData.eventTypes;
 
 interface EventTypeConfig {
+  label: string;
   maxBookings: number;
   recommendations: string;
   minAdvanceBooking: AdvanceBookingTime; // Tempo minimo di anticipo (ore o giorni)
@@ -262,6 +263,15 @@ export const isPoligonoOpen = (date: Date = new Date()): boolean => {
  */
 export const getEventTypeConfig = (eventType: EventType): EventTypeConfig => {
   return eventTypes[eventType];
+};
+
+/**
+ * Ottiene la label dell'evento per la visualizzazione
+ * @param eventType - Il tipo di evento
+ * @returns La label dell'evento
+ */
+export const getEventTypeLabel = (eventType: EventType): string => {
+  return eventTypes[eventType]?.label || eventType;
 };
 
 /**

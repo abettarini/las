@@ -4,7 +4,7 @@
             "startDate": "04-02",
             "endDate": "09-30",
             "eventSchedules": {
-                "Visita Dottore": {
+                "visita_dottore": {
                     "availableDays": {
                         "Tuesday": [
                             "09:00",
@@ -26,7 +26,7 @@
                         ]
                     }
                 },
-                "Corso DIMA": {
+                "corso_dima": {
                     "availableDays": {
                         "Tuesday": [
                             "10:00",
@@ -44,7 +44,7 @@
                         ]
                     }
                 },
-                "Taratura Carabina": {
+                "taratura_carabina": {
                     "availableDays": {
                         "Monday": [
                             "09:00",
@@ -63,7 +63,7 @@
                         ]
                     }
                 },
-                "Conghialino Corrente": {
+                "cinghialino_corrente": {
                     "availableDays": {
                         "Tuesday": [
                             "09:00",
@@ -157,7 +157,7 @@
             "startDate": "10-01",
             "endDate": "04-01",
             "eventSchedules": {
-                "Visita Dottore": {
+                "visita_dottore": {
                     "availableDays": {
                         "Tuesday": [
                             "09:00",
@@ -175,7 +175,7 @@
                         ]
                     }
                 },
-                "Corso DIMA": {
+                "corso_dima": {
                     "availableDays": {
                         "Tuesday": [
                             "10:00",
@@ -187,7 +187,7 @@
                         ]
                     }
                 },
-                "Taratura Carabina": {
+                "taratura_carabina": {
                     "availableDays": {
                         "Monday": [
                             "10:00",
@@ -199,7 +199,7 @@
                         ]
                     }
                 },
-                "Conghialino Corrente": {
+                "cinghialino_corrente": {
                     "availableDays": {
                         "Tuesday": [
                             "09:00",
@@ -394,7 +394,8 @@
         "endBeforeClosingMinutes": 15
     },
     "eventTypes": {
-        "Visita Dottore": {
+        "visita_dottore": {
+            "label": "Visita Dottore",
             "maxBookings": 10,
             "recommendations": "Portare documenti medici e presentarsi 15 minuti prima.",
             "minAdvanceBooking": {
@@ -402,7 +403,8 @@
                 "unit": "hours"
             }
         },
-        "Corso DIMA": {
+        "corso_dima": {
+            "label": "Corso DIMA",
             "maxBookings": 5,
             "recommendations": "Portare il materiale didattico e arrivare puntuali.",
             "minAdvanceBooking": {
@@ -410,7 +412,8 @@
                 "unit": "days"
             }
         },
-        "Taratura Carabina": {
+        "taratura_carabina": {
+            "label": "Taratura Carabina",
             "maxBookings": 5,
             "recommendations": "Portare l'attrezzatura personale e seguire le norme di sicurezza.",
             "minAdvanceBooking": {
@@ -418,7 +421,8 @@
                 "unit": "hours"
             }
         },
-        "Conghialino Corrente": {
+        "cinghialino_corrente": {
+            "label": "Cinghialino Corrente",
             "maxBookings": 8,
             "recommendations": "Abbigliamento adeguato e rispetto delle regole del campo.",
             "minAdvanceBooking": {
