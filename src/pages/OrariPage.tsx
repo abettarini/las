@@ -1,13 +1,13 @@
 import {
-  getCurrentSeasonId,
-  getExceptionalOpenings,
-  getHolidayClosures,
-  getSpecialClosures,
-  seasonConfigurations
+    getCurrentSeasonId,
+    getExceptionalOpenings,
+    getHolidayClosures,
+    getSpecialClosures,
+    seasonConfigurations
 } from '@/components/booking/event-type';
 
 import React from 'react';
-import configurations from '../data/configurations.json';
+import configurations from '../data/calendars.json';
 
 const OrariPage: React.FC = () => {
   const { shootingHours } = configurations;

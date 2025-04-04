@@ -1,0 +1,7 @@
+# Ignora i file di backup
+*.bak
+*.backup
+*.tmp# Ignora i file di backup
+*.bak
+*.backup
+*.tmp

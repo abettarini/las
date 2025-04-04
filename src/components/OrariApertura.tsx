@@ -4,14 +4,14 @@ import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Phone, PhoneOff } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-import configData from '../data/configurations.json';
+import configData from '../data/calendars.json';
 import {
-  getCurrentSeasonId,
-  getOpeningHours,
-  isExceptionalOpening,
-  isHolidayClosure,
-  isSpecialClosure,
-  seasonConfigurations
+    getCurrentSeasonId,
+    getOpeningHours,
+    isExceptionalOpening,
+    isHolidayClosure,
+    isSpecialClosure,
+    seasonConfigurations
 } from './booking/event-type';
 import OrariModal from './orari/orari-modal';
 

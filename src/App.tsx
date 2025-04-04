@@ -6,6 +6,8 @@ import Footer from './components/footer';
 import HamburgerMenu from './components/navigation/hamburger';
 import { MainNavigation } from './components/navigation/main-nav';
 import { Image } from './components/ui/image';
+import { EnvironmentRibbon } from './components/ui/ribbon';
+import { Toaster } from './components/ui/sonner';
 import { QuizProvider } from './context/quiz-context';
 import './index.css';
 import { metaConfig } from './metaConfig';
@@ -21,6 +23,7 @@ const LazyContattiFaqPage = lazy(() => import('./pages/ContattiFaqPage'));
 const LazyBilanciPage = lazy(() => import('./pages/BilanciPage'));
 const LazyBookingPage = lazy(() => import('./pages/BookingPage'));
 const LazyOrariPage = lazy(() => import('./pages/OrariPage'));
+const LazyCancelBookingPage = lazy(() => import('./pages/CancelBookingPage'));
 
 const App: React.FC = () => {
   return (
@@ -37,6 +40,14 @@ const App: React.FC = () => {
         {/* <meta property="fb:app_id" content={metaConfig.og.fb_app_id} /> */}
         {/* <meta property="og:image" content="http://www.asdad.it”/> */}
       </Helmet>
+
+
+      {/* Ribbon per ambiente di sviluppo */}
+      <EnvironmentRibbon />
+
+      {/* Ribbon per ambiente di sviluppo */}
+      <EnvironmentRibbon />
+
     <Router>
       <div className="min-h-screen bg-background">
         {/* Header */}
@@ -62,6 +73,7 @@ const App: React.FC = () => {
             <Route path="/chisiamo/consiglio-direttivo" element={<div className="flex-1 p-6"><LazyConsiglioDirettivoPage /></div>} />
             <Route path="/struttura/impianti" element={<div className="flex-1 p-6"><ImpiantiPage /></div>} />
             <Route path="/struttura/dove-siamo" element={<div className="flex-1 p-6"><LazyStrutturaIndicazioniPage /></div>} />
+            <Route path="/annulla-prenotazione" element={<div className="flex-1 p-6"><LazyCancelBookingPage /></div>} />
             <Route path="/contatti-faq" element={<div className="flex-1 p-6"><LazyContattiFaqPage /></div>} />
             <Route path="/prenotazioni" element={<div className="flex-1 p-6"><LazyBookingPage /></div>} />
             <Route path="/struttura/orari" element={<div className="flex-1 p-6"><LazyOrariPage /></div>} />
@@ -70,6 +82,7 @@ const App: React.FC = () => {
         </main>
         <Footer />
       </div>
+      <Toaster />
     </Router>
     </div>
   );

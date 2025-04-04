@@ -125,14 +125,14 @@
                         "end": "18:45"
                     }
                 ],
-                "venerdì": [
+                "giovedì": [
                     {
                         "start": "09:30",
                         "end": "12:45"
                     },
                     {
-                        "start": "15:30",
-                        "end": "18:45"
+                        "start": "13:45",
+                        "end": "16:45"
                     }
                 ],
                 "sabato": [
@@ -325,6 +325,10 @@
         ],
         "chiusureSpeciali": [
             {
+                "data": "2025-04-02",
+                "descrizione": "Prova"
+            },
+            {
                 "data": "2024-04-21",
                 "descrizione": "Gara Regionale"
             },
@@ -357,6 +361,14 @@
         "apertureEccezionali": [
             {
                 "data": "2024-05-19",
+                "descrizione": "Gara Nazionale di Tiro",
+                "orario": {
+                    "start": "08:00",
+                    "end": "19:00"
+                }
+            },
+            {
+                "data": "2025-04-01",
                 "descrizione": "Gara Nazionale di Tiro",
                 "orario": {
                     "start": "08:00",

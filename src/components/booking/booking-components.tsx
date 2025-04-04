@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import Turnstile from 'react-turnstile';
+import { toast } from 'sonner';
 import * as z from 'zod';
 import {
   EventSchedule,
@@ -172,9 +173,12 @@ const BookingComponent: React.FC = () => {
   const [bookingId, setBookingId] = useState<string | null>(null);
 
   // Funzione per verificare la disponibilità dell'orario selezionato
+  // Ottieni l'URL dell'API dall'ambiente
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const checkTimeAvailability = async (date: string, time: string): Promise<boolean> => {
     try {
-      const response = await fetch('https://api.yourwebsite.com/booking/check-availability', {
+      const response = await fetch(`${apiUrl}/booking/check-availability`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -196,12 +200,52 @@ const BookingComponent: React.FC = () => {
     }
   };
 
+  // Stato per memorizzare l'URL di cancellazione e la secret key
+  const [cancelUrl, setCancelUrl] = useState<string | null>(null);
+  const [cancelSecret, setCancelSecret] = useState<string | null>(null);
+
+  // Stato per il feedback di copia
+  const [urlCopied, setUrlCopied] = useState<boolean>(false);
+  const [secretCopied, setSecretCopied] = useState<boolean>(false);
+
+  // Funzione per copiare il testo negli appunti
+  const copyToClipboard = (text: string, type: 'url' | 'secret') => {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        // Feedback visivo
+        if (type === 'url') {
+          setUrlCopied(true);
+          setTimeout(() => setUrlCopied(false), 2000);
+          toast.success('Link di cancellazione copiato negli appunti', {
+            description: 'Puoi utilizzare questo link per accedere alla pagina di cancellazione',
+            duration: 3000,
+          });
+        } else {
+          setSecretCopied(true);
+          setTimeout(() => setSecretCopied(false), 2000);
+          toast.success('Codice segreto copiato negli appunti', {
+            description: 'Conserva questo codice, ti servirà per confermare la cancellazione',
+            duration: 3000,
+          });
+        }
+        console.log('Testo copiato negli appunti');
+      })
+      .catch(err => {
+        console.error('Errore durante la copia negli appunti:', err);
+        toast.error('Impossibile copiare negli appunti', {
+          description: 'Prova a selezionare e copiare il testo manualmente',
+        });
+      });
+  };
+
   // Funzione per gestire l'invio del form
   const onSubmit = async (data: BookingFormValues) => {
     try {
       setIsSubmitting(true);
       setSubmitError(null);
       setSubmitSuccess(false);
+      setCancelUrl(null);
+      setCancelSecret(null);
 
       // Formatta la data in formato ISO
       const formattedDate = formatDateToISO(data.date);
@@ -209,11 +253,13 @@ const BookingComponent: React.FC = () => {
       // Verifica la disponibilità dell'orario prima di inviare la prenotazione
       const isAvailable = await checkTimeAvailability(formattedDate, data.time);
 
+      console.log('Verifica disponibilità orario:', isAvailable);
       if (!isAvailable) {
         setSubmitError('L\'orario selezionato non è più disponibile. Seleziona un altro orario.');
         return;
       }
 
+      console.log('Invio della prenotazione...');
       // Prepara i dati da inviare
       const bookingData = {
         ...data,
@@ -221,8 +267,10 @@ const BookingComponent: React.FC = () => {
         seasonId
       };
 
+      console.log('Dati del form:', bookingData);
+
       // Invia i dati al service worker di Cloudflare
-      const response = await fetch('https://api.yourwebsite.com/booking', {
+      const response = await fetch(`${apiUrl}/booking`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -239,6 +287,15 @@ const BookingComponent: React.FC = () => {
       // Gestisci la risposta di successo
       setSubmitSuccess(true);
       setBookingId(result.bookingId);
+
+      // Salva l'URL di cancellazione e la secret key
+      if (result.cancelUrl) {
+        setCancelUrl(result.cancelUrl);
+      }
+
+      if (result.cancelSecret) {
+        setCancelSecret(result.cancelSecret);
+      }
 
       // Reset del form
       form.reset({
@@ -283,14 +340,86 @@ const BookingComponent: React.FC = () => {
                 Il tuo numero di prenotazione è: <span className="font-semibold">{bookingId}</span>
               </p>
             )}
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-600 mb-4">
               Abbiamo inviato una email di conferma all'indirizzo fornito con tutti i dettagli della prenotazione.
             </p>
+
+            {/* Informazioni per la cancellazione */}
+            <div className="mt-6 mb-6 max-w-md mx-auto">
+              <h3 className="text-lg font-semibold mb-2 text-gray-800">Informazioni per la cancellazione</h3>
+              <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 text-left">
+                {cancelUrl && (
+                  <div className="mb-3">
+                    <p className="text-sm font-medium text-gray-700 mb-1">Link per annullare la prenotazione:</p>
+                    <div className="flex items-center">
+                      <input
+                        type="text"
+                        value={cancelUrl}
+                        readOnly
+                        className="flex-1 text-sm bg-white border border-gray-300 rounded-l-md py-2 px-3 focus:outline-none"
+                      />
+                      <button
+                        onClick={() => copyToClipboard(cancelUrl, 'url')}
+                        className={`${urlCopied ? 'bg-green-500' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-r-md p-2 transition-colors duration-200`}
+                        title={urlCopied ? "Copiato!" : "Copia negli appunti"}
+                      >
+                        {urlCopied ? (
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        ) : (
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                          </svg>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {cancelSecret && (
+                  <div>
+                    <p className="text-sm font-medium text-gray-700 mb-1">Codice segreto per la cancellazione:</p>
+                    <div className="flex items-center">
+                      <input
+                        type="text"
+                        value={cancelSecret}
+                        readOnly
+                        className="flex-1 text-sm bg-white border border-gray-300 rounded-l-md py-2 px-3 focus:outline-none font-mono"
+                      />
+                      <button
+                        onClick={() => copyToClipboard(cancelSecret, 'secret')}
+                        className={`${secretCopied ? 'bg-green-500' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-r-md p-2 transition-colors duration-200`}
+                        title={secretCopied ? "Copiato!" : "Copia negli appunti"}
+                      >
+                        {secretCopied ? (
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        ) : (
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                          </svg>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                <p className="text-xs text-gray-500 mt-3">
+                  Conserva queste informazioni per poter annullare la prenotazione in caso di necessità.
+                  Il codice segreto ti sarà richiesto al momento della cancellazione.
+                </p>
+              </div>
+            </div>
+
             <Button
               type="button"
               onClick={() => {
                 setSubmitSuccess(false);
                 setBookingId(null);
+                setCancelUrl(null);
+                setCancelSecret(null);
               }}
               className="bg-blue-600 hover:bg-blue-700 text-white"
             >

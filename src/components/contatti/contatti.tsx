@@ -7,23 +7,27 @@ const Contatti: React.FC = () => {
         <section className="py-12" id="contatti">
             <h2 className="text-3xl font-bold mb-8 text-center">Contatti</h2>
 
-            {/* Top section: Contact info and map */}
+            {/* Top section: Contact info and contact form side by side */}
             <div className="container mx-auto mb-12">
-                <div className="flex flex-col lg:flex-row gap-6">
-                    <div className="flex-1">
+                <div className="flex flex-col lg:flex-row gap-8">
+                    {/* Left side: Contact info */}
+                    <div className="lg:w-1/2">
                         <ContactInfo />
                     </div>
-                    <div className="flex-1 h-[300px] lg:h-auto rounded-lg overflow-hidden shadow-sm">
-                        <StreetMap />
+
+                    {/* Right side: Contact form */}
+                    <div className="lg:w-1/2 bg-white p-6 rounded-lg shadow-sm">
+                        <h3 className="text-xl font-semibold mb-4">Inviaci un messaggio</h3>
+                        <ContactForm />
                     </div>
                 </div>
             </div>
 
-            {/* Middle section: Contact form */}
-            <div className="container mx-auto mb-12">
-                <h3 className="text-2xl font-semibold mb-6 text-center">Inviaci un messaggio</h3>
-                <div className="max-w-2xl mx-auto">
-                    <ContactForm />
+            {/* Bottom section: Map */}
+            <div className="container mx-auto">
+                <h3 className="text-xl font-semibold mb-4">Come raggiungerci</h3>
+                <div className="w-full h-[400px] rounded-lg overflow-hidden shadow-sm">
+                    <StreetMap />
                 </div>
             </div>
         </section>

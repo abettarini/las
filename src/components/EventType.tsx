@@ -1,5 +1,5 @@
 import React from 'react';
-import configurations from '../data/configurations.json';
+import configurations from '../data/calendars.json';
 
 interface EventTypeProps {
   eventType: string;

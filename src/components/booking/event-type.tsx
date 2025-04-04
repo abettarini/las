@@ -1,5 +1,5 @@
 // Importazione del tipo di configurazione dal file JSON
-import configData from '../../data/configurations.json';
+import configData from '../../data/calendars.json';
 
 // Definizione dei tipi basati sulla struttura del file JSON
 type EventType = keyof typeof configData.eventTypes;
