@@ -5,15 +5,16 @@ import * as React from "react";
 import { NavLink } from "react-router-dom";
 
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
+    NavigationMenu,
+    NavigationMenuContent,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger,
+    navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { AuthButton } from "../auth/AuthButton";
 import mainMenu, { MenuItem } from "./menu";
 
 const struttura: { title: string; href: string; description: string }[] = [
@@ -73,6 +74,15 @@ const iscrizioni: { title: string; href: string; description: string }[] = [
 ];
 
 const MenuItemComponent: React.FC<{ item: MenuItem; depth?: number }> = ({ item, depth = 0 }) => {
+  // Gestione speciale per il pulsante di autenticazione
+  if (item.title === 'AUTH_BUTTON') {
+    return (
+      <NavigationMenuItem>
+        <AuthButton />
+      </NavigationMenuItem>
+    );
+  }
+
   return (
     <>
       {item.submenu ? (

@@ -2,25 +2,35 @@
 
 import { Button } from "@/components/ui/button"
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
 } from "@/components/ui/collapsible"
 import { Image } from '@/components/ui/image'
 import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
+    Sheet,
+    SheetContent,
+    SheetTrigger,
 } from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
 import { ChevronRightIcon, Menu } from "lucide-react"
 import * as React from "react"
 import { Link } from "react-router-dom"
+import { AuthButton } from "../auth/AuthButton"
 import mainMenu, { MenuItem } from "./menu"
 
 
 const MenuItemComponent: React.FC<{ item: MenuItem; depth?: number }> = ({ item, depth = 0 }) => {
   const [isOpen, setIsOpen] = React.useState(false)
+
+  // Gestione speciale per il pulsante di autenticazione
+  if (item.title === 'AUTH_BUTTON') {
+    return (
+      <div className="flex w-full items-center text-lg font-semibold">
+        <AuthButton />
+      </div>
+    );
+  }
 
   if (item.submenu) {
     return (

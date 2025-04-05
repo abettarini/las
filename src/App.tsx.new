@@ -43,9 +43,8 @@ const App: React.FC = () => {
         <meta property="og:locale" content={metaConfig.og.locale} />
         <meta property="og:type" content={metaConfig.og.type} />
         {/* <meta property="fb:app_id" content={metaConfig.og.fb_app_id} /> */}
-        {/* <meta property="og:image" content="http://www.asdad.it”/> */}
+        {/* <meta property="og:image" content="http://www.asdad.it"/> */}
       </Helmet>
-
 
       {/* Ribbon per ambiente di sviluppo */}
       <EnvironmentRibbon />
@@ -82,7 +81,7 @@ const App: React.FC = () => {
                 <Route path="/prenotazioni" element={<div className="flex-1 p-6"><LazyBookingPage /></div>} />
                 <Route path="/struttura/orari" element={<div className="flex-1 p-6"><LazyOrariPage /></div>} />
                 <Route path="/chisiamo/bilanci" element={<div className="flex-1 p-6"><LazyBilanciPage /></div>} />
-
+                
                 {/* Nuove rotte per l'autenticazione */}
                 <Route path="/registrazione" element={<div className="flex-1 p-6"><LazyRegisterPage /></div>} />
                 <Route path="/login" element={<div className="flex-1 p-6"><LazyLoginPage /></div>} />
