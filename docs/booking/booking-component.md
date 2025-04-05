@@ -5,7 +5,7 @@ Il componente BookingComponent è un form completo per la prenotazione di eventi
 ## Importazione
 
 ```tsx
-import { BookingComponent } from '@/components/booking/booking-components';
+import BookingComponent from '@/components/booking/booking-components';
 ```
 
 ## Proprietà
@@ -27,7 +27,7 @@ Il componente utilizza le seguenti librerie:
 ## Utilizzo base
 
 ```tsx
-import { BookingComponent } from '@/components/booking/booking-components';
+import BookingComponent from '@/components/booking/booking-components';
 
 const BookingPage = () => {
   return (
@@ -239,7 +239,7 @@ try {
 ### Esempio 1: Integrazione in una pagina
 
 ```tsx
-import { BookingComponent } from '@/components/booking/booking-components';
+import BookingComponent from '@/components/booking/booking-components';
 
 const BookingPage = () => {
   return (
@@ -260,7 +260,7 @@ export default BookingPage;
 ### Esempio 2: Utilizzo con un layout personalizzato
 
 ```tsx
-import { BookingComponent } from '@/components/booking/booking-components';
+import BookingComponent from '@/components/booking/booking-components';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const BookingWithCustomLayout = () => {

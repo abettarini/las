@@ -29,6 +29,8 @@ const LazyRegisterPage = lazy(() => import('./pages/RegisterPage'));
 const LazyLoginPage = lazy(() => import('./pages/LoginPage'));
 const LazyVerifyEmailPage = lazy(() => import('./pages/VerifyEmailPage'));
 const LazyAuthenticationPage = lazy(() => import('./pages/AuthenticationPage'));
+const LazyAuth0CallbackPage = lazy(() => import('./pages/Auth0Callback'));
+const LazyProfilePage = lazy(() => import('./pages/ProfilePage'));
 
 const App: React.FC = () => {
   return (
@@ -88,6 +90,8 @@ const App: React.FC = () => {
                 <Route path="/login" element={<div className="flex-1 p-6"><LazyLoginPage /></div>} />
                 <Route path="/verifica-email" element={<div className="flex-1 p-6"><LazyVerifyEmailPage /></div>} />
                 <Route path="/autenticazione" element={<div className="flex-1 p-6"><LazyAuthenticationPage /></div>} />
+                <Route path="/auth/callback" element={<div className="flex-1 p-6"><LazyAuth0CallbackPage /></div>} />
+                <Route path="/profilo" element={<div className="flex-1 p-6"><LazyProfilePage /></div>} />
               </Routes>
             </Suspense>
           </main>

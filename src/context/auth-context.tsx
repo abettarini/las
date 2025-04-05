@@ -1,14 +1,23 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { getTokenFromSession, getUserFromSession, logout, verifyToken } from '../services/auth-service';
 
+// Interfaccia per l'utente
+export interface User {
+  id: string;
+  email: string;
+  isVerified: boolean;
+  name?: string;
+  picture?: string;
+}
+
 // Interfaccia per il contesto di autenticazione
 interface AuthContextType {
-  user: { id: string; email: string; isVerified: boolean } | null;
+  user: User | null;
   token: string | null;
   isAuthenticated: boolean;
   loading: boolean;
   logout: () => void;
-  setAuthInfo: (user: { id: string; email: string; isVerified: boolean }, token: string) => void;
+  setAuthInfo: (user: User, token: string) => void;
 }
 
 // Crea il contesto di autenticazione
@@ -16,7 +25,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Provider del contesto di autenticazione
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<{ id: string; email: string; isVerified: boolean } | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -30,7 +39,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (sessionUser && sessionToken) {
         // Verifica la validità del token
         const response = await verifyToken(sessionToken);
-        
+
         if (response.success) {
           // Token valido, imposta le informazioni di autenticazione
           setUser(response.user!);
@@ -48,7 +57,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   // Funzione per impostare le informazioni di autenticazione
-  const setAuthInfo = (user: { id: string; email: string; isVerified: boolean }, token: string) => {
+  const setAuthInfo = (user: User, token: string) => {
     setUser(user);
     setToken(token);
   };

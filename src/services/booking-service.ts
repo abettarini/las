@@ -86,7 +86,7 @@ export async function cancelBooking(id: string, secret: string): Promise<ApiResp
       },
       body: JSON.stringify({ secret })
     });
-    
+
     const data = await response.json();
     return data;
   } catch (error) {
@@ -94,6 +94,41 @@ export async function cancelBooking(id: string, secret: string): Promise<ApiResp
     return {
       success: false,
       message: 'Si è verificato un errore durante l\'annullamento della prenotazione'
+    };
+  }
+}
+
+/**
+ * Interfaccia per la risposta delle prenotazioni utente
+ */
+interface UserBookingsResponse {
+  success: boolean;
+  message?: string;
+  bookings?: BookingData[];
+}
+
+/**
+ * Ottiene le prenotazioni dell'utente autenticato
+ * @param token - Token di autenticazione
+ * @returns Risposta API con le prenotazioni dell'utente
+ */
+export async function getUserBookings(token: string): Promise<UserBookingsResponse> {
+  try {
+    const response = await fetch(`${API_URL}/booking/user`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Errore durante il recupero delle prenotazioni dell\'utente:', error);
+    return {
+      success: false,
+      message: 'Si è verificato un errore durante il recupero delle prenotazioni'
     };
   }
 }
