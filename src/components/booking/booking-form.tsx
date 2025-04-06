@@ -8,19 +8,19 @@ import { Link } from 'react-router-dom';
 import Turnstile from 'react-turnstile';
 import * as z from 'zod';
 import {
-    EventSchedule,
-    EventType,
-    EventTypeConfig,
-    eventTypes,
-    formatAdvanceBookingTime,
-    getCurrentSeasonId,
-    getEventSchedule,
-    getEventTypeConfig,
-    getEventTypeLabel,
-    getMinBookingDate,
-    isExceptionalOpening,
-    isHolidayClosure,
-    isSpecialClosure
+  EventSchedule,
+  EventType,
+  EventTypeConfig,
+  eventTypes,
+  formatAdvanceBookingTime,
+  getCurrentSeasonId,
+  getEventSchedule,
+  getEventTypeConfig,
+  getEventTypeLabel,
+  getMinBookingDate,
+  isExceptionalOpening,
+  isHolidayClosure,
+  isSpecialClosure
 } from './event-type';
 
 // Componenti UI
@@ -30,36 +30,55 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 
 // Definizione dello schema di validazione con Zod
-const bookingFormSchema = z.object({
-  eventType: z.string().min(1, "Seleziona un tipo di evento"),
-  name: z.string().min(2, "Il nome deve contenere almeno 2 caratteri"),
-  surname: z.string().min(2, "Il cognome deve contenere almeno 2 caratteri"),
-  email: z.string().email("Inserisci un indirizzo email valido"),
-  phone: z.string().min(6, "Inserisci un numero di telefono valido"),
-  date: z.date({
-    required_error: "Seleziona una data",
-    invalid_type_error: "Data non valida",
-  }),
-  time: z.string().min(1, "Seleziona un orario"),
-  privacyConsent: z.literal(true, {
-    errorMap: () => ({ message: "Devi accettare l'informativa sulla privacy per continuare" }),
-  }),
-  // Campo honey-pot nascosto - dovrebbe rimanere vuoto
-  website: z.string().max(0, "Errore di validazione").optional(),
-  // Token di Turnstile
-  cfTurnstileResponse: z.string().min(1, "Verifica di sicurezza richiesta"),
-});
+const createBookingFormSchema = (isAuthenticated: boolean) => {
+  // Schema base comune a tutti gli utenti
+  const baseSchema = {
+    eventType: z.string().min(1, "Seleziona un tipo di evento"),
+    date: z.date({
+      required_error: "Seleziona una data",
+      invalid_type_error: "Data non valida",
+    }),
+    time: z.string().min(1, "Seleziona un orario"),
+    privacyConsent: z.literal(true, {
+      errorMap: () => ({ message: "Devi accettare l'informativa sulla privacy per continuare" }),
+    }),
+    // Campo honey-pot nascosto - dovrebbe rimanere vuoto
+    website: z.string().max(0, "Errore di validazione").optional(),
+    // Token di Turnstile
+    cfTurnstileResponse: z.string().min(1, "Verifica di sicurezza richiesta"),
+  };
+
+  // Se l'utente è autenticato, i campi personali sono opzionali
+  if (isAuthenticated) {
+    return z.object({
+      ...baseSchema,
+      name: z.string().optional(),
+      surname: z.string().optional(),
+      email: z.string().optional(),
+      phone: z.string().min(6, "Inserisci un numero di telefono valido"),
+    });
+  }
+
+  // Se l'utente non è autenticato, i campi personali sono obbligatori
+  return z.object({
+    ...baseSchema,
+    name: z.string().min(2, "Il nome deve contenere almeno 2 caratteri"),
+    surname: z.string().min(2, "Il cognome deve contenere almeno 2 caratteri"),
+    email: z.string().email("Inserisci un indirizzo email valido"),
+    phone: z.string().min(6, "Inserisci un numero di telefono valido"),
+  });
+};
 
 // Tipo derivato dallo schema Zod
-export type BookingFormValues = z.infer<typeof bookingFormSchema>;
+export type BookingFormValues = z.infer<ReturnType<typeof createBookingFormSchema>>;
 
 interface BookingFormProps {
   onSubmit: (data: BookingFormValues) => Promise<void>;
@@ -92,13 +111,13 @@ const BookingForm: React.FC<BookingFormProps> = ({
 
   // Inizializzazione di React Hook Form con Zod
   const form = useForm<BookingFormValues>({
-    resolver: zodResolver(bookingFormSchema),
+    resolver: zodResolver(createBookingFormSchema(isAuthenticated)),
     defaultValues: {
       eventType: defaultEventType,
-      name: "",
-      surname: "",
+      name: isAuthenticated && user?.name ? user.name.split(' ')[0] : "",
+      surname: isAuthenticated && user?.name && user.name.split(' ').length > 1 ? user.name.split(' ').slice(1).join(' ') : "",
       email: user?.email || "",
-      phone: "",
+      phone: user?.phone || "",
       privacyConsent: false,
       website: "", // Campo honey-pot
       cfTurnstileResponse: "",
@@ -126,10 +145,27 @@ const BookingForm: React.FC<BookingFormProps> = ({
     form.setValue("time", "");
   }, [watchEventType, form]);
 
-  // Aggiorna il campo email quando l'utente è autenticato
+  // Aggiorna i campi e il resolver quando l'utente è autenticato
   useEffect(() => {
-    if (isAuthenticated && user?.email) {
+    // Aggiorna il resolver con lo schema appropriato
+    form.clearErrors();
+
+    if (isAuthenticated && user) {
+      // Aggiorna i campi con i dati dell'utente
       form.setValue("email", user.email);
+
+      if (user.name) {
+        const nameParts = user.name.split(' ');
+        const firstName = nameParts[0] || '';
+        const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
+
+        form.setValue("name", firstName);
+        form.setValue("surname", lastName);
+      }
+
+      if (user.phone) {
+        form.setValue("phone", user.phone);
+      }
     }
   }, [isAuthenticated, user, form]);
 
@@ -230,11 +266,33 @@ const BookingForm: React.FC<BookingFormProps> = ({
     }
 
     // Prepara i dati da inviare con il seasonId
-    const bookingData = {
-      ...data,
-      date: formattedDate,
-      seasonId
-    };
+    let bookingData;
+
+    if (isAuthenticated && user) {
+      // Se l'utente è autenticato, utilizza i dati del profilo
+      const nameParts = user.name ? user.name.split(' ') : ['', ''];
+      const firstName = nameParts[0] || '';
+      const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
+
+      bookingData = {
+        ...data,
+        name: firstName,
+        surname: lastName,
+        email: user.email,
+        phone: user.phone || data.phone, // Usa il telefono dal profilo se disponibile, altrimenti dal form
+        date: formattedDate,
+        seasonId,
+        isAuthenticated: true
+      };
+    } else {
+      // Altrimenti utilizza i dati inseriti nel form
+      bookingData = {
+        ...data,
+        date: formattedDate,
+        seasonId,
+        isAuthenticated: false
+      };
+    }
 
     // Chiama la funzione onSubmit passata come prop
     await onSubmit(bookingData);
@@ -300,68 +358,110 @@ const BookingForm: React.FC<BookingFormProps> = ({
               </div>
             )}
 
-            <div className="pt-4 border-t">
-              <h3 className="text-lg font-medium mb-4">Dati personali</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem className="space-y-2">
-                      <FormLabel>Nome</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+            {!isAuthenticated ? (
+              <div className="pt-4 border-t">
+                <h3 className="text-lg font-medium mb-4">Dati personali</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem className="space-y-2">
+                        <FormLabel>Nome</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-                <FormField
-                  control={form.control}
-                  name="surname"
-                  render={({ field }) => (
-                    <FormItem className="space-y-2">
-                      <FormLabel>Cognome</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                  <FormField
+                    control={form.control}
+                    name="surname"
+                    render={({ field }) => (
+                      <FormItem className="space-y-2">
+                        <FormLabel>Cognome</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem className="space-y-2">
+                        <FormLabel>Indirizzo Email</FormLabel>
+                        <FormControl>
+                          <Input {...field} type="email" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem className="space-y-2">
+                        <FormLabel>Numero di telefono</FormLabel>
+                        <FormControl>
+                          <Input {...field} type="tel" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem className="space-y-2">
-                      <FormLabel>Indirizzo Email</FormLabel>
-                      <FormControl>
-                        <Input {...field} type="email" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
+            ) : (
+              <div className="pt-4 border-t">
+                <h3 className="text-lg font-medium mb-4">Dati personali</h3>
+                <div className="bg-green-50 p-4 rounded-md border border-green-100">
+                  <p className="text-green-800">
+                    <span className="font-medium">Utente autenticato:</span> I tuoi dati personali verranno utilizzati automaticamente per la prenotazione.
+                  </p>
+                  {user && (
+                    <div className="mt-2 text-sm">
+                      <p><span className="font-medium">Email:</span> {user.email}</p>
+                      {user.name && <p><span className="font-medium">Nome:</span> {user.name}</p>}
+                      {user.phone ? (
+                        <p><span className="font-medium">Telefono:</span> {user.phone}</p>
+                      ) : (
+                        <p className="text-amber-600">
+                          <span className="font-medium">Telefono:</span> Non specificato.
+                          <a href="/profile" className="text-blue-600 hover:underline ml-1">
+                            Aggiungi nel tuo profilo
+                          </a>
+                        </p>
+                      )}
+                    </div>
                   )}
-                />
+                </div>
 
-                <FormField
-                  control={form.control}
-                  name="phone"
-                  render={({ field }) => (
-                    <FormItem className="space-y-2">
-                      <FormLabel>Numero di telefono</FormLabel>
-                      <FormControl>
-                        <Input {...field} type="tel" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {/* Campo telefono nascosto ma ancora presente nel form */}
+                <div className="hidden">
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input {...field} type="tel" />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Colonna destra: Calendario e selezione orari */}

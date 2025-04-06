@@ -4,12 +4,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/auth-context';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger
 } from '../ui/dropdown-menu';
 import { navigationMenuTriggerStyle } from '../ui/navigation-menu';
 import { LogoutModal } from './LogoutModal';
@@ -31,7 +31,22 @@ export function AuthButton() {
 
   // Funzione per ottenere le iniziali dell'utente
   const getUserInitials = () => {
-    if (!user || !user.email) return '?';
+    if (!user) return '?';
+
+    // Se c'è un nome utente, usa le iniziali del nome
+    if (user.name) {
+      // Dividi il nome in parole e prendi la prima lettera di ogni parola
+      const nameParts = user.name.split(' ');
+      if (nameParts.length >= 2) {
+        // Se ci sono almeno due parti (nome e cognome), prendi la prima lettera di ciascuna
+        return (nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase();
+      } else {
+        // Altrimenti prendi le prime due lettere del nome
+        return user.name.substring(0, 2).toUpperCase();
+      }
+    }
+
+    if (!user.email) return '?';
 
     // Se l'email contiene un punto, prendi la prima lettera di ogni parte
     if (user.email.includes('.')) {

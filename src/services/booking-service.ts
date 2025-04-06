@@ -114,7 +114,7 @@ interface UserBookingsResponse {
  */
 export async function getUserBookings(token: string): Promise<UserBookingsResponse> {
   try {
-    const response = await fetch(`${API_URL}/booking/user`, {
+    const response = await fetch(`${API_URL}/me/bookings`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

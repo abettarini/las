@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { Auth0LoginButton } from '../components/Auth0LoginButton';
+import { GoogleLoginButton } from '../components/GoogleLoginButton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { requestLogin } from '../services/auth-service';
 
@@ -76,25 +76,22 @@ export default function LoginPage() {
         <h2 className="text-md font-semibold text-blue-800 mb-2">Nuovo sistema di autenticazione</h2>
         <p className="text-blue-700 text-sm">
           Abbiamo aggiornato il nostro sistema di autenticazione per migliorare la sicurezza.
-          Ti consigliamo di utilizzare Auth0 per accedere al tuo account.
+          Ti consigliamo di utilizzare Google per accedere al tuo account.
         </p>
       </div>
 
-      <Tabs defaultValue="auth0" className="w-full mb-6">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="auth0">Auth0</TabsTrigger>
-          <TabsTrigger value="email">Email</TabsTrigger>
-        </TabsList>
+      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 mb-6">
+        <h2 className="text-lg font-semibold mb-4 text-center">Accedi con Google</h2>
+        <p className="text-gray-600 mb-6 text-center">
+          Accedi in modo sicuro utilizzando il tuo account Google.
+        </p>
+        <GoogleLoginButton className="w-full" />
+      </div>
 
-        <TabsContent value="auth0" className="mt-4">
-          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <h2 className="text-lg font-semibold mb-4 text-center">Accedi con Auth0</h2>
-            <p className="text-gray-600 mb-6 text-center">
-              Accedi in modo sicuro utilizzando il tuo account Auth0.
-            </p>
-            <Auth0LoginButton className="w-full" />
-          </div>
-        </TabsContent>
+      <Tabs defaultValue="email" className="w-full mb-6">
+        <TabsList className="grid w-full grid-cols-1">
+          <TabsTrigger value="email">Accedi con Email</TabsTrigger>
+        </TabsList>
 
         <TabsContent value="email" className="mt-4">
           {emailSent ? (

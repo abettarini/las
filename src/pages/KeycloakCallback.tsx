@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import { Spinner } from '../components/ui/spinner';
-import { handleAuth0Callback, saveUserSession } from '../services/auth-service';
+import { handleKeycloakCallback, saveUserSession } from '../services/keycloak-auth-service';
 
-export default function Auth0Callback() {
+export default function KeycloakCallback() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
@@ -17,7 +17,7 @@ export default function Auth0Callback() {
         const state = searchParams.get('state');
 
         if (!code || !state) {
-          setError('Parametri mancanti nella risposta di Auth0');
+          setError('Parametri mancanti nella risposta di Keycloak');
           setIsProcessing(false);
           return;
         }
@@ -27,7 +27,7 @@ export default function Auth0Callback() {
 
         if (isMockMode) {
           toast.info('Modalità sviluppo rilevata', {
-            description: 'Utilizzo dell\'implementazione mock di Auth0 per lo sviluppo locale',
+            description: 'Utilizzo dell\'implementazione mock di Keycloak per lo sviluppo locale',
           });
 
           // Simula un breve ritardo per l'autenticazione
@@ -37,11 +37,18 @@ export default function Auth0Callback() {
           const mockUser = {
             id: 'mock-user-id',
             email: 'abettarini@gmail.com',
-            isVerified: true
+            isVerified: true,
+            name: 'Andrea Bettarini'
           };
 
           // Salva le informazioni dell'utente e il token nella sessione
-          saveUserSession(mockUser, 'mock-jwt-token');
+          saveUserSession(
+            mockUser, 
+            'mock-jwt-token',
+            'mock-access-token',
+            'mock-id-token',
+            'mock-refresh-token'
+          );
 
           // Reindirizza alla home page
           toast.success('Autenticazione completata', {
@@ -52,8 +59,8 @@ export default function Auth0Callback() {
           return;
         }
 
-        // Gestisci il callback di Auth0 in produzione
-        const response = await handleAuth0Callback(code, state);
+        // Gestisci il callback di Keycloak in produzione
+        const response = await handleKeycloakCallback(code, state);
 
         if (!response.success) {
           setError(response.message || 'Errore durante l\'autenticazione');
@@ -61,9 +68,15 @@ export default function Auth0Callback() {
           return;
         }
 
-        // Salva le informazioni dell'utente e il token nella sessione
+        // Salva le informazioni dell'utente e i token nella sessione
         if (response.user && response.token) {
-          saveUserSession(response.user, response.token);
+          saveUserSession(
+            response.user, 
+            response.token,
+            response.accessToken,
+            response.idToken,
+            response.refreshToken
+          );
 
           toast.success('Autenticazione completata', {
             description: 'Sei stato autenticato con successo',

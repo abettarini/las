@@ -1,17 +1,17 @@
 import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table";
 import {
-    Tabs,
-    TabsContent,
-    TabsList,
-    TabsTrigger,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
 } from "@/components/ui/tabs";
 import { BookingData, getUserBookings } from '@/services/booking-service';
 import { format, isAfter, parseISO } from 'date-fns';
@@ -91,6 +91,7 @@ const UserBookings: React.FC<UserBookingsProps> = ({ token, isAuthenticated }) =
   const futureBookings = getFutureBookings();
   const pastBookings = getPastBookings();
 
+  // Non mostrare nulla se l'utente non è autenticato
   if (!isAuthenticated) {
     return null;
   }
@@ -105,9 +106,12 @@ const UserBookings: React.FC<UserBookingsProps> = ({ token, isAuthenticated }) =
           <p className="mt-2 text-gray-600">Caricamento prenotazioni...</p>
         </div>
       ) : bookingsError ? (
-        <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded mb-6">
-          <p className="font-bold">Errore</p>
+        <div className="bg-blue-50 border-l-4 border-blue-300 text-blue-700 p-4 rounded mb-6">
           <p>{bookingsError}</p>
+        </div>
+      ) : futureBookings.length === 0 && pastBookings.length === 0 ? (
+        <div className="bg-blue-50 border-l-4 border-blue-300 text-blue-700 p-4 rounded mb-6 text-center">
+          <p>Non hai prenotazioni</p>
         </div>
       ) : (
         <Tabs defaultValue="future" className="w-full">

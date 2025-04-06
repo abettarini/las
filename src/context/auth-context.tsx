@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { getTokenFromSession, getUserFromSession, logout, verifyToken } from '../services/auth-service';
+import { getTokenFromSession, getUserFromSession, logout, verifyToken } from '../services/google-auth-service';
 
 // Interfaccia per l'utente
 export interface User {
@@ -8,6 +8,12 @@ export interface User {
   isVerified: boolean;
   name?: string;
   picture?: string;
+  phone?: string;
+  portoArmi?: string;
+  scadenzaPortoArmi?: string;
+  isSocio?: boolean;
+  numeroTessera?: string;
+  quotaAnnuale?: boolean;
 }
 
 // Interfaccia per il contesto di autenticazione

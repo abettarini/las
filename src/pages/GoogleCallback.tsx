@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import { Spinner } from '../components/ui/spinner';
-import { handleAuth0Callback, saveUserSession } from '../services/auth-service';
+import { useAuth } from '../context/auth-context';
+import { handleGoogleCallback, saveUserSession } from '../services/google-auth-service';
 
-export default function Auth0Callback() {
+export default function GoogleCallback() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { setAuthInfo } = useAuth();
   const [error, setError] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(true);
 
@@ -17,7 +19,7 @@ export default function Auth0Callback() {
         const state = searchParams.get('state');
 
         if (!code || !state) {
-          setError('Parametri mancanti nella risposta di Auth0');
+          setError('Parametri mancanti nella risposta di Google');
           setIsProcessing(false);
           return;
         }
@@ -27,7 +29,7 @@ export default function Auth0Callback() {
 
         if (isMockMode) {
           toast.info('Modalità sviluppo rilevata', {
-            description: 'Utilizzo dell\'implementazione mock di Auth0 per lo sviluppo locale',
+            description: 'Utilizzo dell\'implementazione mock di Google per lo sviluppo locale',
           });
 
           // Simula un breve ritardo per l'autenticazione
@@ -37,11 +39,22 @@ export default function Auth0Callback() {
           const mockUser = {
             id: 'mock-user-id',
             email: 'abettarini@gmail.com',
-            isVerified: true
+            isVerified: true,
+            name: 'Andrea Bettarini',
+            picture: 'https://lh3.googleusercontent.com/a/mock-picture'
           };
 
-          // Salva le informazioni dell'utente e il token nella sessione
-          saveUserSession(mockUser, 'mock-jwt-token');
+          // Salva le informazioni dell'utente e i token nella sessione
+          saveUserSession(
+            mockUser, 
+            'mock-jwt-token',
+            'mock-access-token',
+            'mock-id-token',
+            'mock-refresh-token'
+          );
+
+          // Aggiorna il contesto di autenticazione
+          setAuthInfo(mockUser, 'mock-jwt-token');
 
           // Reindirizza alla home page
           toast.success('Autenticazione completata', {
@@ -52,8 +65,11 @@ export default function Auth0Callback() {
           return;
         }
 
-        // Gestisci il callback di Auth0 in produzione
-        const response = await handleAuth0Callback(code, state);
+        // Gestisci il callback di Google in produzione
+        const response = await handleGoogleCallback(code, state);
+
+        // Log della risposta per debug
+        console.log('Risposta dal server dopo callback Google:', response);
 
         if (!response.success) {
           setError(response.message || 'Errore durante l\'autenticazione');
@@ -61,9 +77,25 @@ export default function Auth0Callback() {
           return;
         }
 
-        // Salva le informazioni dell'utente e il token nella sessione
+        // Salva le informazioni dell'utente e i token nella sessione
         if (response.user && response.token) {
-          saveUserSession(response.user, response.token);
+          // Assicurati che l'utente abbia un nome, anche se il backend non lo fornisce
+          const user = {
+            ...response.user,
+            // Se il nome non è fornito dal backend, estrai il nome dall'email
+            name: response.user.name || response.user.email.split('@')[0]
+          };
+
+          saveUserSession(
+            user,
+            response.token,
+            response.accessToken,
+            response.idToken,
+            response.refreshToken
+          );
+
+          // Aggiorna il contesto di autenticazione
+          setAuthInfo(user, response.token);
 
           toast.success('Autenticazione completata', {
             description: 'Sei stato autenticato con successo',
@@ -83,7 +115,7 @@ export default function Auth0Callback() {
     }
 
     processCallback();
-  }, [searchParams, navigate]);
+  }, [searchParams, navigate, setAuthInfo]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">
@@ -102,7 +134,7 @@ export default function Auth0Callback() {
         <div className="flex flex-col items-center">
           <Spinner size="lg" />
           <p className="mt-4 text-lg">Autenticazione in corso...</p>
-          <p className="mt-2 text-sm text-gray-500">Verifica delle credenziali...</p>
+          <p className="mt-2 text-sm text-gray-500">Verifica delle credenziali Google...</p>
         </div>
       )}
     </div>

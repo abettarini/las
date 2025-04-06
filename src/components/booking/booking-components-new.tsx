@@ -85,7 +85,7 @@ const BookingComponent: React.FC = () => {
         />
       ) : (
         <div className="max-w-6xl mx-auto">
-          {/* Componente prenotazioni utente (visibile solo se autenticato) */}
+          {/* Componente prenotazioni utente (visibile solo se autenticato e ci sono prenotazioni) */}
           <UserBookings isAuthenticated={isAuthenticated} token={token} />
 
           {/* Form di prenotazione */}
