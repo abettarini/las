@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import { useAuth } from '../context/auth-context';
-import { saveUserSession, verifyToken } from '../services/auth-service';
+import { saveUserSession } from '../services/auth-service';
+import { verifyToken } from '../services/google-auth-service';
 
 export default function AuthenticationPage() {
   const [searchParams] = useSearchParams();

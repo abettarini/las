@@ -18,124 +18,6 @@ export interface ApiResponse<T = any> {
 }
 
 /**
- * Inizia il processo di autenticazione con Auth0
- * @returns Risposta API con l'URL di autenticazione Auth0
- */
-export async function initiateAuth0Login(): Promise<ApiResponse> {
-  try {
-    const response = await fetch(`${API_URL}/auth0/auth/login`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
-    const data = await response.json();
-
-    // Salva lo stato nella sessione per verificarlo in seguito
-    if (data.success && data.state) {
-      sessionStorage.setItem('auth0_state', data.state);
-    }
-
-    return data;
-  } catch (error) {
-    console.error('Errore durante l\'inizializzazione del login Auth0:', error);
-    return {
-      success: false,
-      message: 'Si è verificato un errore durante l\'inizializzazione del login Auth0'
-    };
-  }
-}
-
-/**
- * Gestisce il callback di Auth0
- * @param code - Codice di autorizzazione
- * @param state - Stato per protezione CSRF
- * @returns Risposta API
- */
-export async function handleAuth0Callback(code: string, state: string): Promise<ApiResponse> {
-  try {
-    // Verifica lo stato per protezione CSRF
-    const savedState = sessionStorage.getItem('auth0_state');
-    if (state !== savedState) {
-      return {
-        success: false,
-        message: 'Stato non valido'
-      };
-    }
-
-    // Rimuovi lo stato dalla sessione
-    sessionStorage.removeItem('auth0_state');
-
-    // Scambia il codice con i token
-    const response = await fetch(`${API_URL}/auth0/auth/callback?code=${code}&state=${state}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
-    return await response.json();
-  } catch (error) {
-    console.error('Errore durante la gestione del callback Auth0:', error);
-    return {
-      success: false,
-      message: 'Si è verificato un errore durante la gestione del callback Auth0'
-    };
-  }
-}
-
-/**
- * Verifica un token JWT
- * @param token - Token JWT
- * @returns Risposta API
- */
-export async function verifyToken(token: string): Promise<ApiResponse> {
-  try {
-    const response = await fetch(`${API_URL}/auth0/auth/verify-token`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ token })
-    });
-
-    return await response.json();
-  } catch (error) {
-    console.error('Errore durante la verifica del token:', error);
-    return {
-      success: false,
-      message: 'Si è verificato un errore durante la verifica del token'
-    };
-  }
-}
-
-/**
- * Aggiorna un token Auth0
- * @param token - Token JWT
- * @returns Risposta API con il nuovo token
- */
-export async function refreshToken(token: string): Promise<ApiResponse> {
-  try {
-    const response = await fetch(`${API_URL}/auth0/auth/refresh-token`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ token })
-    });
-
-    return await response.json();
-  } catch (error) {
-    console.error('Errore durante l\'aggiornamento del token:', error);
-    return {
-      success: false,
-      message: 'Si è verificato un errore durante l\'aggiornamento del token'
-    };
-  }
-}
-
-/**
  * Salva le informazioni dell'utente nella sessione
  * @param user - Informazioni dell'utente
  * @param token - Token JWT
@@ -266,29 +148,16 @@ export async function registerUser(data: RegistrationData): Promise<ApiResponse>
  * Richiede un link di accesso via email
  * @param email - Indirizzo email dell'utente
  * @returns Risposta API
- * @deprecated Utilizzare Auth0 per l'autenticazione
+ * @deprecated Utilizzare Google per l'autenticazione
  */
 export async function requestLogin(email: string): Promise<ApiResponse> {
   try {
     // Questa funzione è deprecata e restituisce sempre un errore
-    // per incoraggiare l'uso di Auth0
+    // per incoraggiare l'uso di Google
     return {
       success: false,
-      message: 'Il sistema di autenticazione via email è stato disabilitato. Utilizza Auth0 per accedere.'
+      message: 'Il sistema di autenticazione via email è stato disabilitato. Utilizza Google per accedere.'
     };
-
-    // Codice originale commentato
-    /*
-    const response = await fetch(`${API_URL}/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email })
-    });
-
-    return await response.json();
-    */
   } catch (error) {
     console.error('Errore durante la richiesta di login:', error);
     return {
