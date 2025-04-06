@@ -97,8 +97,8 @@ const UserBookings: React.FC<UserBookingsProps> = ({ token, isAuthenticated }) =
   }
 
   return (
-    <div className="mb-8 p-6 bg-white shadow-md rounded-lg">
-      <h2 className="text-2xl font-bold mb-6 text-center">Le mie prenotazioni</h2>
+    <div>
+      <h2 className="text-2xl font-bold mb-6">Le mie prenotazioni</h2>
 
       {loadingBookings ? (
         <div className="text-center py-8">
@@ -156,7 +156,7 @@ const UserBookings: React.FC<UserBookingsProps> = ({ token, isAuthenticated }) =
                         </TableCell>
                         <TableCell>
                           <Link
-                            to={`/cancella-prenotazione/${booking.id}`}
+                            to={`/annulla-prenotazione/${booking.id}`}
                             className="text-red-600 hover:text-red-800 text-sm font-medium"
                           >
                             Annulla

@@ -1,4 +1,4 @@
-import { LogOut, Settings, User } from 'lucide-react';
+import { Calendar, LogOut, Settings, User } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/auth-context';
@@ -92,11 +92,15 @@ export function AuthButton() {
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>Il mio account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => navigate('/profilo')} className="cursor-pointer">
+            <DropdownMenuItem onClick={() => navigate('/account/profilo')} className="cursor-pointer">
               <User className="mr-2 h-4 w-4" />
               <span>Profilo</span>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigate('/impostazioni')} className="cursor-pointer">
+            <DropdownMenuItem onClick={() => navigate('/account/prenotazioni')} className="cursor-pointer">
+              <Calendar className="mr-2 h-4 w-4" />
+              <span>Prenotazioni</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate('/account/impostazioni')} className="cursor-pointer">
               <Settings className="mr-2 h-4 w-4" />
               <span>Impostazioni</span>
             </DropdownMenuItem>

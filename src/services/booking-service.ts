@@ -28,11 +28,26 @@ const API_URL = import.meta.env.VITE_API_URL || '/api';
 /**
  * Ottiene i dettagli di una prenotazione
  * @param id - ID della prenotazione
+ * @param token - Token di autenticazione (opzionale)
  * @returns Risposta API con i dati della prenotazione
  */
-export async function getBooking(id: string): Promise<ApiResponse<BookingData>> {
+export async function getBooking(id: string, token?: string): Promise<ApiResponse<BookingData>> {
   try {
-    const response = await fetch(`${API_URL}/booking/${id}`);
+    // Prepara gli headers
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json'
+    };
+
+    // Aggiungi il token di autenticazione se disponibile
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    const response = await fetch(`${API_URL}/booking/${id}`, {
+      method: 'GET',
+      headers
+    });
+
     const data = await response.json();
     return data;
   } catch (error) {

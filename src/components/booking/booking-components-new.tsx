@@ -2,7 +2,6 @@ import { useAuth } from '@/context/auth-context';
 import React, { useState } from 'react';
 import BookingConfirmation from './booking-confirmation';
 import BookingForm, { BookingFormValues } from './booking-form';
-import UserBookings from './user-bookings';
 
 const BookingComponent: React.FC = () => {
   // Autenticazione
@@ -85,9 +84,6 @@ const BookingComponent: React.FC = () => {
         />
       ) : (
         <div className="max-w-6xl mx-auto">
-          {/* Componente prenotazioni utente (visibile solo se autenticato e ci sono prenotazioni) */}
-          <UserBookings isAuthenticated={isAuthenticated} token={token} />
-
           {/* Form di prenotazione */}
           <BookingForm
             onSubmit={onSubmit}

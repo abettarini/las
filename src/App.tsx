@@ -31,6 +31,9 @@ const LazyVerifyEmailPage = lazy(() => import('./pages/VerifyEmailPage'));
 const LazyAuthenticationPage = lazy(() => import('./pages/AuthenticationPage'));
 const LazyGoogleCallbackPage = lazy(() => import('./pages/GoogleCallback'));
 const LazyProfilePage = lazy(() => import('./pages/ProfilePage'));
+const LazyUserBookingPage = lazy(() => import('./pages/UserBookingPage'));
+const LazySettingsPage = lazy(() => import('./pages/SettingsPage'));
+const LazyUserLayout = lazy(() => import('./layouts/UserLayout'));
 
 const App: React.FC = () => {
   return (
@@ -79,7 +82,7 @@ const App: React.FC = () => {
                 <Route path="/chisiamo/consiglio-direttivo" element={<div className="flex-1 p-6"><LazyConsiglioDirettivoPage /></div>} />
                 <Route path="/struttura/impianti" element={<div className="flex-1 p-6"><ImpiantiPage /></div>} />
                 <Route path="/struttura/dove-siamo" element={<div className="flex-1 p-6"><LazyStrutturaIndicazioniPage /></div>} />
-                <Route path="/annulla-prenotazione" element={<div className="flex-1 p-6"><LazyCancelBookingPage /></div>} />
+                <Route path="/annulla-prenotazione/:id" element={<div className="flex-1 p-6"><LazyCancelBookingPage /></div>} />
                 <Route path="/contatti-faq" element={<div className="flex-1 p-6"><LazyContattiFaqPage /></div>} />
                 <Route path="/prenotazioni" element={<div className="flex-1 p-6"><LazyBookingPage /></div>} />
                 <Route path="/struttura/orari" element={<div className="flex-1 p-6"><LazyOrariPage /></div>} />
@@ -91,7 +94,16 @@ const App: React.FC = () => {
                 <Route path="/verifica-email" element={<div className="flex-1 p-6"><LazyVerifyEmailPage /></div>} />
                 <Route path="/autenticazione" element={<div className="flex-1 p-6"><LazyAuthenticationPage /></div>} />
                 <Route path="/auth/google/callback" element={<div className="flex-1 p-6"><LazyGoogleCallbackPage /></div>} />
+                {/* Rotte account utente con layout condiviso */}
+                <Route path="/account" element={<LazyUserLayout />}>
+                  <Route path="profilo" element={<LazyProfilePage />} />
+                  <Route path="prenotazioni" element={<LazyUserBookingPage />} />
+                  <Route path="impostazioni" element={<LazySettingsPage />} />
+                </Route>
+
+                {/* Manteniamo temporaneamente le vecchie rotte per retrocompatibilità */}
                 <Route path="/profilo" element={<div className="flex-1 p-6"><LazyProfilePage /></div>} />
+                <Route path="/prenotazioni-utente" element={<div className="flex-1 p-6"><LazyUserBookingPage /></div>} />
               </Routes>
             </Suspense>
           </main>
