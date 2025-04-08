@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cannocchiale di fucile con bersaglio -->
+  <g fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Bersaglio sullo sfondo -->
+    <circle cx="256" cy="256" r="180" fill="#f5f5f5" stroke="#e74c3c"/>
+    <circle cx="256" cy="256" r="150" fill="#f5f5f5" stroke="#e74c3c"/>
+    <circle cx="256" cy="256" r="120" fill="#f5f5f5" stroke="#e74c3c"/>
+    <circle cx="256" cy="256" r="90" fill="#f5f5f5" stroke="#e74c3c"/>
+    <circle cx="256" cy="256" r="60" fill="#f5f5f5" stroke="#e74c3c"/>
+    <circle cx="256" cy="256" r="30" fill="#e74c3c" stroke="#e74c3c"/>
+    
+    <!-- Cannocchiale -->
+    <path d="M100 256h312" stroke="#333" stroke-width="20"/>
+    <path d="M120 256c0 0-20-20-20-40v-20c0-20 20-40 20-40h40c0 0 20 20 20 40v20c0 20-20 40-20 40z" fill="#333"/>
+    <path d="M352 256c0 0 20-20 20-40v-20c0-20-20-40-20-40h-40c0 0-20 20-20 40v20c0 20 20 40 20 40z" fill="#333"/>
+    
+    <!-- Lenti del cannocchiale -->
+    <circle cx="140" cy="196" r="15" fill="#3498db"/>
+    <circle cx="372" cy="196" r="15" fill="#3498db"/>
+    
+    <!-- Mirino -->
+    <path d="M236 256h40" stroke="#000" stroke-width="2"/>
+    <path d="M256 236v40" stroke="#000" stroke-width="2"/>
+    <circle cx="256" cy="256" r="20" fill="none" stroke="#000" stroke-width="2"/>
+  </g>
+</svg>

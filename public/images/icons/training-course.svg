@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Corso di Formazione in classe -->
+  <g fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Lavagna -->
+    <rect x="100" y="80" width="312" height="180" rx="5" fill="#34495e"/>
+    <line x1="100" y1="120" x2="412" y2="120" stroke="#fff"/>
+    
+    <!-- Scrittura sulla lavagna -->
+    <path d="M130 150l40 0M130 180l60 0M130 210l30 0" stroke="#fff" stroke-width="6"/>
+    <path d="M240 150c10 0 20 10 20 20c0 10-10 20-20 20c10 0 20 10 20 20" stroke="#fff" stroke-width="6"/>
+    <path d="M300 150l0 60M320 150l0 60M340 150l0 60M300 180l40 0" stroke="#fff" stroke-width="6"/>
+    
+    <!-- Supporto lavagna -->
+    <path d="M256 260v30" stroke="#34495e"/>
+    <path d="M216 290h80" stroke="#34495e"/>
+    
+    <!-- Tavolo/Cattedra -->
+    <rect x="156" y="320" width="200" height="20" rx="2" fill="#d35400"/>
+    <rect x="176" y="340" width="160" height="60" rx="2" fill="#d35400"/>
+    
+    <!-- Persone sedute (stilizzate) -->
+    <!-- Persona 1 -->
+    <circle cx="130" cy="350" r="20" fill="#3498db"/>
+    <path d="M130 370v50" stroke="#3498db"/>
+    <path d="M110 390h40" stroke="#3498db"/>
+    
+    <!-- Persona 2 -->
+    <circle cx="190" cy="350" r="20" fill="#e74c3c"/>
+    <path d="M190 370v50" stroke="#e74c3c"/>
+    <path d="M170 390h40" stroke="#e74c3c"/>
+    
+    <!-- Persona 3 -->
+    <circle cx="256" cy="350" r="20" fill="#2ecc71"/>
+    <path d="M256 370v50" stroke="#2ecc71"/>
+    <path d="M236 390h40" stroke="#2ecc71"/>
+    
+    <!-- Persona 4 -->
+    <circle cx="322" cy="350" r="20" fill="#f1c40f"/>
+    <path d="M322 370v50" stroke="#f1c40f"/>
+    <path d="M302 390h40" stroke="#f1c40f"/>
+    
+    <!-- Persona 5 (insegnante) -->
+    <circle cx="382" cy="350" r="20" fill="#9b59b6"/>
+    <path d="M382 370v50" stroke="#9b59b6"/>
+    <path d="M362 390h40" stroke="#9b59b6"/>
+    <path d="M372 330c0 0 5-10 20-10" stroke="#9b59b6"/>
+  </g>
+</svg>

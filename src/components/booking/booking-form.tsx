@@ -16,12 +16,12 @@ import {
   getCurrentSeasonId,
   getEventSchedule,
   getEventTypeConfig,
-  getEventTypeLabel,
   getMinBookingDate,
   isExceptionalOpening,
   isHolidayClosure,
   isSpecialClosure
 } from './event-type';
+import EventTypeSelector from './event-type-selector';
 
 // Componenti UI
 import { Button } from "@/components/ui/button";
@@ -29,13 +29,6 @@ import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 // Definizione dello schema di validazione con Zod
 const createBookingFormSchema = (isAuthenticated: boolean) => {
@@ -328,25 +321,15 @@ const BookingForm: React.FC<BookingFormProps> = ({
               control={form.control}
               name="eventType"
               render={({ field }) => (
-                <FormItem className="space-y-2">
-                  <FormLabel className="text-lg">Tipo evento</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Seleziona tipo evento">
-                          {field.value ? getEventTypeLabel(field.value as EventType) : "Seleziona tipo evento"}
-                        </SelectValue>
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {Object.keys(eventTypes).map((type) => (
-                        <SelectItem key={type} value={type}>{getEventTypeLabel(type as EventType)}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                <FormItem className="space-y-4">
+                  <FormLabel className="text-lg">Seleziona tipo evento</FormLabel>
+                  <FormControl>
+                    <EventTypeSelector 
+                      value={field.value}
+                      onChange={field.onChange}
+                      options={eventTypes}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -441,7 +424,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
                       ) : (
                         <p className="text-amber-600">
                           <span className="font-medium">Telefono:</span> Non specificato.
-                          <a href="/profile" className="text-blue-600 hover:underline ml-1">
+                          <a href="/account/profilo" className="text-blue-600 hover:underline ml-1">
                             Aggiungi nel tuo profilo
                           </a>
                         </p>

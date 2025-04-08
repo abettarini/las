@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Testa di cinghiale stilizzata -->
+  <g fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Forma della testa -->
+    <path d="M256 120c-80 0-150 60-150 140c0 60 30 100 70 120c40 20 80 20 80 20s40 0 80-20c40-20 70-60 70-120c0-80-70-140-150-140z" fill="#5d4037"/>
+    
+    <!-- Orecchie -->
+    <path d="M146 180c-20-30-40-30-50-20c-10 10-10 30 10 50c20 20 40 10 40 10" fill="#3e2723"/>
+    <path d="M366 180c20-30 40-30 50-20c10 10 10 30-10 50c-20 20-40 10-40 10" fill="#3e2723"/>
+    
+    <!-- Occhi -->
+    <circle cx="196" cy="220" r="15" fill="#000" stroke="none"/>
+    <circle cx="316" cy="220" r="15" fill="#000" stroke="none"/>
+    
+    <!-- Naso/Grugno -->
+    <path d="M226 280h60" stroke="#000"/>
+    <ellipse cx="256" cy="300" rx="40" ry="30" fill="#8d6e63"/>
+    <ellipse cx="256" cy="300" rx="30" ry="20" fill="#5d4037"/>
+    <ellipse cx="240" cy="300" rx="5" ry="10" fill="#000" stroke="none"/>
+    <ellipse cx="272" cy="300" rx="5" ry="10" fill="#000" stroke="none"/>
+    
+    <!-- Zanne -->
+    <path d="M216 290c-10 10-20 30-20 30" fill="#f5f5f5" stroke="#f5f5f5"/>
+    <path d="M296 290c10 10 20 30 20 30" fill="#f5f5f5" stroke="#f5f5f5"/>
+    
+    <!-- Setole/Pelo -->
+    <path d="M196 160c0 0 10-20 60-20c50 0 60 20 60 20" stroke="#000" stroke-width="6"/>
+    <path d="M256 160v40" stroke="#000" stroke-width="6"/>
+    <path d="M226 170l10 20" stroke="#000" stroke-width="4"/>
+    <path d="M286 170l-10 20" stroke="#000" stroke-width="4"/>
+    <path d="M196 180l20 20" stroke="#000" stroke-width="4"/>
+    <path d="M316 180l-20 20" stroke="#000" stroke-width="4"/>
+  </g>
+</svg>
