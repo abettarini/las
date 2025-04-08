@@ -1,12 +1,12 @@
 import { Button } from '@/components/ui/button'
-import { Book, FileText, Video } from 'lucide-react'
+import { Book, Calendar1, FileText, Target, Video } from 'lucide-react'
 import { useState } from 'react'
 import NewsCard from './news-card'
 import NewsDetails from './news-details'
 
 export type Content = {
   id: number
-  type: 'article' | 'video' | 'book'
+  type: 'target' |'event' | 'article' | 'video' | 'book'
   date: string
   title: string
   abstract: string
@@ -15,6 +15,10 @@ export type Content = {
 
 const getIcon = (type: Content['type']) => {
   switch (type) {
+    case 'target':
+      return <Target className="w-5 h-5" aria-label='Obiettivo'/>
+    case 'event':
+      return <Calendar1 className="w-5 h-5" aria-label='Evento'/>
     case 'article':
       return <FileText className="w-5 h-5" aria-label='Articolo'/>
     case 'video':

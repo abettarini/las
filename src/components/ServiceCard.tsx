@@ -52,8 +52,8 @@ const ServiceCard: React.FC<ServiceProps> = ({
 export const services: Service[] = [
   {
     icon: "target",
-    title: "Poligono Indoor",
-    description: "Campo di tiro al chiuso con distanze regolamentari e bersagli elettronici.",
+    title: "Distanze da 25m a 300m",
+    description: "Distanza fino a 300m con telecamere",
     ctaText: "Prenota una sessione",
     link: "/"
   },

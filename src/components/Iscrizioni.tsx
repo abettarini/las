@@ -1,114 +1,26 @@
 // src/components/Iscrizioni.tsx
-import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { ChevronUp } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import TableOfContents from './table-of-contents';
 
-interface TOCItem {
-    title: string;
-    level: number;
-    id: string;
-}
 
-const scrollToSection = (id: string): void => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-};
-
-const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-const Iscrizioni: React.FC = () => {
-    const location = useLocation();
-    const [showScrollTop, setShowScrollTop] = useState(false);
-    const [headings, setHeadings] = useState<TOCItem[]>([]);
-
-    useEffect(() => {
-
-        const content = document.getElementById('main-content');
-        if (content) {
-            const headingElements = Array.from(content.querySelectorAll('h2, h3, h4')) as HTMLHeadingElement[];
-            setHeadings(
-                headingElements.map((heading) => ({
-                    title: heading.innerText,
-                    id: heading.id,
-                    level: parseInt(heading.tagName[1]),
-                }))
-            );
-            const handleScroll = () => {
-                setShowScrollTop(content.scrollY > 300);
-            };
-          
-            window.addEventListener('scroll', handleScroll);
-            return () => window.removeEventListener('scroll', handleScroll);
-        }
-
-      }, []);
-
-    useEffect(() => {
-      if (location.hash) {
-        scrollToSection(location.hash.substring(1));
-      } else {
-        // Scroll to the top of the page when there's no hash
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: 'smooth',
-        });
-      }
-    }, [location]);
-
-  return (
-    <div className="mx-auto py-8 flex">
-        <aside className="top-16 left-0 h-[calc(100vh-4rem)] w-72 border-r border-gray-200 bg-secondary p-4 md:sticky rounded-xl">
-        <nav>
-          <h2 className="font-bold mb-4">Indice</h2>
-          <ul className="list-disc pl-0">
-            {headings.map((item, index) => (
-              <Button 
-              variant="ghost" 
-              key={index}
-              className={`text-left justify-start ${item.level === 0 ? 'font-semibold' : ''} ${item.level === 1 ? 'text-sm' : ''} ${item.level === 2 ? 'text-xs' : ''}`}
-              onClick={() => scrollToSection(item.id)}
-            >
-              {item.title}
-            </Button>
-            ))}
-          </ul>
-        </nav>
-        {showScrollTop && (
-        <Button
-          variant="secondary"
-          size="icon"
-          className="fixed bottom-4 right-4 rounded-full shadow-lg"
-          onClick={scrollToTop}
-          aria-label="Torna all'inizio"
-        >
-          <ChevronUp className="h-4 w-4" />
-        </Button>
-      )}
-      </aside>
-      <ScrollArea className="ml-10 mr-10 h-screen w-full overflow-auto p-0" id="main-content">
-      <h1 className="text-3xl font-bold mb-8 text-center">Iscrizioni</h1>
-      <p className="text-center text-muted-foreground">
-        Informazioni su come iscriversi al nostro poligono.
-      </p>
-        <section id="iscrizioni" className="my-8">
-<div className="row">
-<div className="col-md-9">
+const exampleContent = `
+    
+        <section id="iscrizioni" class="my-8">
+<div class="row">
+<div class="col-md-9">
     <hr />
-    <p className="leading-7 [&:not(:first-child)]:mt-6">Tutti i cittadini appartenenti all'Unione Europea possono iscriversi ad una Sezione del Tiro a Segno Nazionale, sia per lo svolgimento di attività ludica e/o sportiva, sia per gli adempimenti previsti dal relativo DL.</p>
-    <p className="leading-7 [&:not(:first-child)]:mt-6">L'iscrizione al corso può essere effettuata esclusivamente recandosi, con la documentazione necessaria, presso lo sportello al pubblico del T.S.N.</p>
-    <h3 id="documenti-necessari" className="text-xl font-semibold my-4">Documenti necessari</h3>
+    <p class="leading-7 [&:not(:first-child)]:mt-6">Tutti i cittadini appartenenti all'Unione Europea possono iscriversi ad una Sezione del Tiro a Segno Nazionale, sia per lo svolgimento di attività ludica e/o sportiva, sia per gli adempimenti previsti dal relativo DL.</p>
+    <p class="leading-7 [&:not(:first-child)]:mt-6">Tutti i possessori di Porto Armi, sia sportivo, che da caccia, sono tenuti a presentare lo stesso al momento dell'iscrizione/rinnovo alla Sezione.</p>
+    <p class="leading-7 [&:not(:first-child)]:mt-6">Coloro che non sono possessori di P.A. possono comunque iscriversi sostenendo il corso interno obbligatorio.</p>    
+    <p class="leading-7 [&:not(:first-child)]:mt-6">L'iscrizione al corso può essere effettuata esclusivamente recandosi, con la documentazione necessaria, presso lo sportello al pubblico del T.S.N.</p>
+    <h3 id="documenti-necessari" class="text-xl font-semibold my-4">Documenti necessari</h3>
     <br />
-    <h4 id="iscritti-obbligatori" className="font-bold">Iscritti "d'obbligo"</h4>
-    <p className="leading-7 [&:not(:first-child)]:mt-6">
+    <h4 id="iscritti-obbligatori" class="font-bold">Iscritti "d'obbligo"</h4>
+    <p class="leading-7 [&:not(:first-child)]:mt-6">
         Documenti ed adempimenti richiesti:
     </p>
-    <ul className="my-6 ml-6 list-disc [&>li]:mt-2">
+    <ul class="my-6 ml-6 list-disc [&>li]:mt-2">
         <li>
             sottoscrizione della domanda di iscrizione predisposta dalla Sezione;
         </li>
@@ -138,13 +50,13 @@ const Iscrizioni: React.FC = () => {
             produrre il tesserino di codice fiscale o tessera sanitaria.
         </li>
     </ul>
-    <p className="leading-7 [&:not(:first-child)]:mt-6">
+    <p class="leading-7 [&:not(:first-child)]:mt-6">
         Sono esentati dalla presentazione dei documenti di cui ai precedenti punti b) c) e d) le Guardie Particolari Giurate in possesso di valido decreto prefettizio di nomina a Guardia Particolare Giurata e/o di valido porto d'armi, nonché gli Agenti in servizio effettivo presso i Corpi e Servizi di Polizia Locale e/o Provinciale, in possesso di tesserino/attestato di servizio rilasciato dall'Amministrazione di appartenenza (<i>rif. Circolare Ministero dell'Interno n. 557/PAS/U/017997/12982.LEG del 20.12.2018</i>) e tutti coloro che sono in possesso di un Porto d'armi in corso di validità.
     </p>
-    <p className="leading-7 [&:not(:first-child)]:mt-6">
+    <p class="leading-7 [&:not(:first-child)]:mt-6">
         I richiedenti in possesso di valido decreto prefettizio di nomina a guardia particolare giurata e di valido porto d'armi, ne devono produrre copia all'atto dell'iscrizione e, sono esentati anche dalla presentazione dei documenti di cui al precedente punto g).
     </p>
-    <p className="leading-7 [&:not(:first-child)]:mt-6">
+    <p class="leading-7 [&:not(:first-child)]:mt-6">
         Saranno esentati dall'obbligo di presentazione della certificazione medica di cui al punto d) i seguenti casi:
     </p>
     <ol>
@@ -152,11 +64,11 @@ const Iscrizioni: React.FC = () => {
         <li>i titolari di una <u>Licenza di porto di arma per uso di caccia o tiro a volo</u> in corso di validità, (dovrà essere acquisita da parte della Sezione TSN copia della Licenza di porto di arma).</li>
     </ol>
     <br />
-    <h4 id="iscritti-volontari" className="font-bold">Iscritti "volontari"</h4>
-    <p className="leading-7 [&:not(:first-child)]:mt-6">
+    <h4 id="iscritti-volontari" class="font-bold">Iscritti "volontari"</h4>
+    <p class="leading-7 [&:not(:first-child)]:mt-6">
         Documenti ed adempimenti richiesti:
     </p>
-    <ul className="my-6 ml-6 list-disc [&>li]:mt-2">
+    <ul class="my-6 ml-6 list-disc [&>li]:mt-2">
         <li>
             sottoscrizione della domanda di iscrizione predisposta dalla Unione (ammissione-iscrizione alla Sezione TSN e tesseramento alla UITS);
         </li>
@@ -203,29 +115,30 @@ const Iscrizioni: React.FC = () => {
             ai fini dell'esenzione dal corso di cui al punto 4 delle linee guida teorico-pratiche, al momento della richiesta, è necessario venga resa copia conforme all'originale o dichiarazione sostitutiva di certificazione, ai sensi della legge 28 dicembre 2000, n. 445, del foglio di congedo illimitato, rilasciato in data antecedente non oltre i dieci anni, o dello stato di militare al momento della richiesta, o della Licenza di porto di arma in corso di validità.
         </li>
     </ul>
-    <p className="leading-7 [&:not(:first-child)]:mt-6">
+    <p class="leading-7 [&:not(:first-child)]:mt-6">
         La documentazione prevista per l'iscrizione alla Sezione TSN nei sopracitati punti a), b), c) dovrà essere presentata o autocertificata, ogni anno, anche da coloro che rinnovano annualmente l'iscrizione, al fine di confermare il mantenimento dei requisiti morali e psico-fisici in ottemperanza a quanto previsto all'art. 4 c.1 dello Statuto delle Sezioni TSN.
     </p>
-    <p className="leading-7 [&:not(:first-child)]:mt-6">
+    <p class="leading-7 [&:not(:first-child)]:mt-6">
         Per i minorenni (dal 10° anno di età e fino al compimento del 18° anno di età), la dichiarazione di cui al precedente punto b) deve essere sottoscritta, ai sensi della legge 28 dicembre 2000, n. 445, da entrambi i genitori o da chi esercita la rappresentanza genitoriale.
     </p>
     <br />
-    <h3 id="corsi-teorico-pratico" className="text-xl font-semibold my-4">Corso obbligatorio per l'iscrizione</h3>
-    <p className="leading-7 [&:not(:first-child)]:mt-6">Il corso è svolto sotto la direzione di un Istruttore o di un Direttore di tiro munito della licenza comunale prevista dall'art. 31 della legge 18 aprile 1975, n. 110.</p>
-    <h4 id="prenotazione-dei-corsi" className="font-bold">Prenotazione dei corsi</h4>
-    <p className="leading-7 [&:not(:first-child)]:mt-6">Dal giorno dell'iscrizione, è possibile prenotare il corso teorico pratico, facendo trascorrere <strong>non meno di una settimana</strong>. Questo intervallo è necessario per consentire di apprendere le nozioni contenute negli opuscoli scaricabili dai seguenti link.</p>
-    <p className="leading-7 [&:not(:first-child)]:mt-6">
+    <h3 id="corsi-teorico-pratico" class="text-xl font-semibold my-4">Corso obbligatorio per l'iscrizione</h3>
+    <p>Per opportune ragioni di sicurezza tutti i soci devono aver svolto la lezione di tiro per l’accertamento dell’acquisita capacità tecnica. </p>
+    <p class="leading-7 [&:not(:first-child)]:mt-6">Il corso è svolto sotto la direzione di un Istruttore o di un Direttore di tiro munito della licenza comunale prevista dall'art. 31 della legge 18 aprile 1975, n. 110.</p>
+    <h4 id="prenotazione-dei-corsi" class="font-bold mt-6">Prenotazione dei corsi</h4>
+    <p class="leading-7 [&:not(:first-child)]:mt-6">Dal giorno dell'iscrizione, è possibile prenotare il corso teorico pratico, facendo trascorrere <strong>non meno di una settimana</strong>. Questo intervallo è necessario per consentire di apprendere le nozioni contenute negli opuscoli scaricabili dai seguenti link.</p>
+    <p class="leading-7 [&:not(:first-child)]:mt-6">
         <a title="MANUALE DIMA UITS PRIMA PARTE" href="https://www.tsnroma.it/downloads/MANUALE DIMA UITS PRIMA PARTE.pdf">MANUALE DIMA UITS PRIMA PARTE</a><br />
         <a title="MANUALE DIMA UITS SECONDA PARTE" href="https://www.tsnroma.it/downloads/MANUALE DIMA UITS SECONDA PARTE.pdf">MANUALE DIMA UITS SECONDA PARTE</a>
     </p>
-    <p className="leading-7 [&:not(:first-child)]:mt-6">
+    <p class="leading-7 [&:not(:first-child)]:mt-6">
         La prenotazione può essere effettuata richiedendola direttamente al nostro operatore, contestualmente al momento dell'iscrizione.
     </p>
-    <h4 id="orari-dei-corsi" className="font-bold">Orari dei corsi</h4>
-    <p className="leading-7 [&:not(:first-child)]:mt-6">
+    <h4 id="orari-dei-corsi" class="font-bold mt-6">Orari dei corsi</h4>
+    <p class="leading-7 [&:not(:first-child)]:mt-6">
     Giorni dei corsi: mercoledì e sabato (salvo imprevisti e giorni festivi)
     </p>
-    <p className="leading-7 [&:not(:first-child)]:mt-6">
+    <p class="leading-7 [&:not(:first-child)]:mt-6">
     </p><table>
         <tbody><tr>
             <td>Mattina:&nbsp;</td>
@@ -236,7 +149,7 @@ const Iscrizioni: React.FC = () => {
             <td>ore 9.00 inizio corso</td>
         </tr>
     </tbody></table>
-    <p className="leading-7 [&:not(:first-child)]:mt-6"></p>
+    <p class="leading-7 [&:not(:first-child)]:mt-6"></p>
     <table>
         <tbody><tr>
             <td>Pomeriggio:&nbsp;</td>
@@ -247,11 +160,34 @@ const Iscrizioni: React.FC = () => {
             <td>ore 13.00 inizio corso</td>
         </tr>
     </tbody></table>
-    <p className="leading-7 [&:not(:first-child)]:mt-6"></p>
-    <h4 id="contenuto-del-corso" className="font-bold">Contenuto del corso</h4>
-    <p className="leading-7 [&:not(:first-child)]:mt-6">
-        Le lezioni inerenti la parte teorica svolte con ampia e articolata trattazione delle materie inerenti il diritto e l'uso delle armi, si concluderanno con un test basato su domande a risposta multipla, verificando così il grado di apprendimento delle nozioni trattate in aula.
-Seguirà fase pratica con armi corte e lunghe.
+    <p class="leading-7 [&:not(:first-child)]:mt-6"></p>
+    <h4 id="contenuto-del-corso" class="font-bold">Contenuto del corso</h4>
+    <p class="leading-7 [&:not(:first-child)]:mt-6">
+        Il corso è suddiviso in due parti:</p>
+    <h5 class="mt-6 font-bold">Parte Teorica</h5>
+    <p class="mt-6">Le lezioni inerenti la parte teorica svolte con ampia e articolata trattazione delle materie inerenti il diritto e l'uso delle armi</p>
+    <ul class="list-disc pl-6 [&>li]:mt-2 mt-6">
+        <li>Norme di sicurezza e prudenza da osservare nel semplice maneggio e nell'impiego dell'arma, in generale e in un poligono.</li>
+        <li>Struttura di un'arma: sue parti principali, loro funzioni e terminologia, linea e congegni di mira.</li>
+        <li>Munizionamento: tipi e caratteristiche principali.</li>
+        <li>Esecuzione di una corretta azione di tiro: posizione del corpo, modo d'impugnare l'arma, respirazione, puntamento ed azione di scatto.</li>
+        <li>Cenni di legge</li>
+    </ul>
+    <h5 class="mt-6 font-bold">Parte Pratica</h5>
+    <p class="mt-6">
+        La parte pratica viene eseguita con armi corte e lunghe. Il candidato esegue 50 colpi in due riprese di 20 e 30 colpi, rispettivamente, osservando le seguenti modalità:</p>
+    <ul class="list-disc pl-6 [&>li]:mt-2 mt-6">
+
+<li>Posizione di tiro: in piedi.</li>
+
+<li>Nel tiro con arma corta, l'impugnatura può aver luogo con una o due mani. L'arma lunga, oltre che imbracciata, potrà essere appoggiata ad un sostegno.</li>
+
+<li>Il bersaglio da utilizzare nella prova di pistola o carabina è il bersaglio regolamentare di Pistola Libera.</li>
+
+<li>La prova di pistola si svolgerà nel poligono a 25 m, la prova di carabina si svolgerà nel poligono a 50 m.</li>
+
+<li>Le armi e munizioni da usare sono fornite dalla Sezione TSN. Ove possibile, l'istruttore può consentire al candidato l'uso di arma e/o munizioni proprie.</li>
+</ul>
     </p>
 </div>
 
@@ -259,7 +195,48 @@ Seguirà fase pratica con armi corte e lunghe.
         </section>
         </ScrollArea>
     </div>
-  );
-}
+`;
 
-export default Iscrizioni;
+export default function () {
+    useEffect(() => {
+        // Aggiungi gli ID ai titoli dopo che il contenuto è stato renderizzato
+        const headings = document.querySelectorAll('h2, h3, h4');
+        headings.forEach(heading => {
+          const id = slugify(heading.textContent || '');
+          heading.id = id;
+        });
+      }, []);
+    return (
+    <>
+      <Helmet>
+        <title>Iscrizioni - TSN Lastra a Signa</title>
+        <meta name="description" content="Informazioni su come iscriversi al nostro poligono." />
+      </Helmet>
+      <div className="mx-auto mt-8 px-0">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <div className="lg:col-span-1 order-2 lg:order-1">
+            <TableOfContents content={exampleContent} />
+          </div>
+          <div className="lg:col-span-3 order-1 lg:order-2">
+          <h1 className="text-3xl font-bold mb-8 text-center">Iscrizioni</h1>
+            <p className="text-center text-muted-foreground">
+                Informazioni su come iscriversi al nostro poligono.
+            </p>
+            <div 
+              dangerouslySetInnerHTML={{ __html: exampleContent }} 
+            />
+          </div>
+        </div>
+      </div>
+    </>
+    );
+  }
+  
+  // Aggiungi questa funzione alla fine del file
+  function slugify(text: string) {
+    return text
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)+/g, '');
+  }
+  

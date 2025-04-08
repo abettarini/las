@@ -14,6 +14,7 @@ export interface User {
   isSocio?: boolean;
   numeroTessera?: string;
   quotaAnnuale?: boolean;
+  privacyConsent?: boolean;
 }
 
 // Interfaccia per il contesto di autenticazione

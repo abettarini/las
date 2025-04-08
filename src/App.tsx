@@ -15,7 +15,7 @@ import { metaConfig } from './metaConfig';
 import Home from './pages/HomePage';
 import ImpiantiPage from "./pages/ImpiantiPage";
 
-const LazyIscrizioni = lazy(() => import('./components/Iscrizioni'));
+const LazyIscrizioni = lazy(() => import('./components/Iscrizioni2'));
 const LazyQuizPage = lazy(() => import('./pages/QuizPage'));
 const LazyStoriaPage = lazy(() => import('./components/Storia'));
 const LazyConsiglioDirettivoPage = lazy(() => import('./pages/ConsiglioDirettivoPage'));
@@ -32,7 +32,7 @@ const LazyAuthenticationPage = lazy(() => import('./pages/AuthenticationPage'));
 const LazyGoogleCallbackPage = lazy(() => import('./pages/GoogleCallback'));
 const LazyProfilePage = lazy(() => import('./pages/ProfilePage'));
 const LazyUserBookingPage = lazy(() => import('./pages/UserBookingPage'));
-const LazySettingsPage = lazy(() => import('./pages/SettingsPage'));
+const LazySettingsPage = lazy(() => import('./pages/account/settings'));
 const LazyUserLayout = lazy(() => import('./layouts/UserLayout'));
 
 const App: React.FC = () => {

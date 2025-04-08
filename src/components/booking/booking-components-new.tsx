@@ -32,12 +32,20 @@ const BookingComponent: React.FC = () => {
       console.log('Invio della prenotazione...');
       console.log('Dati del form:', data);
 
+      // Prepara gli headers
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+      };
+      
+      // Aggiungi il token di autenticazione se l'utente è autenticato
+      if (isAuthenticated && token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      
       // Invia i dati al service worker di Cloudflare
       const response = await fetch(`${apiUrl}/booking`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify(data),
       });
 

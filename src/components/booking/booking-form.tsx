@@ -8,18 +8,18 @@ import { Link } from 'react-router-dom';
 import Turnstile from 'react-turnstile';
 import * as z from 'zod';
 import {
-  EventSchedule,
-  EventType,
-  EventTypeConfig,
-  eventTypes,
-  formatAdvanceBookingTime,
-  getCurrentSeasonId,
-  getEventSchedule,
-  getEventTypeConfig,
-  getMinBookingDate,
-  isExceptionalOpening,
-  isHolidayClosure,
-  isSpecialClosure
+    EventSchedule,
+    EventType,
+    EventTypeConfig,
+    eventTypes,
+    formatAdvanceBookingTime,
+    getCurrentSeasonId,
+    getEventSchedule,
+    getEventTypeConfig,
+    getMinBookingDate,
+    isExceptionalOpening,
+    isHolidayClosure,
+    isSpecialClosure
 } from './event-type';
 import EventTypeSelector from './event-type-selector';
 
@@ -158,6 +158,11 @@ const BookingForm: React.FC<BookingFormProps> = ({
 
       if (user.phone) {
         form.setValue("phone", user.phone);
+      }
+      
+      // Imposta il valore del consenso alla privacy se l'utente l'ha già dato
+      if (user.privacyConsent) {
+        form.setValue("privacyConsent", true);
       }
     }
   }, [isAuthenticated, user, form]);
@@ -409,31 +414,36 @@ const BookingForm: React.FC<BookingFormProps> = ({
                 </div>
               </div>
             ) : (
-              <div className="pt-4 border-t">
-                <h3 className="text-lg font-medium mb-4">Dati personali</h3>
-                <div className="bg-green-50 p-4 rounded-md border border-green-100">
-                  <p className="text-green-800">
-                    <span className="font-medium">Utente autenticato:</span> I tuoi dati personali verranno utilizzati automaticamente per la prenotazione.
-                  </p>
-                  {user && (
-                    <div className="mt-2 text-sm">
-                      <p><span className="font-medium">Email:</span> {user.email}</p>
-                      {user.name && <p><span className="font-medium">Nome:</span> {user.name}</p>}
-                      {user.phone ? (
-                        <p><span className="font-medium">Telefono:</span> {user.phone}</p>
-                      ) : (
-                        <p className="text-amber-600">
-                          <span className="font-medium">Telefono:</span> Non specificato.
-                          <a href="/account/profilo" className="text-blue-600 hover:underline ml-1">
-                            Aggiungi nel tuo profilo
-                          </a>
-                        </p>
-                      )}
+              // Per utenti autenticati, mostra i dati personali solo se manca il numero di telefono
+              user && !user.phone ? (
+                <div className="pt-4 border-t">
+                  <h3 className="text-lg font-medium mb-4">Dati personali</h3>
+                  <div className="bg-amber-50 p-4 rounded-md border border-amber-100">
+                    <p className="text-amber-800">
+                      <span className="font-medium">Attenzione:</span> Per completare la prenotazione è necessario specificare un numero di telefono.
+                    </p>
+                    <div className="mt-2">
+                      <FormField
+                        control={form.control}
+                        name="phone"
+                        render={({ field }) => (
+                          <FormItem className="space-y-2">
+                            <FormLabel>Numero di telefono</FormLabel>
+                            <FormControl>
+                              <Input {...field} type="tel" />
+                            </FormControl>
+                            <FormMessage />
+                            <p className="text-xs text-muted-foreground">
+                              Puoi anche aggiungere il tuo numero di telefono nel <a href="/account/profilo" className="text-blue-600 hover:underline">tuo profilo</a> per non doverlo inserire ogni volta.
+                            </p>
+                          </FormItem>
+                        )}
+                      />
                     </div>
-                  )}
+                  </div>
                 </div>
-
-                {/* Campo telefono nascosto ma ancora presente nel form */}
+              ) : (
+                // Se l'utente ha tutti i dati, nascondi il riquadro ma mantieni il campo nascosto
                 <div className="hidden">
                   <FormField
                     control={form.control}
@@ -447,7 +457,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
                     )}
                   />
                 </div>
-              </div>
+              )
             )}
           </div>
 
@@ -589,36 +599,68 @@ const BookingForm: React.FC<BookingFormProps> = ({
           />
         </div>
 
-        {/* Checkbox per la privacy */}
-        <div className="mt-8 border-t pt-6">
-          <FormField
-            control={form.control}
-            name="privacyConsent"
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                <FormControl>
-                  <Checkbox
-                    isSelected={field.value}
-                    onChange={(e) => {
-                      const isSelected = e;
-                      field.onChange(isSelected);
-                      // Se la checkbox è selezionata, rimuovi l'errore
-                      if (isSelected) {
-                        form.clearErrors("privacyConsent");
-                      }
-                    }}
-                  />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>
-                    Accetto l'<Link to="/privacy" className="text-blue-600 hover:underline">informativa sulla privacy</Link> e il trattamento dei miei dati personali
-                  </FormLabel>
-                  <FormMessage />
-                </div>
-              </FormItem>
-            )}
-          />
-        </div>
+        {/* Checkbox per la privacy - mostrato solo per utenti non autenticati o autenticati senza consenso privacy */}
+        {(!isAuthenticated || (user && !user.privacyConsent)) && (
+          <div className="mt-8 border-t pt-6">
+            {isAuthenticated && user && !user.privacyConsent ? (
+              <div className="bg-amber-50 p-4 rounded-md border border-amber-100 mb-4">
+                <p className="text-amber-800">
+                  <span className="font-medium">Attenzione:</span> Per completare la prenotazione è necessario accettare l'informativa sulla privacy.
+                </p>
+                <p className="text-sm mt-2">
+                  Puoi gestire le tue preferenze sulla privacy anche dal <Link to="/account/impostazioni" className="text-blue-600 hover:underline">tuo profilo</Link>.
+                </p>
+              </div>
+            ) : null}
+            
+            <FormField
+              control={form.control}
+              name="privacyConsent"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                  <FormControl>
+                    <Checkbox
+                      isSelected={field.value}
+                      onChange={(e) => {
+                        const isSelected = e;
+                        field.onChange(isSelected);
+                        // Se la checkbox è selezionata, rimuovi l'errore
+                        if (isSelected) {
+                          form.clearErrors("privacyConsent");
+                        }
+                      }}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>
+                      Accetto l'<Link to="/privacy" className="text-blue-600 hover:underline">informativa sulla privacy</Link> e il trattamento dei miei dati personali
+                    </FormLabel>
+                    <FormMessage />
+                  </div>
+                </FormItem>
+              )}
+            />
+          </div>
+        )}
+        
+        {/* Messaggio informativo per utenti autenticati che hanno già accettato la privacy */}
+        {isAuthenticated && user && user.privacyConsent && (
+          <div className="mt-8 border-t pt-6">
+            <div className="bg-green-50 p-4 rounded-md border border-green-100 mb-4 flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-600 mr-3 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              <div>
+                <p className="text-green-800 font-medium">
+                  Hai già accettato l'informativa sulla privacy
+                </p>
+                <p className="text-sm text-green-700 mt-1">
+                  Puoi gestire le tue preferenze sulla privacy dal <Link to="/account/impostazioni" className="text-blue-600 hover:underline">tuo profilo</Link>.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Cloudflare Turnstile e bottone di invio */}
         <div className="mt-6">

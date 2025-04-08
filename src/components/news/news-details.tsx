@@ -1,5 +1,3 @@
-import { Button } from '@/components/ui/button'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Content } from './news-list'
 
 type NewsDetailsProps = {
@@ -21,24 +19,7 @@ export default function NewsDetails({ content, onPrevious, onNext, hasPrevious, 
           <p>{content.fullContent}</p>
         </div>
       </div>
-      <div className="mt-8 flex justify-between items-center">
-        <Button
-          onClick={onPrevious}
-          disabled={!hasPrevious}
-          variant="outline"
-          className="flex items-center"
-        >
-          <ChevronLeft className="mr-2 h-4 w-4" /> Precedente
-        </Button>
-        <Button
-          onClick={onNext}
-          disabled={!hasNext}
-          variant="outline"
-          className="flex items-center"
-        >
-          Successivo <ChevronRight className="ml-2 h-4 w-4" />
-        </Button>
-      </div>
+
     </div>
   )
 }

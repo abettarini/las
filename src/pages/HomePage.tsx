@@ -64,16 +64,16 @@ Troverete un punto di ritrovo dove poter scambiare idee, nozioni ed esperienze i
               </div>
               <div className="pt-6 flex gap-8">
                 <div>
-                  <div className="text-2xl font-bold">15+</div>
-                  <div className="text-muted-foreground">Anni di Esperienza</div>
+                  <div className="text-2xl font-bold">1884</div>
+                  <div className="text-muted-foreground">Data di nascita</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold">1000+</div>
+                  <div className="text-2xl font-bold">3500+</div>
                   <div className="text-muted-foreground">Membri Attivi</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold">100%</div>
-                  <div className="text-muted-foreground">Sicurezza</div>
+                  <div className="text-2xl font-bold">3</div>
+                  <div className="text-muted-foreground">Categoria</div>
                 </div>
               </div>
             </div>
@@ -99,7 +99,7 @@ Troverete un punto di ritrovo dove poter scambiare idee, nozioni ed esperienze i
 
       {/* News Section */}
       <section className="py-12" id="news">
-        <h2 className="text-3xl font-bold mb-8 text-center">Comunicazioni</h2>
+        <h2 className="text-3xl font-bold mb-8 text-center">Comunicazioni della Segreteria</h2>
         <NewsList contents={contents} itemsPerPage={3}/>
       </section>
 
