@@ -1,5 +1,5 @@
 import { SiFacebook, SiInstagram } from '@icons-pack/react-simple-icons';
-import { Mail, Phone, Printer } from 'lucide-react';
+import { CreditCard, Mail, Phone, Printer } from 'lucide-react';
 import ConsentBanner from './consent-banner/consent-banner';
 import FooterNewsletter from './newsletter/footer-newsletter';
 import NewsletterDialog from './newsletter/newsletter-dialog';
@@ -57,6 +57,31 @@ const Footer = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+              
+              {/* Sezione pagamenti */}
+              <div className="mt-8 pt-6 border-t border-gray-200">
+                <div className="flex flex-col items-center justify-center">
+                  <div className="flex items-center gap-2 mb-2">
+                    <CreditCard className="h-5 w-5" />
+                    <span className="font-semibold">Accettiamo pagamenti con carte di credito</span>
+                  </div>
+                  <div className="flex gap-3 mt-2">
+                    <img src="/images/payment/visa.svg" alt="Visa" className="h-8" />
+                    <img src="/images/payment/mastercard.svg" alt="Mastercard" className="h-8" />
+                    <img src="/images/payment/amex.svg" alt="American Express" className="h-8" />
+                    <img src="/images/payment/maestro.svg" alt="Maestro" className="h-8" />
+                    <img src="/images/payment/paypal.svg" alt="PayPal" className="h-8" />
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2 text-center">
+                    I pagamenti sono sicuri e gestiti tramite gateway certificati PCI DSS.
+                  </p>
+                </div>
+              </div>
+              
+              {/* Copyright */}
+              <div className="mt-6 text-center text-sm text-muted-foreground">
+                <p>© {new Date().getFullYear()} TSN Lastra a Signa. Tutti i diritti riservati.</p>
               </div>
             </div>
           </footer>

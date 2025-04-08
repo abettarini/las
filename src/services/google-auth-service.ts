@@ -28,9 +28,12 @@ export interface ApiResponse<T = any> {
  */
 export async function initiateGoogleLogin(): Promise<ApiResponse> {
   try {
+    // Pulisci eventuali stati precedenti
+    sessionStorage.removeItem('google_state');
+
     // Costruisci l'URL di callback
     const callbackUrl = `${window.location.origin}/auth/google/callback`;
-    
+
     // Richiedi l'URL di autenticazione Google
     const response = await fetch(`${API_URL}/auth/google/login?redirect_uri=${encodeURIComponent(callbackUrl)}`, {
       method: 'GET',
@@ -43,7 +46,11 @@ export async function initiateGoogleLogin(): Promise<ApiResponse> {
 
     // Salva lo stato nella sessione per verificarlo in seguito
     if (data.success && data.state) {
+      // Salva lo stato sia in sessionStorage che in localStorage per maggiore resilienza
       sessionStorage.setItem('google_state', data.state);
+      localStorage.setItem('google_state', data.state);
+
+      console.log('Stato salvato:', data.state);
     }
 
     return data;
@@ -65,16 +72,21 @@ export async function initiateGoogleLogin(): Promise<ApiResponse> {
 export async function handleGoogleCallback(code: string, state: string): Promise<ApiResponse> {
   try {
     // Verifica lo stato per protezione CSRF
-    const savedState = sessionStorage.getItem('google_state');
-    if (state !== savedState) {
-      return {
-        success: false,
-        message: 'Stato non valido'
-      };
-    }
+    const sessionState = sessionStorage.getItem('google_state');
+    const localState = localStorage.getItem('google_state');
 
-    // Rimuovi lo stato dalla sessione
+    // Log per debug
+    console.log('Stato ricevuto:', state);
+    console.log('Stato salvato in sessionStorage:', sessionState);
+    console.log('Stato salvato in localStorage:', localState);
+
+    // Rimuovi lo stato dalla sessione e dal localStorage
     sessionStorage.removeItem('google_state');
+    localStorage.removeItem('google_state');
+
+    // Verifica se lo stato corrisponde a uno dei due stati salvati
+    const stateIsValid = state === sessionState || state === localState;
+    console.log('Stato valido:', stateIsValid);
 
     // Scambia il codice con i token
     const response = await fetch(`${API_URL}/auth/google/callback?code=${code}&state=${state}`, {

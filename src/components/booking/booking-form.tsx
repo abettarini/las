@@ -203,7 +203,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
   // Funzione per formattare la data in formato ISO (YYYY-MM-DD)
   const formatDateToISO = (date: Date | undefined): string => {
     if (!date) return '';
-    return date.toISOString().split('T')[0];
+    return format(date, "yyyy-MM-dd", { locale: it })
   };
 
   // Stato per controllare se Turnstile è stato validato
@@ -225,14 +225,14 @@ const BookingForm: React.FC<BookingFormProps> = ({
   };
 
   // Funzione per verificare la disponibilità dell'orario selezionato
-  const checkTimeAvailability = async (date: string, time: string): Promise<boolean> => {
+  const checkTimeAvailability = async (date: string, time: string, eventType: string): Promise<boolean> => {
     try {
       const response = await fetch(`${apiUrl}/booking/check-availability`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ date, time }),
+        body: JSON.stringify({ date, time, eventType }),
       });
 
       const result = await response.json();
@@ -252,10 +252,14 @@ const BookingForm: React.FC<BookingFormProps> = ({
   // Funzione per gestire l'invio del form
   const handleSubmit = async (data: BookingFormValues) => {
     // Formatta la data in formato ISO
+    console.log('Data selezionata:', data.date);
+    console.log('Orario selezionato:', data.time);
+    console.log('Tipo di evento selezionato:', data.eventType);
+    console.log('Data formattata:', formatDateToISO(data.date));
     const formattedDate = formatDateToISO(data.date);
 
     // Verifica la disponibilità dell'orario prima di inviare la prenotazione
-    const isAvailable = await checkTimeAvailability(formattedDate, data.time);
+    const isAvailable = await checkTimeAvailability(formattedDate, data.time, data.eventType);
 
     if (!isAvailable) {
       form.setError('time', {
