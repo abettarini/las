@@ -15,7 +15,7 @@ import { metaConfig } from './metaConfig';
 import Home from './pages/HomePage';
 import ImpiantiPage from "./pages/ImpiantiPage";
 
-const LazyIscrizioni = lazy(() => import('./components/Iscrizioni2'));
+const LazyIscrizioni = lazy(() => import('./components/Iscrizioni'));
 const LazyQuizPage = lazy(() => import('./pages/QuizPage'));
 const LazyStoriaPage = lazy(() => import('./components/Storia'));
 const LazyConsiglioDirettivoPage = lazy(() => import('./pages/ConsiglioDirettivoPage'));
