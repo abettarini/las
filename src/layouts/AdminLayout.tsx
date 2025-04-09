@@ -1,7 +1,7 @@
+import { Button } from '@/components/ui/button';
 import { FileText, Home, Menu, Users, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Button } from '../components/ui/button';
 import { useAuth } from '../context/auth-context';
 
 interface SidebarItem {

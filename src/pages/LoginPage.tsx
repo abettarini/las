@@ -1,11 +1,11 @@
+import { GoogleLoginButton } from '@/components/GoogleLoginButton';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { GoogleLoginButton } from '../components/GoogleLoginButton';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { requestLogin } from '../services/auth-service';
 
 // Schema di validazione per il form di login

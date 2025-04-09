@@ -1,4 +1,4 @@
-import { Content } from "../components/news/news-list";
+import { Content } from "@/components/news/news-list";
 
 export const contents: Content[] = [
   {

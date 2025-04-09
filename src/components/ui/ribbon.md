@@ -29,7 +29,7 @@ Il componente Ribbon è un'etichetta che viene mostrata nell'angolo superiore de
 ## Utilizzo base
 
 ```tsx
-import { Ribbon } from './components/ui/ribbon';
+import { Ribbon } from '@/components/ui/ribbon';
 
 // Ribbon con colori personalizzati
 <Ribbon 
@@ -44,7 +44,7 @@ import { Ribbon } from './components/ui/ribbon';
 Il componente `EnvironmentRibbon` è una versione specializzata del Ribbon che mostra automaticamente un'etichetta "SVILUPPO" quando l'applicazione è in esecuzione in un ambiente di sviluppo (non production).
 
 ```tsx
-import { EnvironmentRibbon } from './components/ui/ribbon';
+import { EnvironmentRibbon } from '@/components/ui/ribbon';
 
 // Aggiungilo all'inizio dell'applicazione
 <EnvironmentRibbon />

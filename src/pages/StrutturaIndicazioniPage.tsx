@@ -1,6 +1,6 @@
+import StreetMap from '@/components/street-map';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import StreetMap from '../components/street-map';
 
 const scrollToSection = (id: string): void => {
   const element = document.getElementById(id);

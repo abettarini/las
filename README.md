@@ -54,7 +54,7 @@ npm install sonner
 Per utilizzare i toast nel codice:
 
 ```typescript
-import { toast } from '../components/ui/sonner';
+import { toast } from '@/components/ui/sonner';
 
 // Esempio di utilizzo
 toast.success('Operazione completata con successo');

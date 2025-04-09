@@ -1,3 +1,4 @@
+import { LogoutModal } from '@/components/auth/LogoutModal';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useAuth } from '@/context/auth-context';
@@ -5,7 +6,6 @@ import { cn } from '@/lib/utils';
 import { Calendar, ChevronLeft, LogOut, Settings, User } from 'lucide-react';
 import { useState } from 'react';
 import { Link, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { LogoutModal } from '../components/auth/LogoutModal';
 
 const menuItems = [
   {

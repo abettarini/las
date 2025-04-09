@@ -1,7 +1,7 @@
+import { Spinner } from '@/components/ui/spinner';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
-import { Spinner } from '../components/ui/spinner';
 import { useAuth } from '../context/auth-context';
 import { handleGoogleCallback, saveUserSession } from '../services/google-auth-service';
 

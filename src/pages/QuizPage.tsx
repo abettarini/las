@@ -1,8 +1,8 @@
+import QuizGroup from '@/components/quiz/quiz-group';
+import ResultsDialog from '@/components/result-dialog';
+import { Button } from '@/components/ui/button';
 import { ListChecks, RotateCcw } from "lucide-react";
 import React, { useEffect, useState } from 'react';
-import QuizGroup from '../components/quiz/quiz-group';
-import ResultsDialog from '../components/result-dialog';
-import { Button } from '../components/ui/button';
 import { useQuizContext } from '../hooks/use-quiz-context';
 import { cn } from '../lib/utils';
 

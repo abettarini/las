@@ -1,9 +1,9 @@
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Award, BarChart3, Calendar, Clock, Loader2, ShieldCheck, UserCheck, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { toast } from 'sonner';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
-import { Tabs, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { getLoginStats, getStats, LoginData, UserStats } from '../../services/admin-service';
 
 export function AdminDashboard() {
