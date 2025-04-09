@@ -1,13 +1,13 @@
+import AdBanner, { BannerProps } from '@/components/ad-banner';
+import Contatti from '@/components/contatti/contatti';
+import NewsList, { Content } from '@/components/news/news-list';
+import ServiceCard, { services } from '@/components/ServiceCard';
+import { Button } from '@/components/ui/button';
+import { Image } from '@/components/ui/image';
 import { getAllNews } from '@/services/news-service';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useLocation } from 'react-router-dom';
-import AdBanner, { BannerProps } from '../components/ad-banner';
-import Contatti from '../components/contatti/contatti';
-import NewsList, { Content } from '../components/news/news-list';
-import ServiceCard, { services } from '../components/ServiceCard';
-import { Button } from '../components/ui/button';
-import { Image } from '../components/ui/image';
 
 const scrollToSection = (id: string): void => {
   const element = document.getElementById(id);
@@ -33,7 +33,7 @@ const Home: React.FC = () => {
     }).catch((error) => {
       console.error(error);
     });
-  })
+  }, [])
 
   useEffect(() => {
     if (location.hash) {
