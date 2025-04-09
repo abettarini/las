@@ -7,7 +7,7 @@ interface RibbonProps {
 }
 
 /**
- * Componente Ribbon che mostra un'etichetta nell'angolo superiore destro
+ * Componente Ribbon che mostra un'etichetta nell'angolo superiore sinistro
  * 
  * @param text - Testo da mostrare nel ribbon
  * @param color - Colore del testo (default: bianco)
@@ -23,7 +23,7 @@ export const Ribbon: React.FC<RibbonProps> = ({
       style={{
         position: 'fixed',
         top: '0',
-        right: '0',
+        left: '0',
         zIndex: 9999,
         width: '150px',
         padding: '4px 0',
@@ -32,7 +32,7 @@ export const Ribbon: React.FC<RibbonProps> = ({
         fontSize: '14px',
         color: color,
         backgroundColor: backgroundColor,
-        transform: 'rotate(45deg) translate(35px, -15px)',
+        transform: 'rotate(-45deg) translate(-35px, -15px)',
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
         pointerEvents: 'none', // Assicura che il ribbon non interferisca con i click
       }}
