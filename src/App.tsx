@@ -1,5 +1,6 @@
 import { AuthButton } from '@/components/auth/AuthButton';
 import Footer from '@/components/footer';
+import { InstallButton } from '@/components/InstallButton';
 import HamburgerMenu from '@/components/navigation/hamburger';
 import { MainNavigation } from '@/components/navigation/main-nav';
 import { BadgeOrariApertura } from '@/components/OrariApertura';
@@ -125,6 +126,7 @@ const App: React.FC = () => {
           <Footer />
         </div>
         <Toaster />
+        <InstallButton />
       </AuthProvider>
     </Router>
     </div>
