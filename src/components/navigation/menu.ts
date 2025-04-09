@@ -89,8 +89,7 @@ const mainMenu: MenuItem[] = [
     {title: 'Iscrizioni', submenu: iscrizioni},
     {title: 'Chi siamo', submenu: chisiamo},
     {title: 'Contatti e FAQ', href: '/contatti-faq'},
-    {title: 'Prenotazioni', href: '/prenotazioni'},
-    {title: 'AUTH_BUTTON', href: '#'} // Questo è un segnaposto che verrà sostituito dal componente AuthButton
+    {title: 'Prenotazioni', href: '/prenotazioni'}
 ];
 
 export default mainMenu;

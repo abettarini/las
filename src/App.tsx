@@ -1,10 +1,11 @@
 import { lazy, Suspense } from "react";
 import { Helmet } from 'react-helmet';
 import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import { BadgeOrariApertura } from './components/OrariApertura';
+import { AuthButton } from './components/auth/AuthButton';
 import Footer from './components/footer';
 import HamburgerMenu from './components/navigation/hamburger';
 import { MainNavigation } from './components/navigation/main-nav';
+import { BadgeOrariApertura } from './components/OrariApertura';
 import { Image } from './components/ui/image';
 import { EnvironmentRibbon } from './components/ui/ribbon';
 import { Toaster } from './components/ui/sonner';
@@ -68,7 +69,10 @@ const App: React.FC = () => {
               <HamburgerMenu />
               <MainNavigation />
               <div className="flex-1" />
-              <BadgeOrariApertura />
+              <div className="flex items-center gap-3">
+                <BadgeOrariApertura />
+                <AuthButton />
+              </div>
             </div>
           </header>
 
