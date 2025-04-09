@@ -109,7 +109,19 @@ export default function GoogleCallback() {
         }
       } catch (error) {
         console.error('Errore durante la gestione del callback:', error);
-        setError('Si è verificato un errore durante l\'autenticazione');
+        let errorMessage = 'Si è verificato un errore durante l\'autenticazione';
+        
+        // Se l'errore contiene un messaggio specifico, mostralo
+        if (error instanceof Error) {
+          errorMessage = error.message;
+        } else if (typeof error === 'object' && error !== null && 'message' in error) {
+          errorMessage = String((error as any).message);
+        }
+        
+        setError(errorMessage);
+        toast.error('Errore di autenticazione', {
+          description: errorMessage,
+        });
         setIsProcessing(false);
       }
     }
@@ -123,12 +135,20 @@ export default function GoogleCallback() {
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative max-w-md w-full">
           <strong className="font-bold">Errore!</strong>
           <span className="block sm:inline"> {error}</span>
-          <button
-            className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => navigate('/login')}
-          >
-            Torna al login
-          </button>
+          <div className="flex gap-4 mt-4">
+            <button
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => navigate('/login')}
+            >
+              Torna al login
+            </button>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => window.location.href = '/login?provider=google'}
+            >
+              Riprova con Google
+            </button>
+          </div>
         </div>
       ) : (
         <div className="flex flex-col items-center">

@@ -1,21 +1,21 @@
-import { Calendar, LogOut, Settings, User } from 'lucide-react';
+import { Calendar, LogOut, Settings, ShieldCheck, User } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/auth-context';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
 } from '../ui/dropdown-menu';
 import { navigationMenuTriggerStyle } from '../ui/navigation-menu';
 import { LogoutModal } from './LogoutModal';
 
 export function AuthButton() {
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, user, logout, hasRole } = useAuth();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -104,6 +104,12 @@ export function AuthButton() {
               <Settings className="mr-2 h-4 w-4" />
               <span>Impostazioni</span>
             </DropdownMenuItem>
+            {hasRole('ROLE_ADMIN') && (
+              <DropdownMenuItem onClick={() => navigate('/admin')} className="cursor-pointer">
+                <ShieldCheck className="mr-2 h-4 w-4" />
+                <span>Admin</span>
+              </DropdownMenuItem>
+            )}
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogoutClick} className="cursor-pointer text-red-600 focus:text-red-600">
               <LogOut className="mr-2 h-4 w-4" />

@@ -12,6 +12,7 @@ export interface ApiResponse<T = any> {
     name?: string;
     picture?: string;
     phone?: string;
+    roles?: string[];
   };
   token?: string;
   accessToken?: string;
@@ -71,22 +72,12 @@ export async function initiateGoogleLogin(): Promise<ApiResponse> {
  */
 export async function handleGoogleCallback(code: string, state: string): Promise<ApiResponse> {
   try {
-    // Verifica lo stato per protezione CSRF
-    const sessionState = sessionStorage.getItem('google_state');
-    const localState = localStorage.getItem('google_state');
-
-    // Log per debug
-    console.log('Stato ricevuto:', state);
-    console.log('Stato salvato in sessionStorage:', sessionState);
-    console.log('Stato salvato in localStorage:', localState);
-
     // Rimuovi lo stato dalla sessione e dal localStorage
+    // Nota: non verifichiamo più lo stato localmente, lasciamo che sia il backend a farlo
     sessionStorage.removeItem('google_state');
     localStorage.removeItem('google_state');
-
-    // Verifica se lo stato corrisponde a uno dei due stati salvati
-    const stateIsValid = state === sessionState || state === localState;
-    console.log('Stato valido:', stateIsValid);
+    
+    console.log('Gestione callback con code:', code, 'e state:', state);
 
     // Scambia il codice con i token
     const response = await fetch(`${API_URL}/auth/google/callback?code=${code}&state=${state}`, {

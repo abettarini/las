@@ -1,13 +1,13 @@
-import { useEffect } from 'react';
+import { getAllNews } from '@/services/news-service';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useLocation } from 'react-router-dom';
 import AdBanner, { BannerProps } from '../components/ad-banner';
 import Contatti from '../components/contatti/contatti';
-import NewsList from '../components/news/news-list';
+import NewsList, { Content } from '../components/news/news-list';
 import ServiceCard, { services } from '../components/ServiceCard';
 import { Button } from '../components/ui/button';
 import { Image } from '../components/ui/image';
-import { contents } from '../data/news';
 
 const scrollToSection = (id: string): void => {
   const element = document.getElementById(id);
@@ -24,6 +24,16 @@ const banners: BannerProps[] = [
 
 const Home: React.FC = () => {
   const location = useLocation();
+  const [contents, setContents] = useState<Content[]>([]);
+
+  useEffect(() => {
+    getAllNews().then((response) => {
+      console.log(response.data); // Log the fetched news to the console
+      setContents(response.data || []);
+    }).catch((error) => {
+      console.error(error);
+    });
+  })
 
   useEffect(() => {
     if (location.hash) {

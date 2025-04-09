@@ -35,6 +35,10 @@ const LazyProfilePage = lazy(() => import('./pages/ProfilePage'));
 const LazyUserBookingPage = lazy(() => import('./pages/UserBookingPage'));
 const LazySettingsPage = lazy(() => import('./pages/account/settings'));
 const LazyUserLayout = lazy(() => import('./layouts/UserLayout'));
+const LazyAdminLayout = lazy(() => import('./layouts/AdminLayout'));
+const LazyAdminDashboard = lazy(() => import('./pages/admin'));
+const LazyUserManagement = lazy(() => import('./pages/admin/UserManagement'));
+const LazyNewsManagement = lazy(() => import('./pages/admin/NewsManagement').then(module => ({ default: module.NewsManagement })));
 
 const App: React.FC = () => {
   return (
@@ -103,6 +107,13 @@ const App: React.FC = () => {
                   <Route path="profilo" element={<LazyProfilePage />} />
                   <Route path="prenotazioni" element={<LazyUserBookingPage />} />
                   <Route path="impostazioni" element={<LazySettingsPage />} />
+                </Route>
+
+                {/* Rotte per l'amministrazione */}
+                <Route path="/admin" element={<LazyAdminLayout />}>
+                  <Route index element={<LazyAdminDashboard />} />
+                  <Route path="users" element={<LazyUserManagement />} />
+                  <Route path="news" element={<LazyNewsManagement />} />
                 </Route>
 
                 {/* Manteniamo temporaneamente le vecchie rotte per retrocompatibilità */}

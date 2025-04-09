@@ -58,6 +58,9 @@ export default function NewsList({ contents, itemsPerPage }: NewsListProps) {
   const endIndex = startIndex + itemsPerPage
   const currentContents = contents.slice(startIndex, endIndex)
 
+  if (!currentContents || !currentContents.length) {
+    return null
+  }
   return (
     <div className="container mx-auto px-4 py-8 flex flex-col md:flex-row">
       <div className="w-full md:w-1/2 pr-0 md:pr-4 mb-4 md:mb-0">

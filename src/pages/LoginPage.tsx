@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { GoogleLoginButton } from '../components/GoogleLoginButton';
@@ -18,6 +19,19 @@ type LoginFormData = z.infer<typeof loginSchema>;
 export default function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+  const [searchParams] = useSearchParams();
+  
+  // Controlla se c'è un parametro provider=google per avviare automaticamente l'autenticazione con Google
+  useEffect(() => {
+    const provider = searchParams.get('provider');
+    if (provider === 'google') {
+      // Avvia l'autenticazione con Google
+      const googleButton = document.querySelector('.google-login-button') as HTMLButtonElement;
+      if (googleButton) {
+        googleButton.click();
+      }
+    }
+  }, [searchParams]);
 
   // Inizializza il form con react-hook-form
   const {
@@ -85,7 +99,7 @@ export default function LoginPage() {
         <p className="text-gray-600 mb-6 text-center">
           Accedi in modo sicuro utilizzando il tuo account Google.
         </p>
-        <GoogleLoginButton className="w-full" />
+        <GoogleLoginButton className="w-full google-login-button" />
       </div>
 
       <Tabs defaultValue="email" className="w-full mb-6">

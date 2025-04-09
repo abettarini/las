@@ -52,11 +52,39 @@ export function getTokenFromSession(): string | null {
 }
 
 /**
+ * Ottiene il token di autenticazione per le chiamate API
+ * @returns Token JWT o null se non autenticato
+ */
+export async function getAuthToken(): Promise<string | null> {
+  return getTokenFromSession();
+}
+
+/**
  * Verifica se l'utente è autenticato
  * @returns true se l'utente è autenticato
  */
 export function isAuthenticated(): boolean {
   return !!getUserFromSession() && !!getTokenFromSession();
+}
+
+/**
+ * Verifica se l'utente ha un determinato ruolo
+ * @param role - Ruolo da verificare
+ * @returns true se l'utente ha il ruolo specificato
+ */
+export function hasRole(role: string): boolean {
+  const user = getUserFromSession();
+  if (!user || !user.roles) return false;
+  
+  return user.roles.includes(role);
+}
+
+/**
+ * Verifica se l'utente è un amministratore
+ * @returns true se l'utente è un amministratore
+ */
+export function isAdmin(): boolean {
+  return hasRole('ROLE_ADMIN');
 }
 
 /**

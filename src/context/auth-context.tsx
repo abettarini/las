@@ -15,6 +15,7 @@ export interface User {
   numeroTessera?: string;
   quotaAnnuale?: boolean;
   privacyConsent?: boolean;
+  roles?: string[];
 }
 
 // Interfaccia per il contesto di autenticazione
@@ -23,6 +24,7 @@ interface AuthContextType {
   token: string | null;
   isAuthenticated: boolean;
   loading: boolean;
+  hasRole: (role: string) => boolean;
   logout: () => void;
   setAuthInfo: (user: User, token: string) => void;
 }
@@ -69,12 +71,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setToken(token);
   };
 
+  // Funzione per verificare se l'utente ha un determinato ruolo
+  const hasRole = (role: string): boolean => {
+    if (!user || !user.roles) return false;
+    return user.roles.includes(role);
+  };
+
   // Valore del contesto
   const value = {
     user,
     token,
     isAuthenticated: !!user && !!token,
     loading,
+    hasRole,
     logout: () => {
       logout();
       setUser(null);
