@@ -40,6 +40,7 @@ const LazyAdminLayout = lazy(() => import('./layouts/AdminLayout'));
 const LazyAdminDashboard = lazy(() => import('./pages/admin'));
 const LazyUserManagement = lazy(() => import('./pages/admin/UserManagement'));
 const LazyNewsManagement = lazy(() => import('./pages/admin/NewsManagement').then(module => ({ default: module.NewsManagement })));
+const LazyBookingManagement = lazy(() => import('./pages/admin/BookingManagement').then(module => ({ default: module.BookingManagement })));
 
 const App: React.FC = () => {
   return (
@@ -115,6 +116,7 @@ const App: React.FC = () => {
                   <Route index element={<LazyAdminDashboard />} />
                   <Route path="users" element={<LazyUserManagement />} />
                   <Route path="news" element={<LazyNewsManagement />} />
+                  <Route path="bookings" element={<LazyBookingManagement />} />
                 </Route>
 
                 {/* Manteniamo temporaneamente le vecchie rotte per retrocompatibilità */}

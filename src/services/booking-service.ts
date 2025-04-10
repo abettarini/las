@@ -12,6 +12,23 @@ export interface BookingData {
   createdAt: string;
   status: 'pending' | 'confirmed' | 'cancelled';
   cancelSecret?: string;
+  eventTypeLabel?: string; // Etichetta leggibile del tipo di evento
+}
+
+/**
+ * Ottiene l'etichetta leggibile del tipo di evento
+ * @param eventType - Tipo di evento (nome macchina)
+ * @returns Etichetta leggibile del tipo di evento
+ */
+export function getEventTypeLabel(eventType: string): string {
+  const eventTypes: Record<string, string> = {
+    visita_dottore: 'Visita Dottore',
+    corso_dima: 'Corso DIMA',
+    taratura_carabina: 'Taratura Carabina',
+    cinghialino_corrente: 'Cinghialino Corrente',
+  };
+
+  return eventTypes[eventType] || eventType;
 }
 
 // Interfaccia per la risposta API

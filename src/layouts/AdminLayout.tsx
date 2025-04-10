@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { FileText, Home, Menu, Users, X } from 'lucide-react';
+import { Calendar, FileText, Home, Menu, Users, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/auth-context';
@@ -37,6 +37,11 @@ export default function AdminLayout() {
       title: 'Comunicazioni',
       path: '/admin/news',
       icon: <FileText className="h-5 w-5" />
+    },
+    {
+      title: 'Prenotazioni',
+      path: '/admin/bookings',
+      icon: <Calendar className="h-5 w-5" />
     }
   ];
 
