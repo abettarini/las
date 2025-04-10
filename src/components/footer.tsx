@@ -67,11 +67,9 @@ const Footer = () => {
                     <span className="font-semibold">Accettiamo pagamenti con carte di credito</span>
                   </div>
                   <div className="flex gap-3 mt-2">
-                    <img src="/images/payment/visa.svg" alt="Visa" className="h-8" />
                     <img src="/images/payment/mastercard.svg" alt="Mastercard" className="h-8" />
-                    <img src="/images/payment/amex.svg" alt="American Express" className="h-8" />
+                    <img src="/images/payment/visa.svg" alt="Visa" className="h-8" />
                     <img src="/images/payment/maestro.svg" alt="Maestro" className="h-8" />
-                    <img src="/images/payment/paypal.svg" alt="PayPal" className="h-8" />
                   </div>
                   <p className="text-xs text-muted-foreground mt-2 text-center">
                     I pagamenti sono sicuri e gestiti tramite gateway certificati PCI DSS.
