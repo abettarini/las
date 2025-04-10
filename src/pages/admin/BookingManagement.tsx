@@ -1,15 +1,15 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { format, isSameDay } from 'date-fns';
 import { it } from 'date-fns/locale';
-import { Calendar, CalendarIcon, Check, Loader2, Search, X } from 'lucide-react';
+import { Calendar, Check, Loader2, Search, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { DayClickEventHandler } from 'react-day-picker';
 import { toast } from 'sonner';
@@ -24,7 +24,6 @@ export function BookingManagement() {
   const [statusFilter, setStatusFilter] = useState<'all' | 'pending' | 'confirmed' | 'cancelled'>('all');
   const [eventTypeFilter, setEventTypeFilter] = useState<string>('all');
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedBooking, setSelectedBooking] = useState<BookingData | null>(null);
@@ -128,7 +127,6 @@ export function BookingManagement() {
     } else {
       setSelectedDate(day);
     }
-    setIsCalendarOpen(false);
     setPage(1);
   };
   
@@ -256,116 +254,127 @@ export function BookingManagement() {
         <p className="text-muted-foreground">Visualizza e gestisci le prenotazioni degli utenti.</p>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Filtri</CardTitle>
-          <CardDescription>Filtra le prenotazioni per stato, tipo di evento o cerca per nome, cognome o email.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4 md:grid-cols-5">
-            <div className="space-y-2">
-              <Label htmlFor="search">Cerca</Label>
-              <div className="flex">
-                <Input
-                  id="search"
-                  placeholder="Nome, cognome o email"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="rounded-r-none"
-                />
-                <Button
-                  variant="default"
-                  className="rounded-l-none"
-                  onClick={handleSearch}
-                >
-                  <Search className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="status">Stato</Label>
-              <Select
-                value={statusFilter}
-                onValueChange={(value) => handleStatusChange(value as 'all' | 'pending' | 'confirmed' | 'cancelled')}
-              >
-                <SelectTrigger id="status">
-                  <SelectValue placeholder="Seleziona stato" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Tutti</SelectItem>
-                  <SelectItem value="pending">In attesa</SelectItem>
-                  <SelectItem value="confirmed">Confermate</SelectItem>
-                  <SelectItem value="cancelled">Annullate</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="eventType">Tipo di evento</Label>
-              <Select
-                value={eventTypeFilter}
-                onValueChange={handleEventTypeChange}
-              >
-                <SelectTrigger id="eventType">
-                  <SelectValue placeholder="Seleziona tipo" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Tutti</SelectItem>
-                  {eventTypes.map((type) => (
-                    <SelectItem key={type} value={type}>{getEventTypeLabel(type)}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="date">Data</Label>
-              <div className="flex">
-                <Dialog open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
-                  <DialogTrigger asChild>
-                    <Button
-                      id="date"
-                      variant="outline"
-                      className={`w-full justify-start text-left font-normal ${!selectedDate ? 'text-muted-foreground' : ''}`}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {selectedDate ? format(selectedDate, 'dd MMMM yyyy', { locale: it }) : 'Seleziona data'}
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="p-0" style={{ maxWidth: 'fit-content' }}>
-                    <CalendarComponent
-                      mode="single"
-                      selected={selectedDate}
-                      onSelect={(date) => handleDateSelect(date as Date)}
-                      modifiers={{
-                        booked: daysWithBookings
-                      }}
-                      modifiersStyles={{
-                        booked: {
-                          fontWeight: 'bold',
-                          backgroundColor: 'rgba(34, 197, 94, 0.1)',
-                          color: '#166534'
-                        }
-                      }}
-                      locale={it}
+      <div className="grid gap-6 md:grid-cols-3">
+        <div className="md:col-span-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>Filtri</CardTitle>
+              <CardDescription>Filtra le prenotazioni per stato, tipo di evento o cerca per nome, cognome o email.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-4 md:grid-cols-3">
+                <div className="space-y-2">
+                  <Label htmlFor="search">Cerca</Label>
+                  <div className="flex">
+                    <Input
+                      id="search"
+                      placeholder="Nome, cognome o email"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="rounded-r-none"
                     />
-                  </DialogContent>
-                </Dialog>
+                    <Button
+                      variant="default"
+                      className="rounded-l-none"
+                      onClick={handleSearch}
+                    >
+                      <Search className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="status">Stato</Label>
+                  <Select
+                    value={statusFilter}
+                    onValueChange={(value) => handleStatusChange(value as 'all' | 'pending' | 'confirmed' | 'cancelled')}
+                  >
+                    <SelectTrigger id="status">
+                      <SelectValue placeholder="Seleziona stato" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Tutti</SelectItem>
+                      <SelectItem value="pending">In attesa</SelectItem>
+                      <SelectItem value="confirmed">Confermate</SelectItem>
+                      <SelectItem value="cancelled">Annullate</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="eventType">Tipo di evento</Label>
+                  <Select
+                    value={eventTypeFilter}
+                    onValueChange={handleEventTypeChange}
+                  >
+                    <SelectTrigger id="eventType">
+                      <SelectValue placeholder="Seleziona tipo" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Tutti</SelectItem>
+                      {eventTypes.map((type) => (
+                        <SelectItem key={type} value={type}>{getEventTypeLabel(type)}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
-            </div>
-            {selectedDate && (
-              <div className="space-y-2 flex items-end">
-                <Button 
-                  variant="ghost" 
-                  onClick={handleResetDateFilter}
-                  className="h-10"
-                >
-                  <X className="mr-2 h-4 w-4" />
-                  Rimuovi filtro data
-                </Button>
+            </CardContent>
+          </Card>
+        </div>
+        <Card>
+          <CardContent>
+        <CalendarComponent
+                  mode="single"
+                  selected={selectedDate}
+                  onSelect={(date) => handleDateSelect(date as Date)}
+                  modifiers={{
+                    booked: daysWithBookings
+                  }}
+                  modifiersStyles={{
+                    booked: {
+                      fontWeight: 'bold',
+                      backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                      color: '#166534'
+                    }
+                  }}
+                  locale={it}
+                  className="p-0 m-0 mt-5"
+                  showOutsideDays={false}
+                  fixedWeeks
+                />
+                </CardContent>
+                {selectedDate && (
+                  <CardFooter>
+                  <Button 
+                    variant="ghost" 
+                    onClick={handleResetDateFilter}
+                    size="sm"
+                    className="h-8 px-2"
+                  >
+                    <X className="mr-1 h-4 w-4" />
+                    Rimuovi filtro
+                  </Button>
+                  </CardFooter>
+                )}
+                </Card>
+        {/* <div>
+          <Card>
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <CardTitle>Calendario</CardTitle>
+                
               </div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
+              <CardDescription>
+                Seleziona una data per filtrare le prenotazioni
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="border rounded-md p-2 bg-white">
+                
+              </div>
+            </CardContent>
+          </Card>
+        </div> */}
+      </div>
 
       <Card>
         <CardHeader>
