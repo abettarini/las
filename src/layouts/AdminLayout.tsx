@@ -1,5 +1,8 @@
+import { LogoutModal } from '@/components/auth/LogoutModal';
 import { Button } from '@/components/ui/button';
-import { Calendar, FileText, Home, Menu, Users, X } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import { Calendar, ChevronLeft, FileText, Home, LogOut, Users } from 'lucide-react';
 import { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/auth-context';
@@ -7,14 +10,15 @@ import { useAuth } from '../context/auth-context';
 interface SidebarItem {
   title: string;
   path: string;
-  icon: React.ReactNode;
+  icon: any;
+  description: string;
 }
 
 export default function AdminLayout() {
-  const { hasRole } = useAuth();
+  const { hasRole, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   // Reindirizza alla home se l'utente non è un amministratore
   if (!hasRole('ROLE_ADMIN')) {
@@ -26,80 +30,103 @@ export default function AdminLayout() {
     {
       title: 'Dashboard',
       path: '/admin',
-      icon: <Home className="h-5 w-5" />
+      icon: Home,
+      description: 'Panoramica generale del sistema'
     },
     {
       title: 'Utenti',
       path: '/admin/users',
-      icon: <Users className="h-5 w-5" />
+      icon: Users,
+      description: 'Gestione degli utenti registrati'
     },
     {
       title: 'Comunicazioni',
       path: '/admin/news',
-      icon: <FileText className="h-5 w-5" />
+      icon: FileText,
+      description: 'Gestione delle comunicazioni e news'
     },
     {
       title: 'Prenotazioni',
       path: '/admin/bookings',
-      icon: <Calendar className="h-5 w-5" />
+      icon: Calendar,
+      description: 'Gestione delle prenotazioni'
     }
   ];
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
+  const handleLogoutClick = () => {
+    setIsLogoutModalOpen(true);
+  };
+
+  const handleLogoutConfirm = () => {
+    logout();
+    navigate('/');
+  };
+
+  // Ottieni il titolo e la descrizione della pagina corrente
+  const currentPage = sidebarItems.find(item => item.path === location.pathname) || {
+    title: 'Amministrazione',
+    description: 'Pannello di amministrazione'
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      {/* Sidebar per dispositivi mobili */}
-      <div className="lg:hidden">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="fixed left-4 top-4 z-50"
-          onClick={toggleSidebar}
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex items-center mb-6">
+        <Button 
+          variant="ghost" 
+          className="mr-4 p-2" 
+          onClick={() => navigate('/')}
         >
-          {sidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          <ChevronLeft className="h-5 w-5" />
         </Button>
-      </div>
-
-      {/* Overlay per dispositivi mobili */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      {/* Sidebar */}
-      <div
-        className={`fixed inset-y-0 left-0 z-50 w-64 transform bg-white shadow-lg transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
-      >
-        <div className="flex h-16 items-center justify-center border-b">
-          <h2 className="text-xl font-bold">Pannello Admin</h2>
+        <div>
+          <h1 className="text-2xl font-bold">{currentPage.title}</h1>
+          <p className="text-muted-foreground">{currentPage.description}</p>
         </div>
-        <nav className="mt-5 px-2">
-          <ul className="space-y-2">
-            {sidebarItems.map((item) => (
-              <li key={item.path}>
-                <Link
-                  to={item.path}
-                  className={`flex items-center rounded-md px-4 py-2 text-sm font-medium ${location.pathname === item.path ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-gray-100'}`}
-                  onClick={() => setSidebarOpen(false)}
-                >
-                  {item.icon}
-                  <span className="ml-3">{item.title}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
       </div>
 
-      {/* Contenuto principale */}
-      <div className="flex-1 overflow-auto p-8">
-        <Outlet />
+      <div className="flex flex-col md:flex-row gap-6">
+        {/* Sidebar */}
+        <Card className="md:w-64 shrink-0">
+          <div className="p-4">
+            <nav className="space-y-1">
+              {sidebarItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={cn(
+                    "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors",
+                    location.pathname === item.path
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  )}
+                >
+                  <item.icon className="mr-3 h-5 w-5" />
+                  {item.title}
+                </Link>
+              ))}
+              
+              <button
+                onClick={handleLogoutClick}
+                className="w-full flex items-center px-3 py-2 text-sm font-medium rounded-md text-red-600 hover:bg-red-50 transition-colors"
+              >
+                <LogOut className="mr-3 h-5 w-5" />
+                Esci
+              </button>
+            </nav>
+          </div>
+        </Card>
+
+        {/* Main content */}
+        <div className="flex-1">
+          <Outlet />
+        </div>
       </div>
+
+      <LogoutModal
+        isOpen={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
+        onConfirm={handleLogoutConfirm}
+      />
     </div>
   );
 }
