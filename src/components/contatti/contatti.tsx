@@ -1,5 +1,5 @@
 import ContactForm from "../ContactForm";
-import StreetMap from "../street-map";
+import StreetMapGoogle from "../street-map-google";
 import ContactInfo from "./contact-info";
 
 const Contatti: React.FC = () => {
@@ -27,7 +27,7 @@ const Contatti: React.FC = () => {
             <div className="container mx-auto">
                 <h3 className="text-xl font-semibold mb-4">Come raggiungerci</h3>
                 <div className="w-full h-[400px] rounded-lg overflow-hidden shadow-sm">
-                    <StreetMap />
+                    <StreetMapGoogle />
                 </div>
             </div>
         </section>

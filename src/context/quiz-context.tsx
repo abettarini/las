@@ -95,22 +95,41 @@ export const QuizProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   useEffect(() => {
-      // Check if all questions have been answered, se l'elemento contiene additionalAnswers, controlla anche quelle
+      // Check if all questions have been answered, including additional questions
       let allAnswered = true;
       for (let i = 0; i < randomQuestions.length; i++) {
         const quiz = randomQuestions[i];
-        if (!(quiz.id in selectedAnswers)) {
+        if (!(quiz.id in selectedAnswers) || !(quiz.id in selectedAnswers[quiz.id])) {
           allAnswered = false;
-        } else if (quiz.additionalSection) {
-          quiz.additionalSection.questions.forEach(question => {
+          break;
+        } 
+        
+        // Check if the main question has been answered
+        const mainAnswer = selectedAnswers[quiz.id][quiz.id].answers;
+        if (!mainAnswer || mainAnswer.length === 0) {
+          allAnswered = false;
+          break;
+        }
+        
+        // If there's an additional section and the trigger condition is met, check those questions too
+        if (quiz.additionalSection && mainAnswer[0] === quiz.additionalSection.trigger) {
+          for (const question of quiz.additionalSection.questions) {
             if (!(question.id in selectedAnswers[quiz.id])) {
               allAnswered = false;
+              break;
             }
-          });
+            
+            // Check if the additional question has been answered
+            const additionalAnswer = selectedAnswers[quiz.id][question.id].answers;
+            if (!additionalAnswer || additionalAnswer.length === 0) {
+              allAnswered = false;
+              break;
+            }
+          }
         }
       }
       setCompleted(allAnswered);     
-  }, [selectedAnswers]);
+  }, [selectedAnswers, randomQuestions]);
 
   return (
     <QuizContext.Provider value={{ selectedAnswers, setSelectedAnswers, isVerified, setIsVerified, answers, setAnswers, randomQuestions, setRandomQuestions, questions, setQuestions, hasError, completed, genRandomQuestions, setSingleQuestion }}>

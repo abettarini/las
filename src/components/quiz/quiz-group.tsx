@@ -22,7 +22,8 @@ const QuizGroup: React.FC<QuizGroupProps> = ({ quizzes }) => {
         ...prev[quizId],
         [questionId]: {
           answers: values, // Assuming only one selection per group
-          errors: errors // Reset error state when changing an answer
+          errors: errors, // Reset error state when changing an answer
+          additionalAnswers: prev[quizId]?.[questionId]?.additionalAnswers || {}
         }
       }
     }));
@@ -51,7 +52,8 @@ const QuizGroup: React.FC<QuizGroupProps> = ({ quizzes }) => {
         ...prev[quizId],
         [questionId]: {
           answers: [value], // Assuming only one selection per group
-          errors: errors // Reset error state when changing an answer
+          errors: errors, // Reset error state when changing an answer
+          additionalAnswers: prev[quizId]?.[questionId]?.additionalAnswers || {}
         }
       }
     }));
@@ -80,7 +82,8 @@ const QuizGroup: React.FC<QuizGroupProps> = ({ quizzes }) => {
         ...prev[quizId],
         [questionId]: {
           answers: value.split(',').map(v => v.trim()),
-          errors: errors
+          errors: errors,
+          additionalAnswers: prev[quizId]?.[questionId]?.additionalAnswers || {}
         }
       }
     }));
@@ -126,6 +129,7 @@ const QuizGroup: React.FC<QuizGroupProps> = ({ quizzes }) => {
                 [questionId]: {
                     answers: updatedAnswers,
                     errors,
+                    additionalAnswers: prev[quizId]?.[questionId]?.additionalAnswers || {}
                 },
             },
         };
@@ -159,7 +163,7 @@ const QuizGroup: React.FC<QuizGroupProps> = ({ quizzes }) => {
               options={options || []}
               onChange={handleCheckboxGroupChange(id, id)} />
         )}
-        {type === 'text' || type === 'number' && (
+        {(type === 'text' || type === 'number') && (
           <QuizInput 
             label={title}
             id={id}
@@ -199,11 +203,11 @@ const QuizGroup: React.FC<QuizGroupProps> = ({ quizzes }) => {
                     id={id}
                     type={q.type}
                     options={q.options || []}
-                    onChange={handleCheckboxGroupChange(id, id)} />
+                    onChange={handleCheckboxGroupChange(id, q.id)} />
               )}
-              {q.type === 'text' || q.type === 'number' && (
+              {(q.type === 'text' || q.type === 'number') && (
                 <QuizInput
-                  label={title}
+                  label={q.label || q.title || ''}
                   id={id}
                   type={q.type}
                   onChange={handleInputChange(id, q.id)}

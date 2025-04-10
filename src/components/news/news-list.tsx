@@ -77,21 +77,23 @@ export default function NewsList({ contents, itemsPerPage }: NewsListProps) {
             />
           ))}
         </div>
-        <div className="mt-4 flex justify-between items-center">
-          <Button
-            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-          >
-            Precedente
-          </Button>
-          <span>{currentPage} di {totalPages}</span>
-          <Button
-            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-            disabled={currentPage === totalPages}
-          >
-            Successiva
-          </Button>
-        </div>
+        {totalPages > 1 && (
+          <div className="mt-4 flex justify-between items-center">
+            <Button
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+            >
+              Precedente
+            </Button>
+            <span>{currentPage} di {totalPages}</span>
+            <Button
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+            >
+              Successiva
+            </Button>
+          </div>
+        )}
       </div>
       <div className="md:w-2/2 md:pl-4 md:border-l">
         <NewsDetails

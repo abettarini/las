@@ -57,39 +57,43 @@ const QuizPage: React.FC<QuizPageProps> = ({ quizId, numQuestions }) => {
 
     randomQuestions.forEach((quiz) => {
       total++;
+      // Check if the quiz has been answered
       if (!(quiz.id in selectedAnswers) || !(quiz.id in selectedAnswers[quiz.id])) {
         errors++;
         questionIds.push(quiz.id);
-        setResults({ ...results, total, errors, questionIds });
-        return;
+      } else {
+        // Check if the answer is correct
+        const quizAnswers = selectedAnswers[quiz.id][quiz.id].answers;
+        const correctAnswers = quiz.correctAnswers || [];
+        if (!quizAnswers || (JSON.stringify(correctAnswers.sort()) !== JSON.stringify(quizAnswers.sort()))) {
+          errors++;
+          questionIds.push(quiz.id);
+        }
       }
-      const quizAnswers = selectedAnswers[quiz.id][quiz.id].answers;
-      const correctAnswers = quiz.correctAnswers || [];
-      if (!quizAnswers || (JSON.stringify(correctAnswers.sort()) !== JSON.stringify(quizAnswers.sort())) ) {
-        errors++;
-        questionIds.push(quiz.id);
-      } 
-      setResults({ ...results, total, errors, questionIds });
 
-      if (quiz.additionalSection) {
+      // Check additional questions if the main answer triggers them
+      const mainAnswer = selectedAnswers[quiz.id]?.[quiz.id]?.answers[0];
+      if (quiz.additionalSection && mainAnswer === quiz.additionalSection.trigger) {
         quiz.additionalSection.questions.forEach((question) => {
           total++;
+          // Check if the additional question has been answered
           if (!(question.id in selectedAnswers[quiz.id])) {
             errors++;
             questionIds.push(question.id);
-            setResults({ ...results, total, errors, questionIds });
-            return;
+          } else {
+            // Check if the additional answer is correct
+            const additionalAnswers = selectedAnswers[quiz.id][question.id].answers;
+            const correctAdditionalAnswers = question.correctAnswers || [];
+            if (!additionalAnswers || (JSON.stringify(correctAdditionalAnswers.sort()) !== JSON.stringify(additionalAnswers.sort()))) {
+              errors++;
+              questionIds.push(question.id);
+            }
           }
-          const additionalAnswers = selectedAnswers[quiz.id][question.id].answers;
-          const correctAdditionalAnswers = question.correctAnswers || [];
-          if (!additionalAnswers || (JSON.stringify(correctAdditionalAnswers.sort()) !== JSON.stringify(additionalAnswers.sort())) ) {
-            errors++;
-            questionIds.push(question.id);
-          }
-          setResults({ ...results, total, errors, questionIds });
         });
       }
     });
+
+    setResults({ total, errors, questionIds });
   }
 
   const resetQuiz = () => {
