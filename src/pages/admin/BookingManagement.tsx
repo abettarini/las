@@ -1,25 +1,30 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { format } from 'date-fns';
+import { format, isSameDay } from 'date-fns';
 import { it } from 'date-fns/locale';
-import { Calendar, Check, Loader2, Search, X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { Calendar, CalendarIcon, Check, Loader2, Search, X } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { DayClickEventHandler } from 'react-day-picker';
 import { toast } from 'sonner';
 import { getBookings, GetBookingsOptions, updateBookingStatus } from '../../services/admin-service';
 import { BookingData, getEventTypeLabel } from '../../services/booking-service';
 
 export function BookingManagement() {
   const [bookings, setBookings] = useState<BookingData[]>([]);
+  const [allBookings, setAllBookings] = useState<BookingData[]>([]); // Tutte le prenotazioni per il calendario
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'pending' | 'confirmed' | 'cancelled'>('all');
   const [eventTypeFilter, setEventTypeFilter] = useState<string>('all');
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedBooking, setSelectedBooking] = useState<BookingData | null>(null);
@@ -31,7 +36,28 @@ export function BookingManagement() {
 
   useEffect(() => {
     loadBookings();
-  }, [page, statusFilter, eventTypeFilter]);
+  }, [page, statusFilter, eventTypeFilter, selectedDate]);
+
+  // Carica tutte le prenotazioni per il calendario
+  useEffect(() => {
+    const loadAllBookings = async () => {
+      try {
+        // Carica tutte le prenotazioni con un limite alto per avere dati per il calendario
+        const response = await getBookings({ limit: 1000 });
+        if (response.success) {
+          setAllBookings(response.bookings);
+          
+          // Estrai i tipi di evento unici
+          const uniqueEventTypes = Array.from(new Set(response.bookings.map(booking => booking.eventType)));
+          setEventTypes(uniqueEventTypes);
+        }
+      } catch (error) {
+        console.error('Errore durante il caricamento di tutte le prenotazioni:', error);
+      }
+    };
+    
+    loadAllBookings();
+  }, []);
 
   const loadBookings = async () => {
     setLoading(true);
@@ -53,14 +79,17 @@ export function BookingManagement() {
         options.search = searchTerm;
       }
 
+      // Se è selezionata una data, aggiungi il filtro per data
+      if (selectedDate) {
+        const formattedDate = format(selectedDate, 'yyyy-MM-dd');
+        options.startDate = formattedDate;
+        options.endDate = formattedDate;
+      }
+
       const response = await getBookings(options);
       if (response.success) {
         setBookings(response.bookings);
         setTotalPages(Math.ceil(response.total / response.limit));
-        
-        // Estrai i tipi di evento unici
-        const uniqueEventTypes = Array.from(new Set(response.bookings.map(booking => booking.eventType)));
-        setEventTypes(uniqueEventTypes);
       } else {
         toast.error('Errore', {
           description: response.message || 'Impossibile caricare le prenotazioni'
@@ -90,6 +119,35 @@ export function BookingManagement() {
     setEventTypeFilter(eventType);
     setPage(1);
   };
+  
+  // Gestisce la selezione di una data nel calendario
+  const handleDateSelect: DayClickEventHandler = (day) => {
+    if (selectedDate && isSameDay(day, selectedDate)) {
+      // Se la data selezionata è già selezionata, deselezionala
+      setSelectedDate(undefined);
+    } else {
+      setSelectedDate(day);
+    }
+    setIsCalendarOpen(false);
+    setPage(1);
+  };
+  
+  // Resetta il filtro per data
+  const handleResetDateFilter = () => {
+    setSelectedDate(undefined);
+    setPage(1);
+  };
+  
+  // Calcola i giorni in cui ci sono prenotazioni per evidenziarli nel calendario
+  const daysWithBookings = useMemo(() => {
+    const days = new Set<string>();
+    
+    allBookings.forEach(booking => {
+      days.add(booking.date);
+    });
+    
+    return Array.from(days).map(dateStr => new Date(dateStr));
+  }, [allBookings]);
 
   const handleViewBooking = (booking: BookingData) => {
     setSelectedBooking(booking);
@@ -204,7 +262,7 @@ export function BookingManagement() {
           <CardDescription>Filtra le prenotazioni per stato, tipo di evento o cerca per nome, cognome o email.</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4 md:grid-cols-4">
+          <div className="grid gap-4 md:grid-cols-5">
             <div className="space-y-2">
               <Label htmlFor="search">Cerca</Label>
               <div className="flex">
@@ -258,6 +316,53 @@ export function BookingManagement() {
                 </SelectContent>
               </Select>
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="date">Data</Label>
+              <div className="flex">
+                <Dialog open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+                  <DialogTrigger asChild>
+                    <Button
+                      id="date"
+                      variant="outline"
+                      className={`w-full justify-start text-left font-normal ${!selectedDate ? 'text-muted-foreground' : ''}`}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {selectedDate ? format(selectedDate, 'dd MMMM yyyy', { locale: it }) : 'Seleziona data'}
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="p-0" style={{ maxWidth: 'fit-content' }}>
+                    <CalendarComponent
+                      mode="single"
+                      selected={selectedDate}
+                      onSelect={(date) => handleDateSelect(date as Date)}
+                      modifiers={{
+                        booked: daysWithBookings
+                      }}
+                      modifiersStyles={{
+                        booked: {
+                          fontWeight: 'bold',
+                          backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                          color: '#166534'
+                        }
+                      }}
+                      locale={it}
+                    />
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </div>
+            {selectedDate && (
+              <div className="space-y-2 flex items-end">
+                <Button 
+                  variant="ghost" 
+                  onClick={handleResetDateFilter}
+                  className="h-10"
+                >
+                  <X className="mr-2 h-4 w-4" />
+                  Rimuovi filtro data
+                </Button>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
