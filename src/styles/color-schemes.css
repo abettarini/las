@@ -16,6 +16,24 @@
   
   --ring: 215 20% 65%;
   --border: 215 14% 85%;
+  
+  --background: 215 20% 97%;
+  --foreground: 215 20% 15%;
+  
+  --card: 215 20% 99%;
+  --card-foreground: 215 20% 15%;
+  
+  --popover: 215 20% 99%;
+  --popover-foreground: 215 20% 15%;
+  
+  --muted: 215 14% 95%;
+  --muted-foreground: 215 14% 45%;
+  
+  --input: 215 14% 90%;
+  
+  /* Header e Footer */
+  --header-background: 215 20% 92%;
+  --footer-background: 215 20% 90%;
 }
 
 :root.dark.theme-slate {
@@ -33,6 +51,24 @@
   
   --ring: 215 20% 65%;
   --border: 215 14% 25%;
+  
+  --background: 215 20% 9%;
+  --foreground: 215 20% 95%;
+  
+  --card: 215 20% 12%;
+  --card-foreground: 215 20% 95%;
+  
+  --popover: 215 20% 12%;
+  --popover-foreground: 215 20% 95%;
+  
+  --muted: 215 14% 15%;
+  --muted-foreground: 215 14% 65%;
+  
+  --input: 215 14% 15%;
+  
+  /* Header e Footer */
+  --header-background: 215 20% 14%;
+  --footer-background: 215 20% 12%;
 }
 
 /* GRAY */
@@ -51,6 +87,20 @@
   
   --ring: 220 14% 65%;
   --border: 220 14% 85%;
+  
+  --background: 220 14% 97%;
+  --foreground: 220 14% 15%;
+  
+  --card: 220 14% 99%;
+  --card-foreground: 220 14% 15%;
+  
+  --popover: 220 14% 99%;
+  --popover-foreground: 220 14% 15%;
+  
+  --muted: 220 14% 95%;
+  --muted-foreground: 220 14% 45%;
+  
+  --input: 220 14% 90%;
 }
 
 :root.dark.theme-gray {
@@ -68,6 +118,20 @@
   
   --ring: 220 14% 65%;
   --border: 220 14% 25%;
+  
+  --background: 220 14% 9%;
+  --foreground: 220 14% 95%;
+  
+  --card: 220 14% 12%;
+  --card-foreground: 220 14% 95%;
+  
+  --popover: 220 14% 12%;
+  --popover-foreground: 220 14% 95%;
+  
+  --muted: 220 14% 15%;
+  --muted-foreground: 220 14% 65%;
+  
+  --input: 220 14% 15%;
 }
 
 /* ZINC */
@@ -191,6 +255,24 @@
   
   --ring: 0 72% 51%;
   --border: 0 72% 90%;
+  
+  --background: 0 72% 98%;
+  --foreground: 0 72% 15%;
+  
+  --card: 0 72% 99%;
+  --card-foreground: 0 72% 15%;
+  
+  --popover: 0 72% 99%;
+  --popover-foreground: 0 72% 15%;
+  
+  --muted: 0 72% 95%;
+  --muted-foreground: 0 72% 45%;
+  
+  --input: 0 72% 90%;
+  
+  /* Header e Footer */
+  --header-background: 0 72% 94%;
+  --footer-background: 0 72% 92%;
 }
 
 :root.dark.theme-red {
@@ -208,6 +290,24 @@
   
   --ring: 0 72% 51%;
   --border: 0 72% 25%;
+  
+  --background: 0 72% 9%;
+  --foreground: 0 72% 95%;
+  
+  --card: 0 72% 12%;
+  --card-foreground: 0 72% 95%;
+  
+  --popover: 0 72% 12%;
+  --popover-foreground: 0 72% 95%;
+  
+  --muted: 0 72% 15%;
+  --muted-foreground: 0 72% 65%;
+  
+  --input: 0 72% 15%;
+  
+  /* Header e Footer */
+  --header-background: 0 72% 14%;
+  --footer-background: 0 72% 12%;
 }
 
 /* ORANGE */
@@ -366,6 +466,24 @@
   
   --ring: 142 71% 45%;
   --border: 142 71% 90%;
+  
+  --background: 142 71% 98%;
+  --foreground: 142 71% 15%;
+  
+  --card: 142 71% 99%;
+  --card-foreground: 142 71% 15%;
+  
+  --popover: 142 71% 99%;
+  --popover-foreground: 142 71% 15%;
+  
+  --muted: 142 71% 95%;
+  --muted-foreground: 142 71% 45%;
+  
+  --input: 142 71% 90%;
+  
+  /* Header e Footer */
+  --header-background: 142 71% 94%;
+  --footer-background: 142 71% 92%;
 }
 
 :root.dark.theme-green {
@@ -383,6 +501,24 @@
   
   --ring: 142 71% 45%;
   --border: 142 71% 25%;
+  
+  --background: 142 71% 9%;
+  --foreground: 142 71% 95%;
+  
+  --card: 142 71% 12%;
+  --card-foreground: 142 71% 95%;
+  
+  --popover: 142 71% 12%;
+  --popover-foreground: 142 71% 95%;
+  
+  --muted: 142 71% 15%;
+  --muted-foreground: 142 71% 65%;
+  
+  --input: 142 71% 15%;
+  
+  /* Header e Footer */
+  --header-background: 142 71% 14%;
+  --footer-background: 142 71% 12%;
 }
 
 /* EMERALD */
@@ -541,6 +677,24 @@
   
   --ring: 221 83% 53%;
   --border: 221 83% 90%;
+  
+  --background: 221 83% 98%;
+  --foreground: 221 83% 15%;
+  
+  --card: 221 83% 99%;
+  --card-foreground: 221 83% 15%;
+  
+  --popover: 221 83% 99%;
+  --popover-foreground: 221 83% 15%;
+  
+  --muted: 221 83% 95%;
+  --muted-foreground: 221 83% 45%;
+  
+  --input: 221 83% 90%;
+  
+  /* Header e Footer */
+  --header-background: 221 83% 94%;
+  --footer-background: 221 83% 92%;
 }
 
 :root.dark.theme-blue {
@@ -558,6 +712,24 @@
   
   --ring: 221 83% 53%;
   --border: 221 83% 25%;
+  
+  --background: 221 83% 9%;
+  --foreground: 221 83% 95%;
+  
+  --card: 221 83% 12%;
+  --card-foreground: 221 83% 95%;
+  
+  --popover: 221 83% 12%;
+  --popover-foreground: 221 83% 95%;
+  
+  --muted: 221 83% 15%;
+  --muted-foreground: 221 83% 65%;
+  
+  --input: 221 83% 15%;
+  
+  /* Header e Footer */
+  --header-background: 221 83% 14%;
+  --footer-background: 221 83% 12%;
 }
 
 /* INDIGO */
@@ -646,6 +818,20 @@
   
   --ring: 269 80% 64%;
   --border: 269 80% 90%;
+  
+  --background: 269 80% 98%;
+  --foreground: 269 80% 15%;
+  
+  --card: 269 80% 99%;
+  --card-foreground: 269 80% 15%;
+  
+  --popover: 269 80% 99%;
+  --popover-foreground: 269 80% 15%;
+  
+  --muted: 269 80% 95%;
+  --muted-foreground: 269 80% 45%;
+  
+  --input: 269 80% 90%;
 }
 
 :root.dark.theme-purple {
@@ -663,6 +849,20 @@
   
   --ring: 269 80% 64%;
   --border: 269 80% 25%;
+  
+  --background: 269 80% 9%;
+  --foreground: 269 80% 95%;
+  
+  --card: 269 80% 12%;
+  --card-foreground: 269 80% 95%;
+  
+  --popover: 269 80% 12%;
+  --popover-foreground: 269 80% 95%;
+  
+  --muted: 269 80% 15%;
+  --muted-foreground: 269 80% 65%;
+  
+  --input: 269 80% 15%;
 }
 
 /* FUCHSIA */
