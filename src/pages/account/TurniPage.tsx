@@ -1,4 +1,5 @@
-import TurniCalendar from '@/components/turni/turni-calendar';
+import { TurniCalendar } from '@/components/turni/turni-calendar';
+import { TurniMatrix } from '@/components/turni/turni-matrix';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/context/auth-context';
 import { Navigate } from 'react-router-dom';
@@ -24,6 +25,9 @@ export default function TurniPage() {
           <TurniCalendar />
         </CardContent>
       </Card>
+      
+      {/* Nuova card con la matrice dei turni */}
+      <TurniMatrix />
     </div>
   );
 }
