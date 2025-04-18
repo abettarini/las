@@ -1,5 +1,7 @@
+import { TurniMatrix } from '@/components/turni/turni-matrix';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { isFeatureEnabled } from '@/config/features';
 import { Award, BarChart3, Calendar, Clock, Loader2, ShieldCheck, UserCheck, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
@@ -12,14 +14,20 @@ export function AdminDashboard() {
   const [loginStats, setLoginStats] = useState<LoginData[]>([]);
   const [loginPeriod, setLoginPeriod] = useState<'today' | 'week' | 'month'>('today');
   const [loadingLoginStats, setLoadingLoginStats] = useState(false);
+  
+  // Verifica se la feature delle statistiche di accesso è abilitata
+  const isAccessStatsEnabled = isFeatureEnabled('accessStats');
 
   useEffect(() => {
     loadStats();
   }, []);
 
   useEffect(() => {
-    loadLoginStats();
-  }, [loginPeriod]);
+    // Carica le statistiche di accesso solo se la feature è abilitata
+    if (isAccessStatsEnabled) {
+      loadLoginStats();
+    }
+  }, [loginPeriod, isAccessStatsEnabled]);
 
   const loadStats = async () => {
     setLoading(true);
@@ -163,95 +171,103 @@ export function AdminDashboard() {
         </Card>
       </div>
 
+      {/* Sezione Statistiche di Accesso - condizionata dalla feature flag */}
+      {isAccessStatsEnabled && (
+        <div className="grid gap-4 md:grid-cols-1">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BarChart3 className="h-5 w-5" />
+                Statistiche di Accesso
+              </CardTitle>
+              <CardDescription>
+                Visualizza gli accessi degli utenti nel tempo
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Tabs defaultValue="today" className="w-full" onValueChange={(value) => setLoginPeriod(value as 'today' | 'week' | 'month')}>
+                <TabsList className="grid w-full grid-cols-3">
+                  <TabsTrigger value="today" className="flex items-center gap-1">
+                    <Clock className="h-4 w-4" />
+                    Oggi
+                  </TabsTrigger>
+                  <TabsTrigger value="week" className="flex items-center gap-1">
+                    <Calendar className="h-4 w-4" />
+                    Ultimi 7 giorni
+                  </TabsTrigger>
+                  <TabsTrigger value="month" className="flex items-center gap-1">
+                    <Calendar className="h-4 w-4" />
+                    Ultimi 30 giorni
+                  </TabsTrigger>
+                </TabsList>
+                
+                <div className="mt-4 h-[300px]">
+                  {loadingLoginStats ? (
+                    <div className="flex h-full items-center justify-center">
+                      <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                    </div>
+                  ) : loginStats.length > 0 ? (
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={loginStats} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis 
+                          dataKey="date" 
+                          tickFormatter={(value) => {
+                            if (loginPeriod === 'today') {
+                              // Assicurati che il formato sia HH:00
+                              return value.includes(':') ? value : `${value}:00`;
+                            } else {
+                              // Formatta la data come DD/MM
+                              const date = new Date(value);
+                              return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+                            }
+                          }}
+                        />
+                        <YAxis />
+                        <Tooltip
+                          content={({ active, payload }) => {
+                            if (active && payload && payload.length) {
+                              const data = payload[0].payload;
+                              return (
+                                <div className="rounded-lg border bg-background p-2 shadow-md">
+                                  <p className="font-medium">
+                                    {loginPeriod === 'today' 
+                                      ? `Ora: ${data.date.includes(':') ? data.date : `${data.date}:00`}`
+                                      : `Data: ${new Date(data.date).toLocaleDateString('it-IT')}`}
+                                  </p>
+                                  <p className="text-sm text-muted-foreground">
+                                    Accessi: <span className="font-medium text-foreground">{data.count}</span>
+                                  </p>
+                                </div>
+                              );
+                            }
+                            return null;
+                          }}
+                        />
+                        <Bar 
+                          dataKey="count" 
+                          fill="#3b82f6" 
+                          name="Accessi" 
+                          radius={[4, 4, 0, 0]}
+                        />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  ) : (
+                    <div className="flex h-full flex-col items-center justify-center text-muted-foreground">
+                      <BarChart3 className="mb-2 h-10 w-10" />
+                      <p>Nessun dato disponibile per il periodo selezionato</p>
+                    </div>
+                  )}
+                </div>
+              </Tabs>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+      
+      {/* Matrice dei turni */}
       <div className="grid gap-4 md:grid-cols-1">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <BarChart3 className="h-5 w-5" />
-              Statistiche di Accesso
-            </CardTitle>
-            <CardDescription>
-              Visualizza gli accessi degli utenti nel tempo
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Tabs defaultValue="today" className="w-full" onValueChange={(value) => setLoginPeriod(value as 'today' | 'week' | 'month')}>
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="today" className="flex items-center gap-1">
-                  <Clock className="h-4 w-4" />
-                  Oggi
-                </TabsTrigger>
-                <TabsTrigger value="week" className="flex items-center gap-1">
-                  <Calendar className="h-4 w-4" />
-                  Ultimi 7 giorni
-                </TabsTrigger>
-                <TabsTrigger value="month" className="flex items-center gap-1">
-                  <Calendar className="h-4 w-4" />
-                  Ultimi 30 giorni
-                </TabsTrigger>
-              </TabsList>
-              
-              <div className="mt-4 h-[300px]">
-                {loadingLoginStats ? (
-                  <div className="flex h-full items-center justify-center">
-                    <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-                  </div>
-                ) : loginStats.length > 0 ? (
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={loginStats} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis 
-                        dataKey="date" 
-                        tickFormatter={(value) => {
-                          if (loginPeriod === 'today') {
-                            // Assicurati che il formato sia HH:00
-                            return value.includes(':') ? value : `${value}:00`;
-                          } else {
-                            // Formatta la data come DD/MM
-                            const date = new Date(value);
-                            return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}`;
-                          }
-                        }}
-                      />
-                      <YAxis />
-                      <Tooltip
-                        content={({ active, payload }) => {
-                          if (active && payload && payload.length) {
-                            const data = payload[0].payload;
-                            return (
-                              <div className="rounded-lg border bg-background p-2 shadow-md">
-                                <p className="font-medium">
-                                  {loginPeriod === 'today' 
-                                    ? `Ora: ${data.date.includes(':') ? data.date : `${data.date}:00`}`
-                                    : `Data: ${new Date(data.date).toLocaleDateString('it-IT')}`}
-                                </p>
-                                <p className="text-sm text-muted-foreground">
-                                  Accessi: <span className="font-medium text-foreground">{data.count}</span>
-                                </p>
-                              </div>
-                            );
-                          }
-                          return null;
-                        }}
-                      />
-                      <Bar 
-                        dataKey="count" 
-                        fill="#3b82f6" 
-                        name="Accessi" 
-                        radius={[4, 4, 0, 0]}
-                      />
-                    </BarChart>
-                  </ResponsiveContainer>
-                ) : (
-                  <div className="flex h-full flex-col items-center justify-center text-muted-foreground">
-                    <BarChart3 className="mb-2 h-10 w-10" />
-                    <p>Nessun dato disponibile per il periodo selezionato</p>
-                  </div>
-                )}
-              </div>
-            </Tabs>
-          </CardContent>
-        </Card>
+        <TurniMatrix />
       </div>
     </div>
   );

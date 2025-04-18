@@ -13,6 +13,12 @@ export const features = {
    */
   themeColorSelector: false,
   
+  /**
+   * Abilita o disabilita la visualizzazione delle statistiche di accesso nella dashboard di amministrazione
+   * Quando impostato a false, la sezione delle statistiche di accesso non sarà visibile
+   */
+  accessStats: false,
+  
   // Altri feature flag possono essere aggiunti qui
 };
 

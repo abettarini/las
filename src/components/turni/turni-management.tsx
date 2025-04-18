@@ -1,17 +1,17 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useAuth } from '@/context/auth-context';
-import { API_URL, cn } from '@/lib/utils';
+import { API_URL } from '@/lib/utils';
 import { format } from 'date-fns';
 import { it } from 'date-fns/locale';
-import { CalendarIcon, Loader2, Plus, Search, Users, X } from 'lucide-react';
+import { Loader2, Plus, Search, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 
 // Definizione dei tipi
@@ -53,6 +53,9 @@ export function TurniManagementComponent() {
   const [dialogSelectedDirector, setDialogSelectedDirector] = useState<string>('');
   const [dialogSelectedTimeSlot, setDialogSelectedTimeSlot] = useState<'MORNING' | 'AFTERNOON' | null>(null);
 
+  // Ottieni i parametri URL
+  const [searchParams] = useSearchParams();
+  
   // Carica i dati iniziali
   useEffect(() => {
     const fetchData = async () => {
@@ -95,10 +98,8 @@ export function TurniManagementComponent() {
         }
       } catch (error) {
         console.error("Errore durante il caricamento dei dati:", error);
-        toast({
-          title: "Errore",
-          description: "Si è verificato un errore durante il caricamento dei dati",
-          variant: "destructive"
+        toast.error("Errore", {
+          description: "Si è verificato un errore durante il caricamento dei dati"
         });
       } finally {
         setIsLoading(false);
@@ -108,7 +109,27 @@ export function TurniManagementComponent() {
     if (token) {
       fetchData();
     }
-  }, [token, toast]);
+  }, [token]);
+  
+  // Sincronizza i filtri con i parametri URL
+  useEffect(() => {
+    const dateParam = searchParams.get('date');
+    const timeSlotParam = searchParams.get('timeSlot') as 'MORNING' | 'AFTERNOON' | null;
+    
+    if (dateParam) {
+      try {
+        const date = new Date(dateParam);
+        setSelectedDate(date);
+      } catch (e) {
+        console.error("Errore nel parsing della data:", e);
+      }
+    }
+    
+    // Aggiorna il timeSlot nel dialog se necessario
+    if (timeSlotParam === 'MORNING' || timeSlotParam === 'AFTERNOON') {
+      setDialogSelectedTimeSlot(timeSlotParam);
+    }
+  }, [searchParams]);
 
   // Filtra i turni in base ai criteri selezionati
   const filteredTurni = turni.filter(turno => {
@@ -280,7 +301,7 @@ export function TurniManagementComponent() {
           <DialogTrigger asChild>
             <Button disabled={!selectedDate}>
               <Plus className="mr-2 h-4 w-4" />
-              Aggiungi Turno
+              Aggiungi al Turno
             </Button>
           </DialogTrigger>
           <DialogContent>
@@ -386,141 +407,10 @@ export function TurniManagementComponent() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Filtri */}
-        <Card className="md:col-span-1">
-          <CardHeader>
-            <CardTitle>Filtri</CardTitle>
-            <CardDescription>
-              Filtra i turni per data e direttore
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {/* Filtro per data */}
-            <div className="space-y-2">
-              <Label>Data</Label>
-              <div className="grid gap-2">
-                <Button
-                  id="date"
-                  variant={"outline"}
-                  className={cn(
-                    "w-full justify-start text-left font-normal",
-                    !selectedDate && "text-muted-foreground"
-                  )}
-                  onClick={() => setSelectedDate(undefined)}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {selectedDate ? format(selectedDate, 'PPP', { locale: it }) : "Seleziona una data"}
-                </Button>
-                {selectedDate && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-8 px-2 lg:px-3"
-                    onClick={() => setSelectedDate(undefined)}
-                  >
-                    Reset
-                    <X className="ml-2 h-4 w-4" />
-                  </Button>
-                )}
-                <Calendar
-                  mode="single"
-                  selected={selectedDate}
-                  onSelect={setSelectedDate}
-                  className="rounded-md border"
-                  disabled={(date) => !isOpenDay(date)}
-                />
-                
-                {/* Pannello turni disponibili */}
-                {showShiftsPanel && selectedDate && (
-                  <div className="mt-4 p-4 border rounded-md bg-muted/30">
-                    <h3 className="font-medium mb-2">Turni disponibili per {format(selectedDate, 'd MMMM yyyy', { locale: it })}</h3>
-                    <div className="grid grid-cols-1 gap-3">
-                      {availableShifts.morning && (
-                        <div className="flex justify-between items-center p-3 bg-background rounded-md border">
-                          <div className="flex items-center">
-                            <div className="mr-3">
-                              <span className="font-medium">Mattina</span>
-                            </div>
-                            <Badge variant="outline" className="flex items-center">
-                              <Users className="h-3 w-3 mr-1" />
-                              {countShiftRegistrations(format(selectedDate, 'yyyy-MM-dd'), 'MORNING')}
-                            </Badge>
-                          </div>
-                          <Button 
-                            size="sm" 
-                            onClick={() => {
-                              setDialogSelectedTimeSlot('MORNING');
-                              setIsDialogOpen(true);
-                            }}
-                          >
-                            Iscriviti
-                          </Button>
-                        </div>
-                      )}
-                      
-                      {availableShifts.afternoon && (
-                        <div className="flex justify-between items-center p-3 bg-background rounded-md border">
-                          <div className="flex items-center">
-                            <div className="mr-3">
-                              <span className="font-medium">Pomeriggio</span>
-                            </div>
-                            <Badge variant="outline" className="flex items-center">
-                              <Users className="h-3 w-3 mr-1" />
-                              {countShiftRegistrations(format(selectedDate, 'yyyy-MM-dd'), 'AFTERNOON')}
-                            </Badge>
-                          </div>
-                          <Button 
-                            size="sm" 
-                            onClick={() => {
-                              setDialogSelectedTimeSlot('AFTERNOON');
-                              setIsDialogOpen(true);
-                            }}
-                          >
-                            Iscriviti
-                          </Button>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-            
-            {/* Filtro per direttore */}
-            <div className="space-y-2">
-              <Label>Direttore</Label>
-              <Select 
-                value={selectedDirector} 
-                onValueChange={setSelectedDirector}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Tutti i direttori" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Tutti i direttori</SelectItem>
-                  {directors.map((director) => (
-                    <SelectItem key={director.id} value={director.id}>
-                      {director.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              {selectedDirector && selectedDirector !== 'all' && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 px-2 lg:px-3"
-                  onClick={() => setSelectedDirector('all')}
-                >
-                  Reset
-                  <X className="ml-2 h-4 w-4" />
-                </Button>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+
 
         {/* Elenco turni */}
-        <Card className="md:col-span-2">
+        <Card className="md:col-span-3">
           <CardHeader>
             <CardTitle>Elenco Turni</CardTitle>
             <CardDescription>

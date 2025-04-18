@@ -1,10 +1,11 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/context/auth-context';
 import { API_URL, cn } from '@/lib/utils';
-import { format, getDaysInMonth, getMonth, getYear, startOfMonth } from 'date-fns';
+import { format, getDaysInMonth, getMonth, getYear, parse, startOfMonth } from 'date-fns';
 import { it } from 'date-fns/locale';
 import { Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 
 // Definizione dei tipi
@@ -24,13 +25,43 @@ interface OpenDay {
 
 export function TurniMatrix() {
   const { token } = useAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
   
-  const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
+  const [currentMonth, setCurrentMonth] = useState<Date>(() => {
+    // Recupera il mese dai parametri URL o usa il mese corrente
+    const monthParam = searchParams.get('month');
+    if (monthParam) {
+      try {
+        return parse(monthParam, 'yyyy-MM', new Date());
+      } catch (e) {
+        return new Date();
+      }
+    }
+    return new Date();
+  });
+  
   const [turni, setTurni] = useState<Turno[]>([]);
   const [openDays, setOpenDays] = useState<OpenDay[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedDay, setSelectedDay] = useState<number | null>(null);
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState<'MORNING' | 'AFTERNOON' | null>(null);
+  
+  // Recupera il giorno e il turno selezionati dai parametri URL
+  const [selectedDay, setSelectedDay] = useState<number | null>(() => {
+    const dateParam = searchParams.get('date');
+    if (dateParam) {
+      try {
+        const date = new Date(dateParam);
+        return date.getDate();
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
+  });
+  
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<'MORNING' | 'AFTERNOON' | null>(() => {
+    const timeSlotParam = searchParams.get('timeSlot');
+    return (timeSlotParam === 'MORNING' || timeSlotParam === 'AFTERNOON') ? timeSlotParam : null;
+  });
 
   // Carica i dati iniziali
   useEffect(() => {
@@ -83,6 +114,16 @@ export function TurniMatrix() {
     }
   }, [token]);
 
+  // Aggiorna i parametri URL quando cambia il mese
+  useEffect(() => {
+    const monthString = format(currentMonth, 'yyyy-MM');
+    
+    // Mantieni gli altri parametri e aggiorna solo il mese
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('month', monthString);
+    setSearchParams(newParams, { replace: true });
+  }, [currentMonth, setSearchParams]);
+
   // Funzione per verificare se un giorno è aperto
   const isOpenDay = (date: string): boolean => {
     return openDays.some(day => day.date === date);
@@ -110,19 +151,32 @@ export function TurniMatrix() {
 
   // Funzione per gestire il click su una cella
   const handleCellClick = (day: number, timeSlot: 'MORNING' | 'AFTERNOON') => {
+    const selectedDate = new Date(getYear(currentMonth), getMonth(currentMonth), day);
+    const formattedDate = format(selectedDate, 'yyyy-MM-dd');
+    
     // Se la cella è già selezionata, deselezionala
     if (selectedDay === day && selectedTimeSlot === timeSlot) {
       setSelectedDay(null);
       setSelectedTimeSlot(null);
+      
+      // Rimuovi i parametri date e timeSlot dall'URL
+      const newParams = new URLSearchParams(searchParams);
+      newParams.delete('date');
+      newParams.delete('timeSlot');
+      setSearchParams(newParams, { replace: true });
+      
+      toast.info('Filtro rimosso');
       return;
     }
     
     setSelectedDay(day);
     setSelectedTimeSlot(timeSlot);
     
-    // Qui puoi aggiungere la logica per filtrare i turni in base alla data e alla fascia oraria selezionata
-    const selectedDate = new Date(getYear(currentMonth), getMonth(currentMonth), day);
-    const formattedDate = format(selectedDate, 'yyyy-MM-dd');
+    // Aggiorna i parametri URL
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('date', formattedDate);
+    newParams.set('timeSlot', timeSlot);
+    setSearchParams(newParams, { replace: true });
     
     toast.info('Filtro applicato', {
       description: `Selezionato ${format(selectedDate, 'd MMMM yyyy', { locale: it })} - ${timeSlot === 'MORNING' ? 'Mattina' : 'Pomeriggio'}`
@@ -213,9 +267,9 @@ export function TurniMatrix() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Matrice Turni - {format(currentMonth, 'MMMM yyyy', { locale: it })}</CardTitle>
+        <CardTitle>Turni - {format(currentMonth, 'MMMM yyyy', { locale: it })}</CardTitle>
         <CardDescription>
-          Visualizza il numero di iscrizioni per ogni turno del mese
+          Visualizza il numero di iscrizioni per ogni turno del mese. Clicca su una cella per filtrare.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -225,12 +279,12 @@ export function TurniMatrix() {
           </div>
         ) : (
           <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <div className="text-sm text-muted-foreground">
-                <span className="inline-block w-3 h-3 bg-red-100 dark:bg-red-900 mr-1 rounded-sm"></span> 0 iscritti
-                <span className="inline-block w-3 h-3 bg-yellow-100 dark:bg-yellow-900 mx-1 rounded-sm"></span> 1-2 iscritti
-                <span className="inline-block w-3 h-3 bg-green-100 dark:bg-green-900 mx-1 rounded-sm"></span> 3+ iscritti
-                <span className="inline-block w-3 h-3 bg-gray-100 dark:bg-gray-800 mx-1 rounded-sm"></span> Chiuso
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div className="text-sm text-muted-foreground flex flex-wrap gap-2">
+                <div><span className="inline-block w-3 h-3 bg-red-100 dark:bg-red-900 mr-1 rounded-sm"></span> 0 iscritti</div>
+                <div><span className="inline-block w-3 h-3 bg-yellow-100 dark:bg-yellow-900 mr-1 rounded-sm"></span> 1-2 iscritti</div>
+                <div><span className="inline-block w-3 h-3 bg-green-100 dark:bg-green-900 mr-1 rounded-sm"></span> 3+ iscritti</div>
+                <div><span className="inline-block w-3 h-3 bg-gray-100 dark:bg-gray-800 mr-1 rounded-sm"></span> Chiuso</div>
               </div>
               <div className="flex space-x-2">
                 <button
@@ -266,6 +320,13 @@ export function TurniMatrix() {
                   onClick={() => {
                     setSelectedDay(null);
                     setSelectedTimeSlot(null);
+                    
+                    // Rimuovi i parametri date e timeSlot dall'URL
+                    const newParams = new URLSearchParams(searchParams);
+                    newParams.delete('date');
+                    newParams.delete('timeSlot');
+                    setSearchParams(newParams, { replace: true });
+                    
                     toast.info('Filtro rimosso');
                   }}
                 >
