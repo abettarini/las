@@ -2,7 +2,7 @@ import { LogoutModal } from '@/components/auth/LogoutModal';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { Calendar, ChevronLeft, FileText, Home, LogOut, Users } from 'lucide-react';
+import { Calendar, ChevronLeft, ClipboardList, FileText, Home, LogOut, Users } from 'lucide-react';
 import { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/auth-context';
@@ -50,6 +50,12 @@ export default function AdminLayout() {
       path: '/admin/bookings',
       icon: Calendar,
       description: 'Gestione delle prenotazioni'
+    },
+    {
+      title: 'Turni',
+      path: '/admin/turni',
+      icon: ClipboardList,
+      description: 'Gestione dei turni dei direttori'
     }
   ];
 

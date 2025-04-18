@@ -3,36 +3,53 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useAuth } from '@/context/auth-context';
 import { cn } from '@/lib/utils';
-import { Calendar, ChevronLeft, LogOut, Settings, User } from 'lucide-react';
+import { Calendar, ChevronLeft, ClipboardList, LogOut, Settings, User } from 'lucide-react';
 import { useState } from 'react';
 import { Link, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 
-const menuItems = [
-  {
-    title: 'Profilo',
-    icon: User,
-    path: '/account/profilo',
-    description: 'Gestisci le tue informazioni personali'
-  },
-  {
-    title: 'Prenotazioni',
-    icon: Calendar,
-    path: '/account/prenotazioni',
-    description: 'Visualizza e gestisci le tue prenotazioni'
-  },
-  {
-    title: 'Impostazioni',
-    icon: Settings,
-    path: '/account/impostazioni',
-    description: 'Configura le impostazioni del tuo account'
+const getMenuItems = (hasRole: (role: string) => boolean) => {
+  const items = [
+    {
+      title: 'Profilo',
+      icon: User,
+      path: '/account/profilo',
+      description: 'Gestisci le tue informazioni personali'
+    },
+    {
+      title: 'Prenotazioni',
+      icon: Calendar,
+      path: '/account/prenotazioni',
+      description: 'Visualizza e gestisci le tue prenotazioni'
+    },
+    {
+      title: 'Impostazioni',
+      icon: Settings,
+      path: '/account/impostazioni',
+      description: 'Configura le impostazioni del tuo account'
+    }
+  ];
+  
+  // Aggiungi la voce "Turni" solo per gli utenti con ruolo ROLE_DIRECTOR
+  if (hasRole('ROLE_DIRECTOR')) {
+    items.push({
+      title: 'Turni',
+      icon: ClipboardList,
+      path: '/account/turni',
+      description: 'Gestisci i tuoi turni di presenza'
+    });
   }
-];
+  
+  return items;
+};
 
 export default function UserLayout() {
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, user, logout, hasRole } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  
+  // Ottieni gli elementi del menu in base ai ruoli dell'utente
+  const menuItems = getMenuItems(hasRole);
 
   // Se l'utente non è autenticato, reindirizza alla pagina di login
   if (!isAuthenticated || !user) {

@@ -111,9 +111,14 @@ export async function getUserById(id: string): Promise<ApiResponse> {
  * Aggiorna un utente specifico tramite ID
  * @param id - ID dell'utente
  * @param profileData - Dati del profilo da aggiornare
+ * @param roles - Ruoli dell'utente (opzionale)
  * @returns Risposta API con i dati dell'utente aggiornati
  */
-export async function updateUser(id: string, profileData: ProfileData): Promise<ApiResponse> {
+export async function updateUser(
+  id: string, 
+  profileData: ProfileData, 
+  roles?: string[]
+): Promise<ApiResponse> {
   try {
     // Ottieni il token di autenticazione
     const token = getTokenFromSession();
@@ -124,6 +129,13 @@ export async function updateUser(id: string, profileData: ProfileData): Promise<
       };
     }
 
+    // Prepara i dati da inviare
+    const userData = {
+      ...profileData,
+      // Includi i ruoli solo se sono stati forniti
+      ...(roles ? { roles } : {})
+    };
+
     // Invia la richiesta di aggiornamento
     const response = await fetch(`${API_URL}/admin/users/${id}`, {
       method: 'PUT',
@@ -131,7 +143,7 @@ export async function updateUser(id: string, profileData: ProfileData): Promise<
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify(profileData)
+      body: JSON.stringify(userData)
     });
 
     return await response.json();
