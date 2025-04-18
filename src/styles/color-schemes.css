@@ -1,0 +1,771 @@
+/* Schemi di colore per Tailwind CSS */
+
+/* SLATE */
+:root.theme-slate {
+  --primary: 215 20% 65%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 215 14% 85%;
+  --secondary-foreground: 215 20% 25%;
+  
+  --accent: 215 14% 90%;
+  --accent-foreground: 215 20% 25%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 215 20% 65%;
+  --border: 215 14% 85%;
+}
+
+:root.dark.theme-slate {
+  --primary: 215 20% 65%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 215 14% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 215 14% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 215 20% 65%;
+  --border: 215 14% 25%;
+}
+
+/* GRAY */
+:root.theme-gray {
+  --primary: 220 14% 65%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 220 14% 85%;
+  --secondary-foreground: 220 14% 25%;
+  
+  --accent: 220 14% 90%;
+  --accent-foreground: 220 14% 25%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 220 14% 65%;
+  --border: 220 14% 85%;
+}
+
+:root.dark.theme-gray {
+  --primary: 220 14% 65%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 220 14% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 220 14% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 220 14% 65%;
+  --border: 220 14% 25%;
+}
+
+/* ZINC */
+:root.theme-zinc {
+  --primary: 240 5% 65%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 240 5% 85%;
+  --secondary-foreground: 240 5% 25%;
+  
+  --accent: 240 5% 90%;
+  --accent-foreground: 240 5% 25%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 240 5% 65%;
+  --border: 240 5% 85%;
+}
+
+:root.dark.theme-zinc {
+  --primary: 240 5% 65%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 240 5% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 240 5% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 240 5% 65%;
+  --border: 240 5% 25%;
+}
+
+/* NEUTRAL */
+:root.theme-neutral {
+  --primary: 0 0% 65%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 0 0% 85%;
+  --secondary-foreground: 0 0% 25%;
+  
+  --accent: 0 0% 90%;
+  --accent-foreground: 0 0% 25%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 0 0% 65%;
+  --border: 0 0% 85%;
+}
+
+:root.dark.theme-neutral {
+  --primary: 0 0% 65%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 0 0% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 0 0% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 0 0% 65%;
+  --border: 0 0% 25%;
+}
+
+/* STONE */
+:root.theme-stone {
+  --primary: 25 5% 65%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 25 5% 85%;
+  --secondary-foreground: 25 5% 25%;
+  
+  --accent: 25 5% 90%;
+  --accent-foreground: 25 5% 25%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 25 5% 65%;
+  --border: 25 5% 85%;
+}
+
+:root.dark.theme-stone {
+  --primary: 25 5% 65%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 25 5% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 25 5% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 25 5% 65%;
+  --border: 25 5% 25%;
+}
+
+/* RED */
+:root.theme-red {
+  --primary: 0 72% 51%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 0 72% 90%;
+  --secondary-foreground: 0 72% 30%;
+  
+  --accent: 0 72% 95%;
+  --accent-foreground: 0 72% 30%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 0 72% 51%;
+  --border: 0 72% 90%;
+}
+
+:root.dark.theme-red {
+  --primary: 0 72% 51%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 0 72% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 0 72% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 0 72% 51%;
+  --border: 0 72% 25%;
+}
+
+/* ORANGE */
+:root.theme-orange {
+  --primary: 24 94% 53%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 24 94% 90%;
+  --secondary-foreground: 24 94% 30%;
+  
+  --accent: 24 94% 95%;
+  --accent-foreground: 24 94% 30%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 24 94% 53%;
+  --border: 24 94% 90%;
+}
+
+:root.dark.theme-orange {
+  --primary: 24 94% 53%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 24 94% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 24 94% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 24 94% 53%;
+  --border: 24 94% 25%;
+}
+
+/* AMBER */
+:root.theme-amber {
+  --primary: 38 92% 50%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 38 92% 90%;
+  --secondary-foreground: 38 92% 30%;
+  
+  --accent: 38 92% 95%;
+  --accent-foreground: 38 92% 30%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 38 92% 50%;
+  --border: 38 92% 90%;
+}
+
+:root.dark.theme-amber {
+  --primary: 38 92% 50%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 38 92% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 38 92% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 38 92% 50%;
+  --border: 38 92% 25%;
+}
+
+/* YELLOW */
+:root.theme-yellow {
+  --primary: 48 96% 53%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 48 96% 90%;
+  --secondary-foreground: 48 96% 30%;
+  
+  --accent: 48 96% 95%;
+  --accent-foreground: 48 96% 30%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 48 96% 53%;
+  --border: 48 96% 90%;
+}
+
+:root.dark.theme-yellow {
+  --primary: 48 96% 53%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 48 96% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 48 96% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 48 96% 53%;
+  --border: 48 96% 25%;
+}
+
+/* LIME */
+:root.theme-lime {
+  --primary: 85 78% 55%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 85 78% 90%;
+  --secondary-foreground: 85 78% 30%;
+  
+  --accent: 85 78% 95%;
+  --accent-foreground: 85 78% 30%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 85 78% 55%;
+  --border: 85 78% 90%;
+}
+
+:root.dark.theme-lime {
+  --primary: 85 78% 55%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 85 78% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 85 78% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 85 78% 55%;
+  --border: 85 78% 25%;
+}
+
+/* GREEN */
+:root.theme-green {
+  --primary: 142 71% 45%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 142 71% 90%;
+  --secondary-foreground: 142 71% 30%;
+  
+  --accent: 142 71% 95%;
+  --accent-foreground: 142 71% 30%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 142 71% 45%;
+  --border: 142 71% 90%;
+}
+
+:root.dark.theme-green {
+  --primary: 142 71% 45%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 142 71% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 142 71% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 142 71% 45%;
+  --border: 142 71% 25%;
+}
+
+/* EMERALD */
+:root.theme-emerald {
+  --primary: 160 84% 39%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 160 84% 90%;
+  --secondary-foreground: 160 84% 30%;
+  
+  --accent: 160 84% 95%;
+  --accent-foreground: 160 84% 30%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 160 84% 39%;
+  --border: 160 84% 90%;
+}
+
+:root.dark.theme-emerald {
+  --primary: 160 84% 39%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 160 84% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 160 84% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 160 84% 39%;
+  --border: 160 84% 25%;
+}
+
+/* TEAL */
+:root.theme-teal {
+  --primary: 173 80% 40%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 173 80% 90%;
+  --secondary-foreground: 173 80% 30%;
+  
+  --accent: 173 80% 95%;
+  --accent-foreground: 173 80% 30%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 173 80% 40%;
+  --border: 173 80% 90%;
+}
+
+:root.dark.theme-teal {
+  --primary: 173 80% 40%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 173 80% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 173 80% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 173 80% 40%;
+  --border: 173 80% 25%;
+}
+
+/* CYAN */
+:root.theme-cyan {
+  --primary: 186 94% 41%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 186 94% 90%;
+  --secondary-foreground: 186 94% 30%;
+  
+  --accent: 186 94% 95%;
+  --accent-foreground: 186 94% 30%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 186 94% 41%;
+  --border: 186 94% 90%;
+}
+
+:root.dark.theme-cyan {
+  --primary: 186 94% 41%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 186 94% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 186 94% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 186 94% 41%;
+  --border: 186 94% 25%;
+}
+
+/* SKY */
+:root.theme-sky {
+  --primary: 198 93% 60%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 198 93% 90%;
+  --secondary-foreground: 198 93% 30%;
+  
+  --accent: 198 93% 95%;
+  --accent-foreground: 198 93% 30%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 198 93% 60%;
+  --border: 198 93% 90%;
+}
+
+:root.dark.theme-sky {
+  --primary: 198 93% 60%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 198 93% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 198 93% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 198 93% 60%;
+  --border: 198 93% 25%;
+}
+
+/* BLUE */
+:root.theme-blue {
+  --primary: 221 83% 53%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 221 83% 90%;
+  --secondary-foreground: 221 83% 30%;
+  
+  --accent: 221 83% 95%;
+  --accent-foreground: 221 83% 30%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 221 83% 53%;
+  --border: 221 83% 90%;
+}
+
+:root.dark.theme-blue {
+  --primary: 221 83% 53%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 221 83% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 221 83% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 221 83% 53%;
+  --border: 221 83% 25%;
+}
+
+/* INDIGO */
+:root.theme-indigo {
+  --primary: 243 75% 59%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 243 75% 90%;
+  --secondary-foreground: 243 75% 30%;
+  
+  --accent: 243 75% 95%;
+  --accent-foreground: 243 75% 30%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 243 75% 59%;
+  --border: 243 75% 90%;
+}
+
+:root.dark.theme-indigo {
+  --primary: 243 75% 59%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 243 75% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 243 75% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 243 75% 59%;
+  --border: 243 75% 25%;
+}
+
+/* VIOLET */
+:root.theme-violet {
+  --primary: 250 91% 66%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 250 91% 90%;
+  --secondary-foreground: 250 91% 30%;
+  
+  --accent: 250 91% 95%;
+  --accent-foreground: 250 91% 30%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 250 91% 66%;
+  --border: 250 91% 90%;
+}
+
+:root.dark.theme-violet {
+  --primary: 250 91% 66%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 250 91% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 250 91% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 250 91% 66%;
+  --border: 250 91% 25%;
+}
+
+/* PURPLE */
+:root.theme-purple {
+  --primary: 269 80% 64%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 269 80% 90%;
+  --secondary-foreground: 269 80% 30%;
+  
+  --accent: 269 80% 95%;
+  --accent-foreground: 269 80% 30%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 269 80% 64%;
+  --border: 269 80% 90%;
+}
+
+:root.dark.theme-purple {
+  --primary: 269 80% 64%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 269 80% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 269 80% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 269 80% 64%;
+  --border: 269 80% 25%;
+}
+
+/* FUCHSIA */
+:root.theme-fuchsia {
+  --primary: 289 100% 58%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 289 100% 90%;
+  --secondary-foreground: 289 100% 30%;
+  
+  --accent: 289 100% 95%;
+  --accent-foreground: 289 100% 30%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 289 100% 58%;
+  --border: 289 100% 90%;
+}
+
+:root.dark.theme-fuchsia {
+  --primary: 289 100% 58%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 289 100% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 289 100% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 289 100% 58%;
+  --border: 289 100% 25%;
+}
+
+/* PINK */
+:root.theme-pink {
+  --primary: 330 81% 60%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 330 81% 90%;
+  --secondary-foreground: 330 81% 30%;
+  
+  --accent: 330 81% 95%;
+  --accent-foreground: 330 81% 30%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 330 81% 60%;
+  --border: 330 81% 90%;
+}
+
+:root.dark.theme-pink {
+  --primary: 330 81% 60%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 330 81% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 330 81% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 330 81% 60%;
+  --border: 330 81% 25%;
+}
+
+/* ROSE */
+:root.theme-rose {
+  --primary: 350 89% 60%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 350 89% 90%;
+  --secondary-foreground: 350 89% 30%;
+  
+  --accent: 350 89% 95%;
+  --accent-foreground: 350 89% 30%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 350 89% 60%;
+  --border: 350 89% 90%;
+}
+
+:root.dark.theme-rose {
+  --primary: 350 89% 60%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 350 89% 25%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 350 89% 20%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --ring: 350 89% 60%;
+  --border: 350 89% 25%;
+}

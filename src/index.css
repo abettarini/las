@@ -1,9 +1,12 @@
+@import './styles/color-schemes.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
+    /* Tema chiaro predefinito */
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
@@ -33,9 +36,17 @@
     --ring: 222.2 84% 4.9%;
  
     --radius: 0.5rem;
+
+    /* Colori per i grafici */
+    --chart-1: 222.2 47.4% 11.2%;
+    --chart-2: 215.4 16.3% 46.9%;
+    --chart-3: 0 84.2% 60.2%;
+    --chart-4: 210 40% 96.1%;
+    --chart-5: 217.2 32.6% 17.5%;
   }
  
   .dark {
+    /* Tema scuro */
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
  
@@ -63,6 +74,13 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+
+    /* Colori per i grafici in tema scuro */
+    --chart-1: 210 40% 98%;
+    --chart-2: 215 20.2% 65.1%;
+    --chart-3: 0 62.8% 30.6%;
+    --chart-4: 217.2 32.6% 17.5%;
+    --chart-5: 210 40% 96.1%;
   }
 }
  

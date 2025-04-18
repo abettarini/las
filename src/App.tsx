@@ -4,6 +4,8 @@ import { InstallButton } from '@/components/InstallButton';
 import HamburgerMenu from '@/components/navigation/hamburger';
 import { MainNavigation } from '@/components/navigation/main-nav';
 import { BadgeOrariApertura } from '@/components/OrariApertura';
+import { ThemeProvider } from '@/components/theme/theme-provider';
+import { ThemeToggle } from '@/components/theme/theme-toggle';
 import { Image } from '@/components/ui/image';
 import { EnvironmentRibbon } from '@/components/ui/ribbon';
 import { Toaster } from '@/components/ui/sonner';
@@ -65,24 +67,31 @@ const App: React.FC = () => {
       <EnvironmentRibbon />
 
     <Router>
-      <AuthProvider>
-        <div className="min-h-screen bg-background">
-          {/* Header */}
-          <header role="banner" className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <div className="container flex h-16 items-center">
-            <Link to="/" className="hidden lg:flex">
-              <Image src='/assets/las-logo.png' height={32} width={32} alt="Logo TSN Lastra a Signa" />
-              <span className="sr-only">Acme Inc</span>
-            </Link>
-              <HamburgerMenu />
-              <MainNavigation />
-              <div className="flex-1" />
-              <div className="flex items-center gap-3">
-                <BadgeOrariApertura />
-                <AuthButton />
+      <ThemeProvider 
+        defaultTheme="system" 
+        defaultColorScheme="blue"
+        storageKeyTheme="tsn-las-ui-theme" 
+        storageKeyColorScheme="tsn-las-ui-color-scheme"
+      >
+        <AuthProvider>
+          <div className="min-h-screen bg-background">
+            {/* Header */}
+            <header role="banner" className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+              <div className="container flex h-16 items-center">
+              <Link to="/" className="hidden lg:flex">
+                <Image src='/assets/las-logo.png' height={32} width={32} alt="Logo TSN Lastra a Signa" />
+                <span className="sr-only">Acme Inc</span>
+              </Link>
+                <HamburgerMenu />
+                <MainNavigation />
+                <div className="flex-1" />
+                <div className="flex items-center gap-3">
+                  <ThemeToggle />
+                  <BadgeOrariApertura />
+                  <AuthButton />
+                </div>
               </div>
-            </div>
-          </header>
+            </header>
 
           <main className="container mx-auto px-0 py-4" id="main">
             <Suspense fallback={<div className="flex justify-center items-center h-64"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div></div>}>
@@ -134,6 +143,7 @@ const App: React.FC = () => {
         <Toaster />
         <InstallButton />
       </AuthProvider>
+      </ThemeProvider>
     </Router>
     </div>
   );

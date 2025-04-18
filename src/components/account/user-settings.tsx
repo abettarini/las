@@ -1,3 +1,4 @@
+import { ThemeSettings } from '@/components/theme/theme-settings';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -112,6 +113,11 @@ const UserSettings = () => {
               )}
             </div>
           </div>
+        </div>
+        
+        {/* Impostazioni del tema */}
+        <div className="pt-6 border-t">
+          <ThemeSettings />
         </div>
         
         {/* Altre sezioni di impostazioni possono essere aggiunte qui */}
