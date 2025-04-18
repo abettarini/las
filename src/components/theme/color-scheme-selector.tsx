@@ -1,4 +1,5 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { isFeatureEnabled } from "@/config/features";
 import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
 import { useTheme } from "./theme-provider";
@@ -10,6 +11,10 @@ const colorSchemeNames: Record<string, string> = {
   zinc: "Zinco",
   neutral: "Neutro",
   stone: "Pietra",
+  white: "Bianco",
+  "8bit": "8-Bit Retro",
+  terminal: "Terminal",
+  phosphor: "Fosfori Verdi",
   red: "Rosso",
   orange: "Arancione",
   amber: "Ambra",
@@ -37,6 +42,10 @@ function getColorHex(colorScheme: string): string {
     zinc: "#71717a",
     neutral: "#737373",
     stone: "#78716c",
+    white: "#ffffff",
+    "8bit": "#4169e1",
+    terminal: "#00ff00",
+    phosphor: "#39ff14",
     red: "#ef4444",
     orange: "#f97316",
     amber: "#f59e0b",
@@ -61,6 +70,12 @@ function getColorHex(colorScheme: string): string {
 
 export function ColorSchemeSelector() {
   const { colorScheme, setColorScheme, availableColorSchemes } = useTheme();
+  const showColorSelector = isFeatureEnabled('themeColorSelector');
+
+  // Se il selettore di colori è disabilitato, non renderizzare nulla
+  if (!showColorSelector) {
+    return null;
+  }
 
   // Raggruppa gli schemi di colore per categoria
   const colorGroups = {
@@ -70,6 +85,9 @@ export function ColorSchemeSelector() {
     blues: ["cyan", "sky", "blue", "indigo"],
     purples: ["violet", "purple", "fuchsia", "pink", "rose"]
   };
+
+  // Aggiungi i temi speciali
+  const specialThemes = ["white", "8bit", "terminal", "phosphor"];
 
   return (
     <div className="space-y-4">
@@ -82,6 +100,21 @@ export function ColorSchemeSelector() {
       
       <ScrollArea className="h-[300px] rounded-md border">
         <div className="p-4 space-y-6">
+          {/* Temi speciali */}
+          <div className="space-y-2">
+            <h4 className="text-sm font-medium">Temi speciali</h4>
+            <div className="grid grid-cols-5 gap-2">
+              {specialThemes.map((scheme) => (
+                <ColorButton 
+                  key={scheme} 
+                  scheme={scheme} 
+                  isSelected={colorScheme === scheme}
+                  onClick={() => setColorScheme(scheme as any)}
+                />
+              ))}
+            </div>
+          </div>
+          
           {/* Grigi */}
           <div className="space-y-2">
             <h4 className="text-sm font-medium">Grigi</h4>
@@ -182,10 +215,18 @@ function ColorButton({
         "hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary",
         isSelected && "ring-2 ring-primary ring-offset-2"
       )}
-      style={{ backgroundColor: getColorHex(scheme) }}
+      style={{ 
+        backgroundColor: getColorHex(scheme),
+        border: scheme === "white" ? "1px solid #e5e7eb" : "none"
+      }}
     >
       {isSelected && (
-        <Check className="absolute inset-0 m-auto h-4 w-4 text-white drop-shadow-[0_0_1px_rgba(0,0,0,0.5)]" />
+        <Check 
+          className={cn(
+            "absolute inset-0 m-auto h-4 w-4 drop-shadow-[0_0_1px_rgba(0,0,0,0.5)]",
+            scheme === "white" ? "text-black" : "text-white"
+          )} 
+        />
       )}
     </button>
   );

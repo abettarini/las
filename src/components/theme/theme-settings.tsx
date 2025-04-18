@@ -3,11 +3,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
+import { isFeatureEnabled } from "@/config/features";
 import { Monitor, Moon, Sun } from "lucide-react";
 import { useTheme } from "./theme-provider";
 
 export function ThemeSettings() {
   const { theme, setTheme } = useTheme();
+  const showColorSelector = isFeatureEnabled('themeColorSelector');
 
   return (
     <Card>
@@ -60,10 +62,14 @@ export function ThemeSettings() {
           </RadioGroup>
         </div>
         
-        <Separator />
-        
-        {/* Selettore schema colori */}
-        <ColorSchemeSelector />
+        {showColorSelector && (
+          <>
+            <Separator />
+            
+            {/* Selettore schema colori */}
+            <ColorSchemeSelector />
+          </>
+        )}
       </CardContent>
     </Card>
   );

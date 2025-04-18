@@ -7,6 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { isFeatureEnabled } from "@/config/features";
 import { Moon, Palette, Sun } from "lucide-react";
 import { useTheme } from "./theme-provider";
 
@@ -18,6 +19,9 @@ const colorSchemeNames: Record<string, string> = {
   neutral: "Neutro",
   stone: "Pietra",
   white: "Bianco",
+  "8bit": "8-Bit Retro",
+  terminal: "Terminal",
+  phosphor: "Fosfori Verdi",
   red: "Rosso",
   orange: "Arancione",
   amber: "Ambra",
@@ -46,6 +50,9 @@ function getColorHex(colorScheme: string): string {
     neutral: "#737373",
     stone: "#78716c",
     white: "#ffffff",
+    "8bit": "#4169e1",
+    terminal: "#00ff00",
+    phosphor: "#39ff14",
     red: "#ef4444",
     orange: "#f97316",
     amber: "#f59e0b",
@@ -70,6 +77,7 @@ function getColorHex(colorScheme: string): string {
 
 export function ThemeToggle() {
   const { theme, setTheme, colorScheme, setColorScheme } = useTheme();
+  const showColorSelector = isFeatureEnabled('themeColorSelector');
 
   return (
     <DropdownMenu>
@@ -100,27 +108,31 @@ export function ThemeToggle() {
           Sistema
         </DropdownMenuItem>
         
-        <DropdownMenuSeparator />
-        
-        <DropdownMenuLabel className="flex items-center">
-          <Palette className="h-4 w-4 mr-2" />
-          Colore: {colorSchemeNames[colorScheme] || colorScheme}
-        </DropdownMenuLabel>
-        
-        <div className="grid grid-cols-6 gap-1 p-2">
-          {["blue", "green", "red", "purple", "orange", "white"].map((scheme) => (
-            <button
-              key={scheme}
-              className="w-6 h-6 rounded-full focus:outline-none focus:ring-2 focus:ring-primary"
-              style={{ 
-                backgroundColor: getColorHex(scheme),
-                border: scheme === "white" ? "1px solid #e5e7eb" : "none"
-              }}
-              onClick={() => setColorScheme(scheme as any)}
-              title={colorSchemeNames[scheme] || scheme}
-            />
-          ))}
-        </div>
+        {showColorSelector && (
+          <>
+            <DropdownMenuSeparator />
+            
+            <DropdownMenuLabel className="flex items-center">
+              <Palette className="h-4 w-4 mr-2" />
+              Colore: {colorSchemeNames[colorScheme] || colorScheme}
+            </DropdownMenuLabel>
+            
+            <div className="grid grid-cols-3 gap-1 p-2">
+              {["blue", "green", "red", "purple", "orange", "white", "8bit", "terminal", "phosphor"].map((scheme) => (
+                <button
+                  key={scheme}
+                  className="w-6 h-6 rounded-full focus:outline-none focus:ring-2 focus:ring-primary"
+                  style={{ 
+                    backgroundColor: getColorHex(scheme),
+                    border: scheme === "white" ? "1px solid #e5e7eb" : "none"
+                  }}
+                  onClick={() => setColorScheme(scheme as any)}
+                  title={colorSchemeNames[scheme] || scheme}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );
