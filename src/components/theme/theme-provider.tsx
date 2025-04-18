@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 // Definizione dei tipi
 type Theme = "light" | "dark" | "system";
-type ColorScheme = "slate" | "gray" | "zinc" | "neutral" | "stone" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose";
+type ColorScheme = "slate" | "gray" | "zinc" | "neutral" | "stone" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | "white";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -22,7 +22,7 @@ type ThemeProviderState = {
 
 // Elenco degli schemi di colore disponibili
 const availableColorSchemes: ColorScheme[] = [
-  "slate", "gray", "zinc", "neutral", "stone", 
+  "slate", "gray", "zinc", "neutral", "stone", "white",
   "red", "orange", "amber", "yellow", "lime", 
   "green", "emerald", "teal", "cyan", "sky", 
   "blue", "indigo", "violet", "purple", "fuchsia", 

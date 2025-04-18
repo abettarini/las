@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Moon, Palette, Sun } from "lucide-react";
 import { useTheme } from "./theme-provider";
@@ -17,6 +17,7 @@ const colorSchemeNames: Record<string, string> = {
   zinc: "Zinco",
   neutral: "Neutro",
   stone: "Pietra",
+  white: "Bianco",
   red: "Rosso",
   orange: "Arancione",
   amber: "Ambra",
@@ -44,6 +45,7 @@ function getColorHex(colorScheme: string): string {
     zinc: "#71717a",
     neutral: "#737373",
     stone: "#78716c",
+    white: "#ffffff",
     red: "#ef4444",
     orange: "#f97316",
     amber: "#f59e0b",
@@ -105,12 +107,15 @@ export function ThemeToggle() {
           Colore: {colorSchemeNames[colorScheme] || colorScheme}
         </DropdownMenuLabel>
         
-        <div className="grid grid-cols-5 gap-1 p-2">
-          {["blue", "green", "red", "purple", "orange"].map((scheme) => (
+        <div className="grid grid-cols-6 gap-1 p-2">
+          {["blue", "green", "red", "purple", "orange", "white"].map((scheme) => (
             <button
               key={scheme}
               className="w-6 h-6 rounded-full focus:outline-none focus:ring-2 focus:ring-primary"
-              style={{ backgroundColor: getColorHex(scheme) }}
+              style={{ 
+                backgroundColor: getColorHex(scheme),
+                border: scheme === "white" ? "1px solid #e5e7eb" : "none"
+              }}
               onClick={() => setColorScheme(scheme as any)}
               title={colorSchemeNames[scheme] || scheme}
             />
