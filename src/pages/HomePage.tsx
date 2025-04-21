@@ -1,9 +1,14 @@
 import AdBanner, { BannerProps } from '@/components/ad-banner';
-import Contatti from '@/components/contatti/contatti';
+import { ContactsNew } from '@/components/contatti';
+import DimaCTA from '@/components/dima-cta';
+import FAQ from "@/components/faq/faq";
 import NewsList, { Content } from '@/components/news/news-list';
 import ServiceCard, { services } from '@/components/ServiceCard';
+import { DirectorHomeCalendar } from '@/components/turni/director-home-calendar';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { Image } from '@/components/ui/image';
+import { useAuth } from '@/context/auth-context';
 import { getAllNews } from '@/services/news-service';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
@@ -24,7 +29,9 @@ const banners: BannerProps[] = [
 
 const Home: React.FC = () => {
   const location = useLocation();
+  const { user, hasRole } = useAuth();
   const [contents, setContents] = useState<Content[]>([]);
+  const isDirector = user && hasRole('ROLE_DIRECTOR');
 
   useEffect(() => {
     getAllNews().then((response) => {
@@ -39,67 +46,78 @@ const Home: React.FC = () => {
     if (location.hash) {
       scrollToSection(location.hash.substring(1));
     } else {
-      scrollToSection('hero');
+      scrollToSection(isDirector ? 'director-calendar' : 'hero');
     }
-  }, [location]);
+  }, [location, isDirector]);
 
   return (
     <>
       <Helmet>
         <meta property="og:title" content="Home" />
       </Helmet>
-      {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden bg-background">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="text-left space-y-6">
-              <h1 className="text-5xl font-bold leading-tight">
-                Benvenuti al<br />
-                <span className="text-primary">TSN Lastra a Signa</span>
-              </h1>
-              <p className="text-xl text-muted-foreground">
-              Lo scopo della nostra associazione e' l'insegnamento e l'addestramento al maneggio delle armi consapevole e in sicurezza; mediante corsi di formazione dedicati a Polizia Municipale, Guardie Giurate, corpi armati istituzionali e civili.
+      {isDirector ? (
+        /* Director Calendar Section */
+        <section id="director-calendar" className="relative py-12 overflow-hidden bg-background">
+          <div className="container mx-auto px-4">
+            <DirectorHomeCalendar />
+          </div>
+        </section>
+      ) : (
+        /* Hero Section */
+        <section id="hero" className="relative py-20 overflow-hidden bg-background">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+              <div className="text-left space-y-6">
+                <h1 className="text-5xl font-bold leading-tight">
+                  Benvenuti al<br />
+                  <span className="text-primary">TSN Lastra a Signa</span>
+                </h1>
+                <p className="text-xl text-muted-foreground">
+                Lo scopo della nostra associazione e' l'insegnamento e l'addestramento al maneggio delle armi consapevole e in sicurezza; mediante corsi di formazione dedicati a Polizia Municipale, Guardie Giurate, corpi armati istituzionali e civili.
 
-Troverete un punto di ritrovo dove poter scambiare idee, nozioni ed esperienze in un clima sereno.
+  Troverete un punto di ritrovo dove poter scambiare idee, nozioni ed esperienze in un clima sereno.
 
- 
-              </p>
-              <div className="flex gap-4">
-                <Button size="lg" onClick={() => scrollToSection('servizi')}>
-                  Scopri i Nostri Servizi
-                </Button>
-                <Button size="lg" variant="outline" onClick={() => scrollToSection('contatti')}>
-                  Contattaci
-                </Button>
+   
+                </p>
+                <div className="flex gap-4 flex-wrap">
+                  <Button size="lg" onClick={() => scrollToSection('servizi')}>
+                    Scopri i Nostri Servizi
+                  </Button>
+                  <Button size="lg" variant="secondary" onClick={() => scrollToSection('dima-corso')}>
+                    Corso DIMA
+                  </Button>
+                  <Button size="lg" variant="outline" onClick={() => scrollToSection('contatti')}>
+                    Contattaci
+                  </Button>
+                </div>
+                <div className="pt-6 flex gap-8">
+                  <div>
+                    <div className="text-2xl font-bold">1884</div>
+                    <div className="text-muted-foreground">Data di nascita</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold">3500+</div>
+                    <div className="text-muted-foreground">Membri Attivi</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold">3</div>
+                    <div className="text-muted-foreground">Categoria</div>
+                  </div>
+                </div>
               </div>
-              <div className="pt-6 flex gap-8">
-                <div>
-                  <div className="text-2xl font-bold">1884</div>
-                  <div className="text-muted-foreground">Data di nascita</div>
+              <div className="relative h-[400px] bg-muted rounded-lg overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
+                  {/* Placeholder for hero image */}
+                  <Image width={700} height={400} src="/assets/poligono.jpg" alt="Hero Image" className="object-cover object-center"/>
                 </div>
-                <div>
-                  <div className="text-2xl font-bold">3500+</div>
-                  <div className="text-muted-foreground">Membri Attivi</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold">3</div>
-                  <div className="text-muted-foreground">Categoria</div>
-                </div>
-              </div>
-            </div>
-            <div className="relative h-[400px] bg-muted rounded-lg overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
-                {/* Placeholder for hero image */}
-                <Image width={700} height={400} src="/assets/poligono.jpg" alt="Hero Image" className="object-cover object-center"/>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Services Section */}
       <section className="py-12" id="servizi">
-        <h2 className="text-3xl font-bold mb-8 text-center">I Nostri Servizi</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service) => (
             <ServiceCard key={service.title} {...service} />
@@ -113,9 +131,27 @@ Troverete un punto di ritrovo dove poter scambiare idee, nozioni ed esperienze i
         <NewsList contents={contents} itemsPerPage={3}/>
       </section>
 
-      {/* Contact Form Section */}
-      <Contatti />
+      {/* DIMA Course CTA Section */}
+      <section className="py-12" id="dima-corso">
+        <div className="container mx-auto px-4">
+          <DimaCTA 
+            title="Corso DIMA - Diploma di Idoneità al Maneggio Armi" 
+            description="Partecipa al nostro corso per otttenere il Diploma di Idoneità al . Impara le tecniche di tiro e la gestione sicura delle armi con i nostri istruttori qualificati."
+            buttonText="Prenota il tuo posto ora"
+            className="shadow-lg"
+          />
+        </div>
+      </section>
 
+      {/* Contact Form Section */}
+      <section className="py-12" id="contatti">
+        <Card className="border border-gray-200 rounded-lg shadow-sm bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 pt-4 pb-8">
+        <h2 className="text-3xl font-bold mb-8 text-center">Contatti</h2>
+        <ContactsNew />
+        </Card>
+      </section>
+
+      <FAQ />
       {/* Ad Banners */}
       <section className="py-12" id="banner">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">

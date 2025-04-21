@@ -94,19 +94,45 @@ export function TurniCalendar() {
 
   // Funzione per verificare se un giorno è aperto
   const isOpenDay = (date: Date) => {
-    const dateString = format(date, 'yyyy-MM-dd');
-    return openDays.some(day => day.date === dateString);
+    try {
+      // Verifica che la data sia valida
+      if (date && !isNaN(date.getTime())) {
+        const dateString = format(date, 'yyyy-MM-dd');
+        return openDays.some(day => day.date === dateString);
+      }
+      return false;
+    } catch (error) {
+      console.error('Errore nella verifica del giorno aperto:', error);
+      return false;
+    }
   };
 
   // Funzione per ottenere le informazioni di un giorno aperto
   const getOpenDayInfo = (date: Date): OpenDay | undefined => {
-    const dateString = format(date, 'yyyy-MM-dd');
-    return openDays.find(day => day.date === dateString);
+    try {
+      // Verifica che la data sia valida
+      if (date && !isNaN(date.getTime())) {
+        const dateString = format(date, 'yyyy-MM-dd');
+        return openDays.find(day => day.date === dateString);
+      }
+      return undefined;
+    } catch (error) {
+      console.error('Errore nel recupero delle informazioni del giorno:', error);
+      return undefined;
+    }
   };
 
   // Funzione per iscriversi a un turno
   const handleIscriviti = async () => {
     if (!selectedDate || !selectedTimeSlot || !user || !token) return;
+    
+    // Verifica che la data sia valida
+    if (isNaN(selectedDate.getTime())) {
+      toast.error('Errore', {
+        description: 'La data selezionata non è valida. Seleziona un\'altra data.'
+      });
+      return;
+    }
 
     setIsSubmitting(true);
     try {
@@ -126,7 +152,11 @@ export function TurniCalendar() {
         const newTurno = await response.json();
         setMyTurni([...myTurni, newTurno]);
         toast.success('Iscrizione completata', {
-          description: `Ti sei iscritto al turno di ${selectedTimeSlot === 'MORNING' ? 'mattina' : 'pomeriggio'} del ${format(selectedDate, 'd MMMM yyyy', { locale: it })}`
+          description: `Ti sei iscritto al turno di ${selectedTimeSlot === 'MORNING' ? 'mattina' : 'pomeriggio'} del ${
+            selectedDate && !isNaN(selectedDate.getTime())
+              ? format(selectedDate, 'd MMMM yyyy', { locale: it })
+              : 'data selezionata'
+          }`
         });
         setSelectedDate(undefined);
         setSelectedTimeSlot(null);
@@ -212,7 +242,9 @@ export function TurniCalendar() {
               {selectedDate && (
                 <div className="space-y-4">
                   <h3 className="font-medium">
-                    Seleziona fascia oraria per {format(selectedDate, 'd MMMM yyyy', { locale: it })}:
+                    Seleziona fascia oraria per {selectedDate && !isNaN(selectedDate.getTime()) 
+                      ? format(selectedDate, 'd MMMM yyyy', { locale: it })
+                      : 'data selezionata'}:
                   </h3>
                   
                   <RadioGroup 
@@ -293,7 +325,23 @@ export function TurniCalendar() {
               {/* Raggruppa i turni per data */}
               {Object.entries(
                 myTurni
-                  .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+                  .sort((a, b) => {
+                    // Validazione delle date prima del confronto
+                    try {
+                      const dateA = new Date(a.date);
+                      const dateB = new Date(b.date);
+                      
+                      // Verifica che entrambe le date siano valide
+                      if (!isNaN(dateA.getTime()) && !isNaN(dateB.getTime())) {
+                        return dateA.getTime() - dateB.getTime();
+                      }
+                      // Se una delle date non è valida, mantieni l'ordine originale
+                      return 0;
+                    } catch (error) {
+                      console.error('Errore durante il confronto delle date:', error);
+                      return 0;
+                    }
+                  })
                   .reduce((acc, turno) => {
                     if (!acc[turno.date]) {
                       acc[turno.date] = [];
@@ -305,14 +353,28 @@ export function TurniCalendar() {
                 // Separa i turni di mattina e pomeriggio
                 const morningTurni = turni.filter(t => t.timeSlot === 'MORNING');
                 const afternoonTurni = turni.filter(t => t.timeSlot === 'AFTERNOON');
-                const turnoDate = new Date(date);
+                
+                // Assicurati che la data sia valida prima di creare l'oggetto Date
+                let formattedDate = date;
+                try {
+                  // Verifica se la data è in formato ISO (YYYY-MM-DD)
+                  if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+                    const turnoDate = new Date(date);
+                    // Verifica che la data sia valida
+                    if (!isNaN(turnoDate.getTime())) {
+                      formattedDate = format(turnoDate, 'EEEE d MMMM yyyy', { locale: it });
+                    }
+                  }
+                } catch (error) {
+                  console.error(`Errore nel formato della data: ${date}`, error);
+                }
                 
                 return (
                   <div key={date} className="border rounded-md overflow-hidden">
                     {/* Intestazione con la data */}
                     <div className="bg-muted p-3 border-b">
                       <h3 className="font-medium">
-                        {format(turnoDate, 'EEEE d MMMM yyyy', { locale: it })}
+                        {formattedDate}
                       </h3>
                     </div>
                     

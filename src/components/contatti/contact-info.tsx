@@ -5,7 +5,7 @@ const ContactInfo: React.FC = () => {
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm">
       <h3 className="text-xl font-semibold mb-4">Informazioni di contatto</h3>
-      <div className="space-y-4">
+      <div className="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="flex items-start">
           <MapPin className="h-5 w-5 text-primary mr-3 mt-0.5" />
           <div>

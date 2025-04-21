@@ -24,10 +24,11 @@ const LazyQuizPage = lazy(() => import('./pages/QuizPage'));
 const LazyStoriaPage = lazy(() => import('@/components/Storia'));
 const LazyConsiglioDirettivoPage = lazy(() => import('./pages/ConsiglioDirettivoPage'));
 const LazyStrutturaIndicazioniPage = lazy(() => import('./pages/StrutturaIndicazioniPage'));
-const LazyContattiFaqPage = lazy(() => import('./pages/ContattiFaqPage'));
 const LazyBilanciPage = lazy(() => import('./pages/BilanciPage'));
 const LazyBookingPage = lazy(() => import('./pages/BookingPage'));
 const LazyOrariPage = lazy(() => import('./pages/OrariPage'));
+const LazyPrezziPage = lazy(() => import('./pages/PrezziPage'));
+const LazyArmeriaPage = lazy(() => import('./pages/ArmeriaPage'));
 const LazyCancelBookingPage = lazy(() => import('./pages/CancelBookingPage'));
 const LazyRegisterPage = lazy(() => import('./pages/RegisterPage'));
 const LazyLoginPage = lazy(() => import('./pages/LoginPage'));
@@ -103,8 +104,9 @@ const App: React.FC = () => {
                 <Route path="/chisiamo/consiglio-direttivo" element={<div className="flex-1 p-6"><LazyConsiglioDirettivoPage /></div>} />
                 <Route path="/struttura/impianti" element={<div className="flex-1 p-6"><ImpiantiPage /></div>} />
                 <Route path="/struttura/dove-siamo" element={<div className="flex-1 p-6"><LazyStrutturaIndicazioniPage /></div>} />
+                <Route path="/struttura/prezzi" element={<div className="flex-1 p-6"><LazyPrezziPage /></div>} />
+                <Route path="/struttura/armeria" element={<div className="flex-1 p-6"><LazyArmeriaPage /></div>} />
                 <Route path="/annulla-prenotazione/:id" element={<div className="flex-1 p-6"><LazyCancelBookingPage /></div>} />
-                <Route path="/contatti-faq" element={<div className="flex-1 p-6"><LazyContattiFaqPage /></div>} />
                 <Route path="/prenotazioni" element={<div className="flex-1 p-6"><LazyBookingPage /></div>} />
                 <Route path="/struttura/orari" element={<div className="flex-1 p-6"><LazyOrariPage /></div>} />
                 <Route path="/chisiamo/bilanci" element={<div className="flex-1 p-6"><LazyBilanciPage /></div>} />

@@ -1,14 +1,16 @@
 import { Button } from '@/components/ui/button'
 import { Award, LucideIcon, Shield, Target, Users } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import Rifle from './icons/Rifle'
 
-type IconType = 'target' | 'shield' | 'users' | 'award'
+type IconType = 'target' | 'shield' | 'users' | 'award' | 'rifle'
 
 const iconMap: Record<IconType, LucideIcon> = {
   target: Target,
   shield: Shield,
   users: Users,
   award: Award,
+  rifle: Rifle,
 }
 
 interface ServiceProps {
@@ -65,11 +67,11 @@ export const services: Service[] = [
     link: "/"
   },
   {
-    icon: "users",
-    title: "Iscrizioni",
-    description: "Diventa membro del nostro poligono e accedi a vantaggi esclusivi.",
-    ctaText: "Iscriviti",
-    link: "/iscrizioni"
+    icon: "rifle",
+    title: "Armeria",
+    description: "Armi a noleggio e munizioni acquistabili presso la struttura.",
+    ctaText: "Visualizza",
+    link: "/struttura/armeria"
   },
   {
     icon: "award",

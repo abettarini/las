@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/context/auth-context';
 import { API_URL, cn } from '@/lib/utils';
-import { format, getDaysInMonth, getMonth, getYear, parse, startOfMonth } from 'date-fns';
+import { format, getDaysInMonth, getMonth, getYear, parse } from 'date-fns';
 import { it } from 'date-fns/locale';
 import { Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -23,7 +23,7 @@ interface OpenDay {
   isAfternoonOpen: boolean;
 }
 
-export function TurniMatrix() {
+export function TurniMatrixFlex() {
   const { token } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   
@@ -183,89 +183,87 @@ export function TurniMatrix() {
     });
   };
 
-  // Genera le celle della matrice usando CSS Grid
-  const generateMatrix = () => {
+  // Genera le celle della matrice usando Flexbox
+  const generateFlexMatrix = () => {
     const daysInMonth = getDaysInMonth(currentMonth);
-    const firstDayOfMonth = startOfMonth(currentMonth);
     const year = getYear(currentMonth);
     const month = getMonth(currentMonth);
     
     const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
     
-    // Calcola il numero di colonne necessarie (1 per l'intestazione + giorni del mese)
-    const gridColumns = daysInMonth + 1;
-    
     return (
       <div className="overflow-x-auto pb-2">
-        <div 
-          className="grid gap-[1px] bg-border" 
-          style={{ 
-            gridTemplateColumns: `minmax(120px, auto) repeat(${daysInMonth}, minmax(24px, 1fr))`,
-            width: 'max-content',
-            minWidth: '100%'
-          }}
-        >
-          {/* Header row - labels */}
-          <div className="p-1 bg-muted font-medium text-left">Turno / Giorno 1</div>
-          
-          {/* Header row - days */}
-          {days.map(day => (
-            <div key={day} className="p-1 bg-muted font-medium text-center">
-              {day}
+        <div className="flex flex-col min-w-full">
+          {/* Header row */}
+          <div className="flex border-b border-border">
+            <div className="flex-shrink-0 w-24 p-1 bg-muted font-medium">Turno / Giorno</div>
+            <div className="flex flex-1">
+              {days.map(day => (
+                <div 
+                  key={day} 
+                  className="flex-1 min-w-[40px] p-1 bg-muted font-medium text-center border-l border-border"
+                >
+                  {day}
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
           
-          {/* Morning row - label */}
-          <div className="p-1 bg-muted font-medium">Mattina</div>
+          {/* Morning row */}
+          <div className="flex border-b border-border">
+            <div className="flex-shrink-0 w-24 p-1 bg-muted font-medium">Mattina</div>
+            <div className="flex flex-1">
+              {days.map(day => {
+                const date = new Date(year, month, day);
+                const dateString = format(date, 'yyyy-MM-dd');
+                const openDay = getOpenDayInfo(dateString);
+                const isOpen = openDay?.isMorningOpen;
+                const count = isOpen ? countShiftRegistrations(dateString, 'MORNING') : 0;
+                
+                return (
+                  <div 
+                    key={`morning-${day}`} 
+                    className={cn(
+                      "flex-1 min-w-[40px] p-1 text-center cursor-pointer shadow-sm hover:shadow-md transition-shadow flex items-center justify-center border-l border-border",
+                      isOpen ? getCellColor(count) : "bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600",
+                      selectedDay === day && selectedTimeSlot === 'MORNING' && "ring-2 ring-primary"
+                    )}
+                    onClick={() => isOpen && handleCellClick(day, 'MORNING')}
+                  >
+                    {isOpen ? count : ''}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
           
-          {/* Morning row - cells */}
-          {days.map(day => {
-            const date = new Date(year, month, day);
-            const dateString = format(date, 'yyyy-MM-dd');
-            const openDay = getOpenDayInfo(dateString);
-            const isOpen = openDay?.isMorningOpen;
-            const count = isOpen ? countShiftRegistrations(dateString, 'MORNING') : 0;
-            
-            return (
-              <div 
-                key={`morning-${day}`} 
-                className={cn(
-                  "p-1 text-center cursor-pointer shadow-sm hover:shadow-md transition-shadow flex items-center justify-center",
-                  isOpen ? getCellColor(count) : "bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600",
-                  selectedDay === day && selectedTimeSlot === 'MORNING' && "ring-2 ring-primary"
-                )}
-                onClick={() => isOpen && handleCellClick(day, 'MORNING')}
-              >
-                {isOpen ? count : ''}
-              </div>
-            );
-          })}
-          
-          {/* Afternoon row - label */}
-          <div className="p-1 bg-muted font-medium">Pomeriggio</div>
-          
-          {/* Afternoon row - cells */}
-          {days.map(day => {
-            const date = new Date(year, month, day);
-            const dateString = format(date, 'yyyy-MM-dd');
-            const openDay = getOpenDayInfo(dateString);
-            const isOpen = openDay?.isAfternoonOpen;
-            const count = isOpen ? countShiftRegistrations(dateString, 'AFTERNOON') : 0;
-            
-            return (
-              <div 
-                key={`afternoon-${day}`} 
-                className={cn(
-                  "p-1 text-center cursor-pointer shadow-sm hover:shadow-md transition-shadow flex items-center justify-center",
-                  isOpen ? getCellColor(count) : "bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600",
-                  selectedDay === day && selectedTimeSlot === 'AFTERNOON' && "ring-2 ring-primary"
-                )}
-                onClick={() => isOpen && handleCellClick(day, 'AFTERNOON')}
-              >
-                {isOpen ? count : ''}
-              </div>
-            );
-          })}
+          {/* Afternoon row */}
+          <div className="flex">
+            <div className="flex-shrink-0 w-24 p-1 bg-muted font-medium">Pomeriggio</div>
+            <div className="flex flex-1">
+              {days.map(day => {
+                const date = new Date(year, month, day);
+                const dateString = format(date, 'yyyy-MM-dd');
+                const openDay = getOpenDayInfo(dateString);
+                const isOpen = openDay?.isAfternoonOpen;
+                const count = isOpen ? countShiftRegistrations(dateString, 'AFTERNOON') : 0;
+                
+                return (
+                  <div 
+                    key={`afternoon-${day}`} 
+                    className={cn(
+                      "flex-1 min-w-[40px] p-1 text-center cursor-pointer shadow-sm hover:shadow-md transition-shadow flex items-center justify-center border-l border-border",
+                      isOpen ? getCellColor(count) : "bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600",
+                      selectedDay === day && selectedTimeSlot === 'AFTERNOON' && "ring-2 ring-primary"
+                    )}
+                    onClick={() => isOpen && handleCellClick(day, 'AFTERNOON')}
+                  >
+                    {isOpen ? count : ''}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -317,7 +315,7 @@ export function TurniMatrix() {
                 </button>
               </div>
             </div>
-            {generateMatrix()}
+            {generateFlexMatrix()}
             {selectedDay && selectedTimeSlot && (
               <div className="mt-4 p-3 border rounded-md bg-muted/30">
                 <h3 className="font-medium">
@@ -349,4 +347,4 @@ export function TurniMatrix() {
   );
 }
 
-export default TurniMatrix;
+export default TurniMatrixFlex;

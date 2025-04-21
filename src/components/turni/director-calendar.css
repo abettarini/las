@@ -1,0 +1,13 @@
+:root {
+  --blue-100: #dbeafe;
+  --blue-800: #1e40af;
+  --green-100: #dcfce7;
+  --green-800: #166534;
+}
+
+.dark {
+  --blue-100: #1e3a8a;
+  --blue-800: #93c5fd;
+  --green-100: #065f46;
+  --green-800: #86efac;
+}

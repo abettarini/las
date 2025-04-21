@@ -1,17 +1,5 @@
 [
     {
-        "question": "Qual è l'orario di apertura?",
-        "answer": "Siamo aperti dal Martedì alla Domenica con orari specifici per ogni giorno."
-    },
-    {
-        "question": "Dove si trova il poligono?",
-        "answer": "Il poligono si trova in Via del Tiro a Segno, 1, 50055 Lastra a Signa (FI)."
-    },
-    {
-        "question": "Come posso contattarvi?",
-        "answer": "Puoi contattarci via email a info@poligonolastra.it o telefonicamente al +39 055 8722638."
-    },
-    {
         "question": "Sono iscritto ad un altra sezione U.I.T.S. posso utilizzare la vostra struttura?",
         "answer": "Se si è tesserati preso un altra sezione U.I.T.S., ci si può associare presso la nostra struttura, pagando la sola quota associativa di 55 euro. La nostra sezione essendo gemellata con quella di Colle Valdelsa permette ai suoi soci di utilizzare la nostra struttura direttamente."
     },
@@ -25,10 +13,6 @@
     },
     {
         "question": "Se il mio porto d'armi è scaduto o dal mio congedo militare sono passati più di 10 anni, devo rifare l'abilitazione al maneggio delle armi?",
-        "answer": "Si"
-    },
-    {
-        "question": "Prova",
         "answer": "Si"
     }
 ]

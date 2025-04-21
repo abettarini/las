@@ -19,6 +19,18 @@ const struttura: MenuItem[] = [
       href: "/struttura/impianti",
       description:
         "Dai un'occhiata ai nostri impianti.",
+    },
+    {
+      title: "Prezzi",
+      href: "/struttura/prezzi",
+      description:
+        "Listino prezzi e tariffe per i servizi offerti.",
+    },
+    {
+      title: "Armeria",
+      href: "/struttura/armeria",
+      description:
+        "Armi disponibili per il noleggio e munizioni in vendita.",
     }
 ];
   
@@ -84,11 +96,9 @@ const attivitaIstituzionale: MenuItem[] = [
 const mainMenu: MenuItem[] = [
     {title: 'Attività Istituzionale', image: "/assets/logo-uits.jpeg", href: '/', description: 'Attività istituzionali.', heading: 'UITS', submenu: attivitaIstituzionale},
     {title: 'Struttura', submenu: struttura},
-    {title: 'Servizi', href: '/#servizi'},
     {title: 'News', href: '/#news'},
     {title: 'Iscrizioni', submenu: iscrizioni},
     {title: 'Chi siamo', submenu: chisiamo},
-    {title: 'Contatti e FAQ', href: '/contatti-faq'},
     {title: 'Prenotazioni', href: '/prenotazioni'}
 ];
 

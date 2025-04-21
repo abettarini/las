@@ -11,14 +11,15 @@ const Contatti: React.FC = () => {
             <div className="container mx-auto mb-12">
                 <div className="flex flex-col lg:flex-row gap-8">
                     {/* Left side: Contact info */}
-                    <div className="lg:w-1/2">
-                        <ContactInfo />
-                    </div>
-
-                    {/* Right side: Contact form */}
                     <div className="lg:w-1/2 bg-white p-6 rounded-lg shadow-sm">
                         <h3 className="text-xl font-semibold mb-4">Inviaci un messaggio</h3>
                         <ContactForm />
+                    </div>
+
+                    {/* Right side: Contact form */}
+                    
+                    <div className="lg:w-1/2">
+                        <ContactInfo />
                     </div>
                 </div>
             </div>
