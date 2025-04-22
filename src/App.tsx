@@ -71,7 +71,7 @@ const App: React.FC = () => {
     <Router>
       <ThemeProvider 
         defaultTheme="system" 
-        defaultColorScheme="blue"
+        defaultColorScheme="white"
         storageKeyTheme="tsn-las-ui-theme" 
         storageKeyColorScheme="tsn-las-ui-color-scheme"
       >
