@@ -120,3 +120,178 @@
 .icon-incorrect::before {
   content: '❌';
 }
+
+/* Stili specifici per i componenti di contatto */
+.contact-card {
+  @apply bg-card text-card-foreground border border-border rounded-lg shadow-sm;
+}
+
+.contact-info-card {
+  @apply bg-card text-card-foreground border border-border rounded-lg shadow-sm p-4;
+}
+
+.contact-section {
+  @apply py-12;
+}
+
+.contact-heading {
+  @apply text-3xl font-bold mb-8 text-center;
+}
+
+.contact-subheading {
+  @apply text-xl font-semibold mb-4;
+}
+
+.contact-container {
+  @apply container mx-auto mb-12;
+}
+
+.contact-map-container {
+  @apply w-full h-[400px] rounded-lg overflow-hidden shadow-sm border border-border;
+}
+
+.contact-icon {
+  @apply h-5 w-5 text-primary mr-3 mt-0.5;
+}
+
+/* Stili specifici per il componente FAQ */
+.faq-section {
+  @apply w-full py-12;
+}
+
+.faq-container {
+  @apply mx-auto max-w-6xl px-4;
+}
+
+.faq-heading {
+  @apply text-3xl font-bold mb-10 text-center;
+}
+
+.faq-item {
+  @apply flex gap-4 bg-card text-card-foreground rounded-lg p-6 shadow-sm border border-border h-full;
+}
+
+.faq-number {
+  @apply flex items-center justify-center w-8 h-8 rounded-full bg-muted text-muted-foreground font-semibold;
+}
+
+.faq-content {
+  @apply space-y-2;
+}
+
+.faq-question {
+  @apply text-lg font-medium;
+}
+
+.faq-answer {
+  @apply text-muted-foreground;
+}
+
+/* Stili specifici per il componente OrariPage */
+.orari-container {
+  @apply max-w-4xl mx-auto;
+}
+
+.orari-heading {
+  @apply text-3xl font-bold mb-8 text-center;
+}
+
+.orari-info-box {
+  @apply p-6 rounded-lg shadow-md mb-8 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900;
+}
+
+.orari-info-heading {
+  @apply text-xl font-semibold mb-4 text-blue-800 dark:text-blue-300;
+}
+
+.orari-closures-box {
+  @apply p-6 rounded-lg shadow-md bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900;
+}
+
+.orari-closures-heading {
+  @apply text-xl font-semibold mb-4 text-red-800 dark:text-red-300;
+}
+
+.orari-special-box {
+  @apply p-6 rounded-lg shadow-md bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900;
+}
+
+.orari-special-heading {
+  @apply text-xl font-semibold mb-4 text-amber-800 dark:text-amber-300;
+}
+
+.orari-openings-box {
+  @apply mt-6 p-6 rounded-lg shadow-md bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-900;
+}
+
+.orari-openings-heading {
+  @apply text-xl font-semibold mb-4 text-purple-800 dark:text-purple-300;
+}
+
+.orari-openings-time {
+  @apply text-sm mt-1 italic text-purple-700 dark:text-purple-400;
+}
+
+.orari-season-box {
+  @apply mb-12 p-6 rounded-lg shadow-md border border-border bg-card text-card-foreground;
+}
+
+.orari-season-active {
+  @apply border-2 border-green-300 dark:border-green-800;
+}
+
+.orari-season-active-banner {
+  @apply bg-green-500 dark:bg-green-700 text-white text-center py-2 px-4 rounded-t-lg mb-4 -mt-6 -mx-6 font-semibold;
+}
+
+.orari-season-heading {
+  @apply text-2xl font-bold mb-4 text-center;
+}
+
+.orari-table {
+  @apply w-full border-collapse;
+}
+
+.orari-table-header {
+  @apply bg-muted;
+}
+
+.orari-table-subheader {
+  @apply bg-muted/50;
+}
+
+.orari-table-row-even {
+  @apply bg-card;
+}
+
+.orari-table-row-odd {
+  @apply bg-muted/30;
+}
+
+.orari-table-cell {
+  @apply border border-border px-4 py-2;
+}
+
+.orari-notes-box {
+  @apply mt-6 p-4 rounded-md bg-yellow-50 dark:bg-yellow-950/30 border border-yellow-200 dark:border-yellow-900;
+}
+
+.orari-notes-heading {
+  @apply font-semibold text-yellow-800 dark:text-yellow-300 mb-2;
+}
+
+.orari-bullet {
+  @apply inline-block w-5 h-5 rounded-full mr-2 mt-0.5 flex-shrink-0;
+}
+
+.orari-bullet-red {
+  @apply bg-red-200 dark:bg-red-800;
+}
+
+.orari-bullet-amber {
+  @apply bg-amber-200 dark:bg-amber-800;
+}
+
+.orari-bullet-purple {
+  @apply bg-purple-200 dark:bg-purple-800;
+}

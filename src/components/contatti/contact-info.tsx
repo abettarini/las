@@ -3,11 +3,11 @@ import React from "react";
 
 const ContactInfo: React.FC = () => {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-sm">
-      <h3 className="text-xl font-semibold mb-4">Informazioni di contatto</h3>
+    <div className="contact-card p-6">
+      <h3 className="contact-subheading">Informazioni di contatto</h3>
       <div className="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="flex items-start">
-          <MapPin className="h-5 w-5 text-primary mr-3 mt-0.5" />
+          <MapPin className="contact-icon" />
           <div>
             <p className="font-medium">Indirizzo</p>
             <p className="text-muted-foreground">
@@ -18,7 +18,7 @@ const ContactInfo: React.FC = () => {
         </div>
         
         <div className="flex items-start">
-          <Phone className="h-5 w-5 text-primary mr-3 mt-0.5" />
+          <Phone className="contact-icon" />
           <div>
             <p className="font-medium">Telefono</p>
             <p className="text-muted-foreground">+39 055 8720079</p>
@@ -26,7 +26,7 @@ const ContactInfo: React.FC = () => {
         </div>
         
         <div className="flex items-start">
-          <Printer className="h-5 w-5 text-primary mr-3 mt-0.5" />
+          <Printer className="contact-icon" />
           <div>
             <p className="font-medium">Fax</p>
             <p className="text-muted-foreground">+39 055 8720079</p>
@@ -34,7 +34,7 @@ const ContactInfo: React.FC = () => {
         </div>
         
         <div className="flex items-start">
-          <Mail className="h-5 w-5 text-primary mr-3 mt-0.5" />
+          <Mail className="contact-icon" />
           <div>
             <p className="font-medium">Email</p>
             <p className="text-muted-foreground">info@tsnlastrasigna.it</p>

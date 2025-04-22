@@ -5,22 +5,22 @@ import StreetMapGoogle from "../street-map-google";
 
 const ContactsNew: React.FC = () => {
   return (
-      <div>
+      <div className="contact-section">
         {/* Top section: Contact form and Google Maps side by side */}
-        <div className="container mx-auto mb-8">
+        <div className="contact-container">
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Left side: Contact form */}
             <div className="lg:w-1/2">
-              <div className="bg-white p-6 rounded-lg shadow-sm h-full">
-                <h3 className="text-xl font-semibold mb-4">Inviaci un messaggio</h3>
+              <div className="contact-card p-6 h-full">
+                <h3 className="contact-subheading">Inviaci un messaggio</h3>
                 <ContactForm />
               </div>
             </div>
 
             {/* Right side: Google Maps */}
             <div className="lg:w-1/2">
-              <div className="bg-white p-6 rounded-lg shadow-sm h-full">
-                <h3 className="text-xl font-semibold mb-4">Come raggiungerci</h3>
+              <div className="contact-card p-6 h-full">
+                <h3 className="contact-subheading">Come raggiungerci</h3>
                 <div className="w-full h-[400px] rounded-lg overflow-hidden">
                   <StreetMapGoogle />
                 </div>
@@ -33,9 +33,9 @@ const ContactsNew: React.FC = () => {
         <div className="container mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Card 1: Address */}
-            <div className="bg-white p-6 rounded-lg shadow-sm">
+            <div className="contact-card p-6">
               <div className="flex items-start">
-                <MapPin className="h-5 w-5 text-primary mr-3 mt-0.5" />
+                <MapPin className="contact-icon" />
                 <div>
                   <p className="font-medium">Indirizzo</p>
                   <p className="text-muted-foreground">
@@ -47,9 +47,9 @@ const ContactsNew: React.FC = () => {
             </div>
 
             {/* Card 2: Phone */}
-            <div className="bg-white p-6 rounded-lg shadow-sm">
+            <div className="contact-card p-6">
               <div className="flex items-start">
-                <Phone className="h-5 w-5 text-primary mr-3 mt-0.5" />
+                <Phone className="contact-icon" />
                 <div>
                   <p className="font-medium">Telefono</p>
                   <p className="text-muted-foreground">+39 055 8720079</p>
@@ -58,9 +58,9 @@ const ContactsNew: React.FC = () => {
             </div>
 
             {/* Card 3: Fax */}
-            <div className="bg-white p-6 rounded-lg shadow-sm">
+            <div className="contact-card p-6">
               <div className="flex items-start">
-                <Printer className="h-5 w-5 text-primary mr-3 mt-0.5" />
+                <Printer className="contact-icon" />
                 <div>
                   <p className="font-medium">Fax</p>
                   <p className="text-muted-foreground">+39 055 8720079</p>
@@ -69,9 +69,9 @@ const ContactsNew: React.FC = () => {
             </div>
 
             {/* Card 4: Email */}
-            <div className="bg-white p-6 rounded-lg shadow-sm">
+            <div className="contact-card p-6">
               <div className="flex items-start">
-                <Mail className="h-5 w-5 text-primary mr-3 mt-0.5" />
+                <Mail className="contact-icon" />
                 <div>
                   <p className="font-medium">Email</p>
                   <p className="text-muted-foreground">info@tsnlastrasigna.it</p>

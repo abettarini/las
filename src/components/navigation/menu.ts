@@ -65,8 +65,8 @@ const iscrizioni: MenuItem[] = [
     },
     {
         title: "Documenti",
-        href: "/iscrizioni/documenti",
-        description: "Documenti e fac-simili necessari per l'iscrizione."
+        href: "/documenti",
+        description: "Documenti e fac-simili necessari per l'iscrizione e altre risorse utili."
     },
     {
         title: "Test",
@@ -99,6 +99,7 @@ const mainMenu: MenuItem[] = [
     {title: 'News', href: '/#news'},
     {title: 'Iscrizioni', submenu: iscrizioni},
     {title: 'Chi siamo', submenu: chisiamo},
+    {title: 'Documenti', href: '/documenti'},
     {title: 'Prenotazioni', href: '/prenotazioni'}
 ];
 

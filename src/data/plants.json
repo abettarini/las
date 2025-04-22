@@ -1,0 +1,83 @@
+[
+    {
+        "id": "tunnel",
+        "category": "Tunnel",
+        "title": "Tunnel con bersaglio motorizzato",
+        "titleClassName": "text-blue-800",
+        "imageUrl": "/assets/Cursor-Target-2--Streamline-Ultimate.png",
+        "imageAlt": "Immagine del tunnel",
+        "imagePosition": "left",
+        "description": "La struttura dispone di un tunnel con due linee con bersaglio motorizzato.",
+        "features": {
+            "titleClassName": "text-blue-800",
+            "backgroundColor": "bg-blue-50",
+            "items": [
+                "Due linee di tiro",
+                "Bersagli motorizzati",
+                "Ambiente controllato e sicuro"
+            ]
+        }
+    },
+    {
+        "id": "arma-corta",
+        "category": "Linee 25 metri",
+        "title": "Line di tiro per arma corta",
+        "titleClassName": "text-green-800",
+        "imageUrl": "/assets/Athletics-Shooting--Streamline-Ultimate.png",
+        "imageAlt": "Immagine linee arma corta",
+        "imagePosition": "right",
+        "description": "La struttura dispone di 10 linee nelle quali i bersagli possono essere posti a 12, 18 e 25 metri.",
+        "features": {
+            "titleClassName": "text-green-800",
+            "backgroundColor": "bg-green-50",
+            "items": [
+                "10 linee di tiro",
+                "Distanze variabili: 12, 18 e 25 metri",
+                "Adatto per allenamento e competizioni",
+                "Illuminazione ottimale"
+            ]
+        }
+    },
+    {
+        "id": "carabina",
+        "category": "Carabina",
+        "title": "Linee di tiro per carabina 100 - 300 metri",
+        "titleClassName": "text-amber-800",
+        "imageUrl": "/assets/Shooting-Rifle--Streamline-Ultimate.png",
+        "imageAlt": "Immagine linee carabina",
+        "imagePosition": "left",
+        "description": "La struttura dispone di 10 linee di tiro per carabina dalle quali si può sparare a bersagli posti a 100 o 200 metri in appoggio da seduti. I turni sono di 45 minuti, al termine di ogni turno si provvede a cambiare i bersagli.",
+        "features": {
+            "titleClassName": "text-amber-800",
+            "backgroundColor": "bg-amber-50",
+            "items": [
+                "10 linee di tiro",
+                "Distanze: 100 e 200 metri",
+                "Postazioni con appoggio da seduti",
+                "Turni di 45 minuti",
+                "Cambio bersagli al termine di ogni turno"
+            ]
+        }
+    },
+    {
+        "id": "cinghialino",
+        "title": "Linee di tiro carabina e fucile 50 metri con cinghialino corrente",
+        "category": "Linee 50 metri",
+        "titleClassName": "text-purple-800",
+        "imageUrl": "/assets/Wild-Pig--Streamline-Ultimate.png",
+        "imageAlt": "Immagine cinghialino corrente",
+        "imagePosition": "right",
+        "description": "La struttura dispone di 10 linee di tiro per sparare a bersagli posizionati a 50 metri e di un cinghialino corrente da ingaggiare sia con carabina sia con fucile usando munizioni a palla unica.",
+        "features": {
+            "titleClassName": "text-purple-800",
+            "backgroundColor": "bg-purple-50",
+            "items": [
+                "10 linee di tiro a 50 metri",
+                "Cinghialino corrente",
+                "Utilizzabile con carabina e fucile",
+                "Solo munizioni a palla unica",
+                "Ideale per cacciatori e tiratori sportivi"
+            ]
+        }
+    }
+]

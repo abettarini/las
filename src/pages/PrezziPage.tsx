@@ -1,6 +1,7 @@
 import DimaCTA from "@/components/dima-cta";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import priceData from "@/data/price.json";
 import { Helmet } from "react-helmet";
 
 const PrezziPage = () => {
@@ -34,26 +35,17 @@ const PrezziPage = () => {
               </CardHeader>
               <CardContent>
                 <div className="grid gap-4">
-                  <div className="grid grid-cols-2 items-center border-b pb-2">
-                    <span className="font-medium">Iscrizione Volontaria</span>
-                    <span className="text-right">€ 120,00</span>
-                  </div>
-                  <div className="grid grid-cols-2 items-center border-b pb-2">
-                    <span className="font-medium">Iscrizione Obbligatoria (GPG, GPG Ausiliari)</span>
-                    <span className="text-right">€ 100,00</span>
-                  </div>
-                  <div className="grid grid-cols-2 items-center border-b pb-2">
-                    <span className="font-medium">Rinnovo Volontario</span>
-                    <span className="text-right">€ 100,00</span>
-                  </div>
-                  <div className="grid grid-cols-2 items-center border-b pb-2">
-                    <span className="font-medium">Rinnovo Obbligatorio</span>
-                    <span className="text-right">€ 80,00</span>
-                  </div>
-                  <div className="grid grid-cols-2 items-center">
-                    <span className="font-medium">Riduzione Under 16</span>
-                    <span className="text-right">- 50%</span>
-                  </div>
+                  {priceData.subscription.map((item, index) => (
+                    <div 
+                      key={index} 
+                      className={`grid grid-cols-2 items-center ${
+                        index < priceData.subscription.length - 1 ? "border-b pb-2" : ""
+                      }`}
+                    >
+                      <span className="font-medium">{item.name}</span>
+                      <span className="text-right">{item.price}</span>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
               <CardFooter className="text-sm text-muted-foreground">
@@ -80,36 +72,19 @@ const PrezziPage = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="border-b hover:bg-muted/50">
-                        <td className="py-3 px-4 font-medium">Linea a 25m (1 ora)</td>
-                        <td className="py-3 px-4 text-center">€ 10,00</td>
-                        <td className="py-3 px-4 text-center">€ 15,00</td>
-                        <td className="py-3 px-4 text-center">€ 8,00</td>
-                      </tr>
-                      <tr className="border-b hover:bg-muted/50">
-                        <td className="py-3 px-4 font-medium">Linea a 50m (1 ora)</td>
-                        <td className="py-3 px-4 text-center">€ 12,00</td>
-                        <td className="py-3 px-4 text-center">€ 18,00</td>
-                        <td className="py-3 px-4 text-center">€ 10,00</td>
-                      </tr>
-                      <tr className="border-b hover:bg-muted/50">
-                        <td className="py-3 px-4 font-medium">Linea aria compressa (1 ora)</td>
-                        <td className="py-3 px-4 text-center">€ 8,00</td>
-                        <td className="py-3 px-4 text-center">€ 12,00</td>
-                        <td className="py-3 px-4 text-center">€ 6,00</td>
-                      </tr>
-                      <tr className="border-b hover:bg-muted/50">
-                        <td className="py-3 px-4 font-medium">Noleggio arma (escluse munizioni)</td>
-                        <td className="py-3 px-4 text-center">€ 5,00</td>
-                        <td className="py-3 px-4 text-center">€ 8,00</td>
-                        <td className="py-3 px-4 text-center">€ 5,00</td>
-                      </tr>
-                      <tr className="hover:bg-muted/50">
-                        <td className="py-3 px-4 font-medium">Bersagli (cadauno)</td>
-                        <td className="py-3 px-4 text-center">€ 0,50</td>
-                        <td className="py-3 px-4 text-center">€ 0,50</td>
-                        <td className="py-3 px-4 text-center">€ 0,50</td>
-                      </tr>
+                      {priceData.shooting_line.map((line, index) => (
+                        <tr 
+                          key={index} 
+                          className={`${
+                            index < priceData.shooting_line.length - 1 ? "border-b" : ""
+                          } hover:bg-muted/50`}
+                        >
+                          <td className="py-3 px-4 font-medium">{line.name}</td>
+                          <td className="py-3 px-4 text-center">{line.socio}</td>
+                          <td className="py-3 px-4 text-center">{line.ospite}</td>
+                          <td className="py-3 px-4 text-center">{line.militari}</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
@@ -133,22 +108,17 @@ const PrezziPage = () => {
               </CardHeader>
               <CardContent>
                 <div className="grid gap-4">
-                  <div className="grid grid-cols-2 items-center border-b pb-2">
-                    <span className="font-medium">Corso DIMA (Diploma Idoneità Maneggio Armi)</span>
-                    <span className="text-right">€ 150,00</span>
-                  </div>
-                  <div className="grid grid-cols-2 items-center border-b pb-2">
-                    <span className="font-medium">Certificazione per porto d'armi</span>
-                    <span className="text-right">€ 80,00</span>
-                  </div>
-                  <div className="grid grid-cols-2 items-center border-b pb-2">
-                    <span className="font-medium">Corso base di tiro (3 lezioni)</span>
-                    <span className="text-right">€ 120,00</span>
-                  </div>
-                  <div className="grid grid-cols-2 items-center">
-                    <span className="font-medium">Lezione privata con istruttore (1 ora)</span>
-                    <span className="text-right">€ 40,00</span>
-                  </div>
+                  {priceData.courses.map((course, index) => (
+                    <div 
+                      key={index} 
+                      className={`grid grid-cols-2 items-center ${
+                        index < priceData.courses.length - 1 ? "border-b pb-2" : ""
+                      }`}
+                    >
+                      <span className="font-medium">{course.name}</span>
+                      <span className="text-right">{course.price}</span>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
               <CardFooter className="text-sm text-muted-foreground">

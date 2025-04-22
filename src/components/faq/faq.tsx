@@ -15,39 +15,39 @@ const FAQ: React.FC = () => {
   }
 
   return (
-    <section id="faq" className="w-full py-12">
-      <div className="mx-auto max-w-6xl px-4">
-        <h2 className="text-3xl font-bold mb-10 text-center">Domande Frequenti</h2>
+    <section id="faq" className="faq-section">
+      <div className="faq-container">
+        <h2 className="faq-heading">Domande Frequenti</h2>
         
         <div className="space-y-6">
           {faqPairs.map((pair, rowIndex) => (
             <div key={`faq-row-${rowIndex}`} className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Left Item */}
               {pair[0] && (
-                <div className="flex gap-4 bg-white rounded-lg p-6 shadow-sm h-full">
+                <div className="faq-item">
                   <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-700 font-semibold">
+                    <div className="faq-number">
                       {rowIndex * 2 + 1}
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <h3 className="text-lg font-medium">{pair[0].question}</h3>
-                    <p className="text-muted-foreground">{pair[0].answer}</p>
+                  <div className="faq-content">
+                    <h3 className="faq-question">{pair[0].question}</h3>
+                    <p className="faq-answer">{pair[0].answer}</p>
                   </div>
                 </div>
               )}
 
               {/* Right Item */}
               {pair[1] && (
-                <div className="flex gap-4 bg-white rounded-lg p-6 shadow-sm h-full">
+                <div className="faq-item">
                   <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-700 font-semibold">
+                    <div className="faq-number">
                       {rowIndex * 2 + 2}
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <h3 className="text-lg font-medium">{pair[1].question}</h3>
-                    <p className="text-muted-foreground">{pair[1].answer}</p>
+                  <div className="faq-content">
+                    <h3 className="faq-question">{pair[1].question}</h3>
+                    <p className="faq-answer">{pair[1].answer}</p>
                   </div>
                 </div>
               )}

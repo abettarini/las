@@ -29,6 +29,7 @@ const LazyBookingPage = lazy(() => import('./pages/BookingPage'));
 const LazyOrariPage = lazy(() => import('./pages/OrariPage'));
 const LazyPrezziPage = lazy(() => import('./pages/PrezziPage'));
 const LazyArmeriaPage = lazy(() => import('./pages/ArmeriaPage'));
+const LazyDocumentsPage = lazy(() => import('./pages/DocumentsPage'));
 const LazyCancelBookingPage = lazy(() => import('./pages/CancelBookingPage'));
 const LazyRegisterPage = lazy(() => import('./pages/RegisterPage'));
 const LazyLoginPage = lazy(() => import('./pages/LoginPage'));
@@ -106,6 +107,7 @@ const App: React.FC = () => {
                 <Route path="/struttura/dove-siamo" element={<div className="flex-1 p-6"><LazyStrutturaIndicazioniPage /></div>} />
                 <Route path="/struttura/prezzi" element={<div className="flex-1 p-6"><LazyPrezziPage /></div>} />
                 <Route path="/struttura/armeria" element={<div className="flex-1 p-6"><LazyArmeriaPage /></div>} />
+                <Route path="/documenti" element={<div className="flex-1 p-6"><LazyDocumentsPage /></div>} />
                 <Route path="/annulla-prenotazione/:id" element={<div className="flex-1 p-6"><LazyCancelBookingPage /></div>} />
                 <Route path="/prenotazioni" element={<div className="flex-1 p-6"><LazyBookingPage /></div>} />
                 <Route path="/struttura/orari" element={<div className="flex-1 p-6"><LazyOrariPage /></div>} />

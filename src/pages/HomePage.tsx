@@ -3,15 +3,18 @@ import { ContactsNew } from '@/components/contatti';
 import DimaCTA from '@/components/dima-cta';
 import FAQ from "@/components/faq/faq";
 import NewsList, { Content } from '@/components/news/news-list';
+import PlantsComponent from '@/components/plants-component';
 import ServiceCard, { services } from '@/components/ServiceCard';
 import { DirectorHomeCalendar } from '@/components/turni/director-home-calendar';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Image } from '@/components/ui/image';
 import { useAuth } from '@/context/auth-context';
+import plantsData from '@/data/plants.json';
 import { getAllNews } from '@/services/news-service';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
+
 import { useLocation } from 'react-router-dom';
 
 const scrollToSection = (id: string): void => {
@@ -143,6 +146,13 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      <section className="py-12" id="impianti">
+        <div className="max-w-6xl mx-auto">
+          <div className="space-y-10">
+            <PlantsComponent plants={plantsData} />
+          </div>
+        </div>
+      </section>
       {/* Contact Form Section */}
       <section className="py-12" id="contatti">
         <Card className="border border-gray-200 rounded-lg shadow-sm bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 pt-4 pb-8">

@@ -80,6 +80,9 @@ const Footer = () => {
               {/* Copyright */}
               <div className="mt-6 text-center text-sm text-muted-foreground">
                 <p>© {new Date().getFullYear()} TSN Lastra a Signa. Tutti i diritti riservati.</p>
+                <p className="mt-2">
+                  Realizzato da <a href="https://monema.it" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Monema</a>
+                </p>
               </div>
             </div>
           </footer>

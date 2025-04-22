@@ -1,0 +1,74 @@
+{
+    "subscription": [
+        {
+            "name": "Iscrizione Volontaria",
+            "price": "€ 121,00"
+        },
+        {
+            "name": "Iscrizione Obbligatoria (GPG, GPG Ausiliari)",
+            "price": "€ 100,00"
+        },
+        {
+            "name": "Rinnovo Volontario",
+            "price": "€ 100,00"
+        },
+        {
+            "name": "Rinnovo Obbligatorio",
+            "price": "€ 80,00"
+        },
+        {
+            "name": "Riduzione Under 16",
+            "price": "- 50%"
+        }
+    ],
+    "shooting_line": [
+        {
+            "name": "Linea a 25m (1 ora)",
+            "socio": "€ 10,00",
+            "ospite": "€ 15,00",
+            "militari": "€ 8,00"
+        },
+        {
+            "name": "Linea a 50m (1 ora)",
+            "socio": "€ 12,00",
+            "ospite": "€ 18,00",
+            "militari": "€ 10,00"
+        },
+        {
+            "name": "Linea aria compressa (1 ora)",
+            "socio": "€ 8,00",
+            "ospite": "€ 12,00",
+            "militari": "€ 6,00"
+        },
+        {
+            "name": "Noleggio arma (escluse munizioni)",
+            "socio": "€ 5,00",
+            "ospite": "€ 8,00",
+            "militari": "€ 5,00"
+        },
+        {
+            "name": "Bersagli (cadauno)",
+            "socio": "€ 0,50",
+            "ospite": "€ 0,50",
+            "militari": "€ 0,50"
+        }
+    ],
+    "courses": [
+        {
+            "name": "Corso DIMA (Diploma Idoneità Maneggio Armi)",
+            "price": "€ 150,00"
+        },
+        {
+            "name": "Certificazione per porto d'armi",
+            "price": "€ 80,00"
+        },
+        {
+            "name": "Corso base di tiro (3 lezioni)",
+            "price": "€ 120,00"
+        },
+        {
+            "name": "Lezione privata con istruttore (1 ora)",
+            "price": "€ 40,00"
+        }
+    ]
+}

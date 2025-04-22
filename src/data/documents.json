@@ -1,0 +1,77 @@
+{
+    "categories": [
+        {
+            "id": "modulistica",
+            "name": "Modulistica",
+            "description": "Moduli e documenti ufficiali per le iscrizioni e le attività del club"
+        },
+        {
+            "id": "regolamenti",
+            "name": "Regolamenti",
+            "description": "Regolamenti ufficiali e normative per le attività sportive"
+        },
+        {
+            "id": "manuali",
+            "name": "Manuali e Guide",
+            "description": "Guide tecniche e manuali per atleti e istruttori"
+        }
+    ],
+    "documents": [
+        {
+            "id": "doc1",
+            "title": "Modulo di iscrizione",
+            "description": "Modulo per l'iscrizione al club sportivo per la stagione corrente",
+            "categoryId": "modulistica",
+            "url": "/documents/modulo-iscrizione.pdf",
+            "isExternal": false
+        },
+        {
+            "id": "doc2",
+            "title": "Certificato medico",
+            "description": "Modello di certificato medico per attività sportiva non agonistica",
+            "categoryId": "modulistica",
+            "url": "/documents/certificato-medico.pdf",
+            "isExternal": false
+        },
+        {
+            "id": "doc3",
+            "title": "Regolamento FITARCO",
+            "description": "Regolamento ufficiale della Federazione Italiana Tiro con l'Arco",
+            "categoryId": "regolamenti",
+            "url": "https://www.fitarco-italia.org/documenti/regolamenti.pdf",
+            "isExternal": true
+        },
+        {
+            "id": "doc4",
+            "title": "Regolamento interno",
+            "description": "Regolamento interno del club con norme di comportamento e utilizzo delle strutture",
+            "categoryId": "regolamenti",
+            "url": "/documents/regolamento-interno.pdf",
+            "isExternal": false
+        },
+        {
+            "id": "doc5",
+            "title": "Manuale tecnico base",
+            "description": "Guida tecnica di base per principianti del tiro con l'arco",
+            "categoryId": "manuali",
+            "url": "/documents/manuale-base.pdf",
+            "isExternal": false
+        },
+        {
+            "id": "doc6",
+            "title": "Guida alla manutenzione dell'attrezzatura",
+            "description": "Manuale per la corretta manutenzione dell'arco e delle frecce",
+            "categoryId": "manuali",
+            "url": "/documents/manutenzione-attrezzatura.pdf",
+            "isExternal": false
+        },
+        {
+            "id": "doc7",
+            "title": "Calendario gare nazionali",
+            "description": "Calendario ufficiale delle competizioni nazionali",
+            "categoryId": "regolamenti",
+            "url": "https://www.fitarco-italia.org/gare/calendario.php",
+            "isExternal": true
+        }
+    ]
+}
