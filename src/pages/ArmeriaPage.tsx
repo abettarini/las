@@ -4,7 +4,7 @@ import { Image } from "@/components/ui/image";
 import armoryData from "@/data/armory.json";
 import { Ammunition, Weapon } from "@/types/armory";
 import { Check, X } from "lucide-react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 // Get weapons data from JSON file
 const rifles: Weapon[] = armoryData.weapons.rifles;

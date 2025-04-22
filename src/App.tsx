@@ -10,7 +10,7 @@ import { Image } from '@/components/ui/image';
 import { EnvironmentRibbon } from '@/components/ui/ribbon';
 import { Toaster } from '@/components/ui/sonner';
 import { lazy, Suspense } from "react";
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { AuthProvider } from './context/auth-context';
 import { QuizProvider } from './context/quiz-context';

@@ -13,7 +13,7 @@ import { useAuth } from '@/context/auth-context';
 import plantsData from '@/data/plants.json';
 import { getAllNews } from '@/services/news-service';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 import { useLocation } from 'react-router-dom';
 
@@ -121,7 +121,7 @@ const Home: React.FC = () => {
 
       {/* Services Section */}
       <section className="py-12" id="servizi">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 mx-8 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service) => (
             <ServiceCard key={service.title} {...service} />
           ))}

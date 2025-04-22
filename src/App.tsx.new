@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { BadgeOrariApertura } from '@/components/OrariApertura';
 import Footer from '@/components/footer';
