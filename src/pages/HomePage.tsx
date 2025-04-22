@@ -121,7 +121,7 @@ const Home: React.FC = () => {
 
       {/* Services Section */}
       <section className="py-12" id="servizi">
-        <div className="grid grid-cols-1 mx-8 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 mx-4 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service) => (
             <ServiceCard key={service.title} {...service} />
           ))}
@@ -154,7 +154,7 @@ const Home: React.FC = () => {
         </div>
       </section>
       {/* Contact Form Section */}
-      <section className="py-12" id="contatti">
+      <section className="py-12 mx-4" id="contatti">
         <Card className="border border-gray-200 rounded-lg shadow-sm bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 pt-4 pb-8">
         <h2 className="text-3xl font-bold mb-8 text-center">Contatti</h2>
         <ContactsNew />
