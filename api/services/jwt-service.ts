@@ -15,9 +15,10 @@ function getSecret(jwtSecret: string): Uint8Array {
   return new TextEncoder().encode(jwtSecret)
 }
 
-async function normalizeKey(key: string): Promise<Uint8Array> {
+async function normalizeKey(key: string): Promise<Uint8Array<ArrayBuffer>> {
   const raw = new TextEncoder().encode(key)
-  const normalized = new Uint8Array(32)
+  const buf = new ArrayBuffer(32)
+  const normalized = new Uint8Array(buf)
   for (let i = 0; i < 32; i++) normalized[i] = raw[i % raw.length]
   return normalized
 }
