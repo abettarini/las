@@ -42,7 +42,9 @@ function toBookingData(row: {
     date: row.date,
     time: row.time,
     seasonId: row.seasonId,
-    status: row.status as BookingData['status'],
+    status: (['pending', 'confirmed', 'cancelled'] as const).includes(row.status as BookingData['status'])
+      ? (row.status as BookingData['status'])
+      : 'pending',
     cancelSecret: row.cancelSecret,
     notes: row.notes,
     adminNotes: row.adminNotes,
@@ -63,6 +65,8 @@ export async function createBooking(data: Omit<BookingData, 'id' | 'createdAt' |
       seasonId: data.seasonId,
       status: data.status,
       cancelSecret: generateCancelSecret(),
+      notes: data.notes ?? null,
+      adminNotes: data.adminNotes ?? null,
     },
   })
   return toBookingData(row)
