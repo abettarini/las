@@ -1,5 +1,6 @@
 import { Resend } from 'resend'
 import type { UserData } from './user-service.js'
+import type { BookingData } from './booking-service.js'
 
 interface EmailServiceEnv {
   RESEND_API_KEY: string
@@ -119,6 +120,133 @@ export async function sendAuthenticationEmail(
     return true
   } catch (error) {
     console.error('Errore email autenticazione:', error)
+    return false
+  }
+}
+
+function getBookingEventLabel(eventType: string): string {
+  const labels: Record<string, string> = {
+    visita_dottore: 'Visita Dottore',
+    corso_dima: 'Corso DIMA',
+    taratura_carabina: 'Taratura Carabina',
+    cinghialino_corrente: 'Cinghialino Corrente',
+  }
+  return labels[eventType] ?? eventType
+}
+
+function bookingConfirmationHtml(booking: BookingData, formattedDate: string, cancelUrl: string): string {
+  return `<html><body style="font-family:Arial,sans-serif;color:#333">
+    <div style="max-width:600px;margin:0 auto;padding:20px">
+      <h1 style="background:#f8f9fa;padding:20px;text-align:center">Conferma Prenotazione</h1>
+      <p>Gentile ${booking.name} ${booking.surname},</p>
+      <p>La tua prenotazione è stata registrata con successo.</p>
+      <div style="background:#f8f9fa;padding:15px;margin:15px 0;border-radius:5px">
+        <p><strong>Tipo di evento:</strong> ${getBookingEventLabel(booking.eventType)}</p>
+        <p><strong>Data:</strong> ${formattedDate}</p>
+        <p><strong>Ora:</strong> ${booking.time}</p>
+        <p><strong>Codice prenotazione:</strong> ${booking.id}</p>
+      </div>
+      <p>Per cancellare la prenotazione: <a href="${cancelUrl}" style="background:#dc3545;color:white;padding:10px 20px;border-radius:5px;text-decoration:none">Cancella Prenotazione</a></p>
+      <p>Ti aspettiamo!<br>TSN Lastra a Signa</p>
+    </div>
+  </body></html>`
+}
+
+function bookingUpdateHtml(booking: BookingData, formattedDate: string): string {
+  return `<html><body style="font-family:Arial,sans-serif;color:#333">
+    <div style="max-width:600px;margin:0 auto;padding:20px">
+      <h1 style="background:#f8f9fa;padding:20px;text-align:center">Prenotazione Aggiornata</h1>
+      <p>Gentile ${booking.name} ${booking.surname},</p>
+      <p>La tua prenotazione è stata aggiornata.</p>
+      <div style="background:#f8f9fa;padding:15px;margin:15px 0;border-radius:5px">
+        <p><strong>Tipo di evento:</strong> ${getBookingEventLabel(booking.eventType)}</p>
+        <p><strong>Data:</strong> ${formattedDate}</p>
+        <p><strong>Ora:</strong> ${booking.time}</p>
+        <p><strong>Codice prenotazione:</strong> ${booking.id}</p>
+      </div>
+      <p>Ti aspettiamo!<br>TSN Lastra a Signa</p>
+    </div>
+  </body></html>`
+}
+
+function bookingCancellationHtml(booking: BookingData, formattedDate: string): string {
+  return `<html><body style="font-family:Arial,sans-serif;color:#333">
+    <div style="max-width:600px;margin:0 auto;padding:20px">
+      <h1 style="background:#f8f9fa;padding:20px;text-align:center">Prenotazione Cancellata</h1>
+      <p>Gentile ${booking.name} ${booking.surname},</p>
+      <p>La tua prenotazione è stata cancellata.</p>
+      <div style="background:#f8f9fa;padding:15px;margin:15px 0;border-radius:5px">
+        <p><strong>Tipo di evento:</strong> ${getBookingEventLabel(booking.eventType)}</p>
+        <p><strong>Data:</strong> ${formattedDate}</p>
+        <p><strong>Ora:</strong> ${booking.time}</p>
+      </div>
+      <p>Per una nuova prenotazione visita il nostro sito.<br>TSN Lastra a Signa</p>
+    </div>
+  </body></html>`
+}
+
+interface BookingEmailEnv {
+  RESEND_API_KEY: string
+  RESEND_FROM_EMAIL: string
+  RESEND_FROM_NAME: string
+  FRONTEND_URL: string
+}
+
+export async function sendBookingConfirmationEmail(booking: BookingData, env: BookingEmailEnv): Promise<boolean> {
+  try {
+    const resend = new Resend(env.RESEND_API_KEY)
+    const frontendUrl = env.FRONTEND_URL || 'https://tsnlastrasigna.it'
+    const cancelUrl = `${frontendUrl}/annulla-prenotazione/${booking.id}`
+    const [y, m, d] = booking.date.split('-')
+    const formattedDate = `${d}/${m}/${y}`
+    const { error } = await resend.emails.send({
+      from: `${env.RESEND_FROM_NAME} <${env.RESEND_FROM_EMAIL}>`,
+      to: [booking.email],
+      subject: `Conferma Prenotazione - ${getBookingEventLabel(booking.eventType)}`,
+      html: bookingConfirmationHtml(booking, formattedDate, cancelUrl),
+    })
+    if (error) { console.error('Email conferma booking error:', error); return false }
+    return true
+  } catch (e) {
+    console.error('sendBookingConfirmationEmail error:', e)
+    return false
+  }
+}
+
+export async function sendBookingUpdateEmail(booking: BookingData, env: BookingEmailEnv): Promise<boolean> {
+  try {
+    const resend = new Resend(env.RESEND_API_KEY)
+    const [y, m, d] = booking.date.split('-')
+    const formattedDate = `${d}/${m}/${y}`
+    const { error } = await resend.emails.send({
+      from: `${env.RESEND_FROM_NAME} <${env.RESEND_FROM_EMAIL}>`,
+      to: [booking.email],
+      subject: `Aggiornamento Prenotazione - ${getBookingEventLabel(booking.eventType)}`,
+      html: bookingUpdateHtml(booking, formattedDate),
+    })
+    if (error) { console.error('Email update booking error:', error); return false }
+    return true
+  } catch (e) {
+    console.error('sendBookingUpdateEmail error:', e)
+    return false
+  }
+}
+
+export async function sendBookingCancellationEmail(booking: BookingData, env: BookingEmailEnv): Promise<boolean> {
+  try {
+    const resend = new Resend(env.RESEND_API_KEY)
+    const [y, m, d] = booking.date.split('-')
+    const formattedDate = `${d}/${m}/${y}`
+    const { error } = await resend.emails.send({
+      from: `${env.RESEND_FROM_NAME} <${env.RESEND_FROM_EMAIL}>`,
+      to: [booking.email],
+      subject: `Cancellazione Prenotazione - ${getBookingEventLabel(booking.eventType)}`,
+      html: bookingCancellationHtml(booking, formattedDate),
+    })
+    if (error) { console.error('Email cancellazione booking error:', error); return false }
+    return true
+  } catch (e) {
+    console.error('sendBookingCancellationEmail error:', e)
     return false
   }
 }
