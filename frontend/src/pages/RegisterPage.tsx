@@ -248,7 +248,7 @@ export default function RegisterPage() {
         {/* Turnstile */}
         <div className="flex justify-center">
           <Turnstile
-            sitekey="0x4AAAAAABDYSKm0qzHLkKyu" // Sostituisci con la tua chiave Turnstile
+            sitekey={import.meta.env.VITE_TURNSTILE_SITE_ID}
             onSuccess={token => {
               setTurnstileToken(token);
               setTurnstileError(null);

@@ -676,7 +676,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
                       <div className="mb-4">
                         <Turnstile
                           ref={turnstileRef}
-                          sitekey="0x4AAAAAABDYSKm0qzHLkKyu"
+                          sitekey={import.meta.env.VITE_TURNSTILE_SITE_ID}
                           onVerify={handleTurnstileVerify}
                           onError={handleTurnstileError}
                           theme="light"
