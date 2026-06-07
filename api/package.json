@@ -1,0 +1,22 @@
+{
+  "name": "tsnlas-api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "@prisma/client": "^6.0.0",
+    "hono": "^4.7.5",
+    "ical-generator": "^8.1.1",
+    "jose": "^5.2.3",
+    "resend": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "prisma": "^6.0.0",
+    "typescript": "^5.5.2"
+  }
+}

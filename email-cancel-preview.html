@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anteprima Email di Cancellazione</title>
+    <style>
+      body { 
+        font-family: 'Google Sans', Roboto, Arial, sans-serif; 
+        line-height: 1.5; 
+        color: #202124; 
+        margin: 0; 
+        padding: 0;
+        background-color: #f5f5f5;
+      }
+      .container { 
+        max-width: 720px; 
+        margin: 0 auto; 
+        border: 1px solid #dadce0; 
+        border-radius: 8px; 
+        overflow: hidden;
+        background-color: #fff;
+      }
+      .header { 
+        background-color: #ea4335; 
+        color: white; 
+        padding: 16px 24px;
+      }
+      .header h1 { 
+        font-size: 22px; 
+        font-weight: 500; 
+        margin: 0; 
+      }
+      .event-type {
+        font-size: 16px;
+        opacity: 0.9;
+        margin-top: 4px;
+      }
+      .content { 
+        padding: 24px; 
+        background-color: #ffffff;
+      }
+      .event-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 24px;
+      }
+      .date-cell {
+        width: 70px;
+        text-align: center;
+        vertical-align: top;
+        padding-right: 20px;
+      }
+      .date-container {
+        border: 1px solid #dadce0;
+        border-radius: 8px;
+        padding: 8px 0;
+        background-color: #f8f9fa;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      }
+      .month {
+        display: block;
+        font-size: 14px;
+        color: #5f6368;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+      .day {
+        display: block;
+        font-size: 28px;
+        font-weight: 500;
+        color: #202124;
+        line-height: 1.2;
+        text-decoration: line-through;
+        margin: 4px 0;
+      }
+      .weekday {
+        display: block;
+        font-size: 14px;
+        color: #5f6368;
+        text-transform: lowercase;
+        margin-top: 4px;
+      }
+      .event-details-cell {
+        vertical-align: top;
+        width: 52%;
+      }
+      .event-title {
+        font-size: 16px;
+        font-weight: 500;
+        color: #202124;
+        margin: 0 0 8px 0;
+      }
+      .calendar-link {
+        font-size: 14px;
+        color: #1a73e8;
+        text-decoration: none;
+        display: block;
+        margin-bottom: 16px;
+      }
+      .calendar-link:hover {
+        text-decoration: underline;
+      }
+      .details-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+      .details-table td {
+        padding: 8px 0;
+        vertical-align: top;
+      }
+      .details-label {
+        width: 60px;
+        color: #5f6368;
+        font-weight: normal;
+      }
+      .details-value {
+        color: #5f6368;
+        text-decoration: line-through;
+      }
+      .agenda-cell {
+        vertical-align: top;
+        border-left: 1px solid #dadce0;
+        padding-left: 16px;
+      }
+      .agenda-title {
+        font-size: 16px;
+        font-weight: 500;
+        color: #202124;
+        margin: 0 0 8px 0;
+      }
+      .agenda-date {
+        font-size: 14px;
+        color: #5f6368;
+        margin-bottom: 16px;
+      }
+      .agenda-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+      .agenda-table td {
+        padding: 4px 0;
+        vertical-align: top;
+      }
+      .agenda-time {
+        width: 70px;
+        color: #5f6368;
+      }
+      .agenda-event {
+        color: #202124;
+      }
+      .current-event {
+        font-weight: 500;
+        text-decoration: line-through;
+        color: #5f6368;
+      }
+      .no-events {
+        font-style: italic;
+        color: #5f6368;
+      }
+      .response-buttons {
+        margin: 24px 0;
+        text-align: left;
+      }
+      .response-button {
+        display: inline-block;
+        background-color: #f1f3f4;
+        color: #202124;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-weight: 500;
+        font-size: 14px;
+        margin-right: 8px;
+        border: 1px solid #dadce0;
+      }
+      .response-button.new {
+        background-color: #1a73e8;
+        color: white;
+        border-color: #1a73e8;
+      }
+      .response-button:hover {
+        background-color: #e8eaed;
+      }
+      .response-button.new:hover {
+        background-color: #1765cc;
+      }
+      .footer {
+        padding: 16px 24px;
+        font-size: 12px;
+        color: #5f6368;
+        border-top: 1px solid #dadce0;
+        background-color: #f8f9fa;
+      }
+      .divider {
+        height: 1px;
+        background-color: #dadce0;
+        margin: 16px 0;
+      }
+      .cancel-badge {
+        display: inline-block;
+        background-color: #ea4335;
+        color: white;
+        font-size: 12px;
+        font-weight: 500;
+        padding: 2px 8px;
+        border-radius: 4px;
+        margin-left: 8px;
+        vertical-align: middle;
+      }
+      .cancelled-event {
+        text-decoration: line-through;
+        color: #5f6368;
+      }
+      @media (max-width: 600px) {
+        .event-table, .event-table tbody, .event-table tr, .event-table td {
+          display: block;
+          width: 100%;
+        }
+        .date-cell {
+          text-align: left;
+          padding-bottom: 16px;
+        }
+        .agenda-cell {
+          border-left: none;
+          border-top: 1px solid #dadce0;
+          margin-top: 16px;
+          padding-top: 16px;
+          padding-left: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <table class="event-table" cellpadding="0">
+        <tr>
+          <td class="date-cell">
+            <div class="date-container">
+              <span class="month">apr</span>
+              <span class="day">15</span>
+              <span class="weekday">lun</span>
+            </div>
+          </td>
+          <td class="event-details-cell">
+            <div class="event-title">Sessione di tiro a 25m <span class="cancel-badge">Cancellato</span></div>
+            
+            <table class="details-table">
+              <tr>
+                <td class="details-label">Quando</td>
+                <td class="details-value">lun 15 apr 2024 dalle 14:30 alle 15:30 (CEST)</td>
+              </tr>
+              <tr>
+                <td class="details-label">Dove</td>
+                <td class="details-value">TSN Lastra a Signa - Via del Poligono, 1 - 50055 Lastra a Signa (FI)</td>
+              </tr>
+              <tr>
+                <td class="details-label">Chi</td>
+                <td class="details-value">Mario Rossi, mario.rossi@example.com</td>
+              </tr>
+            </table>
+            
+            <div class="response-buttons">
+              <a href="#" class="response-button new">Nuova prenotazione</a>
+            </div>
+          </td>
+          <td class="agenda-cell">
+            <div class="agenda-title">Agenda</div>
+            <div class="agenda-date">lun 15 apr 2024</div>
+            
+            <table class="agenda-table">
+              <tr>
+                <td class="agenda-time"></td>
+                <td class="agenda-event no-events">Nessun evento precedente</td>
+              </tr>
+              <tr>
+                <td class="agenda-time">14:30</td>
+                <td class="agenda-event current-event">Sessione di tiro a 25m</td>
+              </tr>
+              <tr>
+                <td class="agenda-time">15:30</td>
+                <td class="agenda-event no-events">Nessun evento successivo</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      
+      <div class="divider"></div>
+      
+      <div class="content">
+        <p>Gentile Mario Rossi,</p>
+        <p>La tua prenotazione è stata cancellata con successo.</p>
+        
+        <p><strong>Dettagli della prenotazione cancellata:</strong></p>
+        <ul>
+          <li><strong>Telefono:</strong> +39 333 1234567</li>
+          <li><strong>Codice prenotazione:</strong> BOOK123456</li>
+        </ul>
+        
+        <p>Grazie per averci informato della cancellazione.</p>
+        <p>Cordiali saluti,<br>TSN Lastra a Signa</p>
+      </div>
+      
+      <div class="footer">
+        <p>Questo è un messaggio automatico, si prega di non rispondere.</p>
+        <p>TSN Lastra a Signa - Via del Poligono, 1 - 50055 Lastra a Signa (FI)</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                         String    @id @default(uuid())
+  email                      String    @unique
+  birthDate                  String?
+  securityQuestion1          String?
+  securityAnswer1            String?
+  securityQuestion2          String?
+  securityAnswer2            String?
+  createdAt                  DateTime  @default(now())
+  isVerified                 Boolean   @default(false)
+  verificationToken          String?
+  verificationTokenExpiresAt DateTime?
+  lastLogin                  DateTime?
+  name                       String?
+  picture                    String?
+  googleId                   String?   @unique
+  facebookId                 String?
+  phone                      String?
+  portoArmi                  String?
+  scadenzaPortoArmi          String?
+  isSocio                    Boolean   @default(false)
+  numeroTessera              String?
+  quotaAnnuale               Boolean   @default(false)
+  privacyConsent             Boolean   @default(false)
+  roles                      String    @default("ROLE_USER")
+  turni                      Turno[]
+
+  @@index([verificationToken])
+}
+
+model Booking {
+  id           String   @id @default(uuid())
+  eventType    String
+  name         String
+  surname      String
+  email        String
+  phone        String
+  date         String
+  time         String
+  seasonId     String
+  status       String   @default("pending")
+  cancelSecret String?
+  notes        String?
+  adminNotes   String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([date])
+  @@index([email])
+  @@index([status])
+  @@index([cancelSecret])
+}
+
+model Content {
+  id          Int      @id @default(autoincrement())
+  type        String
+  date        String
+  title       String
+  abstract    String
+  fullContent String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Turno {
+  id        String   @id @default(uuid())
+  userId    String
+  userName  String
+  date      String
+  timeSlot  String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, date, timeSlot])
+}
+
+model OAuthState {
+  state       String   @id
+  redirectUri String
+  expiresAt   DateTime
+}
