@@ -1,5 +1,5 @@
 import { prisma } from '../lib/prisma.js'
-import calendarsData from '../data/calendars.json' assert { type: 'json' }
+import calendarsData from '../data/calendars.json' with { type: 'json' }
 
 interface EventTypeConfig {
   maxBookings: number
