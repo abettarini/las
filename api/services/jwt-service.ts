@@ -6,7 +6,7 @@ export interface JWTPayload {
   name?: string
   picture?: string
   encryptedData: string
-  roles: string[]
+  roles?: string[]
   iat: number
   exp: number
 }
@@ -80,11 +80,9 @@ export async function verifyJWT(
     const { payload } = await jwtVerify(token, getSecret(env.JWT_SECRET))
     const p = payload as unknown as JWTPayload
 
-    if (p.encryptedData && p.email) {
-      const decrypted = await decryptData(p.encryptedData, env.EMAIL_SECRET) as { emailHash: string }
-      if ((await emailHash(p.email)) !== decrypted.emailHash) return null
-    }
-
+    if (!p.encryptedData || !p.email) return null
+    const decrypted = await decryptData(p.encryptedData, env.EMAIL_SECRET) as { emailHash: string }
+    if ((await emailHash(p.email)) !== decrypted.emailHash) return null
     return p
   } catch {
     return null
