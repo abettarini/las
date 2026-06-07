@@ -1,5 +1,5 @@
 import { Hono } from 'hono'
-import { isAuthenticated } from '../middleware/auth.js'
+import { isAuthenticated, isAdmin } from '../middleware/auth.js'
 import type { UserData } from '../services/user-service.js'
 import {
   createBooking, deleteBooking, getAllBookings, getBooking,
@@ -115,15 +115,21 @@ bookingRouter.get('/booking/:id', async (c) => {
     if (!booking) return c.json({ success: false, message: 'Prenotazione non trovata' }, 404)
 
     const authHeader = c.req.header('Authorization')
-    let authenticated = false
+    let isOwnerOrAdmin = false
     if (authHeader?.startsWith('Bearer ')) {
       try {
         const payload = await verifyJWT(authHeader.substring(7), getEnv())
-        authenticated = !!payload?.sub
+        if (payload?.sub) {
+          const user = await getUserById(payload.sub)
+          isOwnerOrAdmin = !!user && (
+            user.email === booking.email ||
+            (Array.isArray(user.roles) && user.roles.includes('ROLE_ADMIN'))
+          )
+        }
       } catch { /* unauthenticated */ }
     }
 
-    if (authenticated) return c.json({ success: true, booking })
+    if (isOwnerOrAdmin) return c.json({ success: true, booking })
     const { cancelSecret, ...safe } = booking
     return c.json({ success: true, booking: safe })
   } catch (error) {
@@ -139,9 +145,38 @@ bookingRouter.put('/booking/:id', async (c) => {
     const data = await c.req.json() as Partial<{
       eventType: string; name: string; surname: string; email: string; phone: string
       date: string; time: string; status: 'pending' | 'confirmed' | 'cancelled'
+      secret?: string
     }>
     const existing = await getBooking(id)
     if (!existing) return c.json({ success: false, message: 'Prenotazione non trovata' }, 404)
+
+    // Require admin auth or valid cancelSecret
+    const authHeader = c.req.header('Authorization')
+    let authorized = false
+    if (authHeader?.startsWith('Bearer ')) {
+      try {
+        const payload = await verifyJWT(authHeader.substring(7), getEnv())
+        if (payload?.sub) {
+          const user = await getUserById(payload.sub)
+          authorized = !!user && (
+            user.email === existing.email ||
+            (Array.isArray(user.roles) && user.roles.includes('ROLE_ADMIN'))
+          )
+        }
+      } catch { /* unauthenticated */ }
+    }
+    if (!authorized && existing.cancelSecret) {
+      const secret = data.secret ?? c.req.query('secret')
+      if (!secret || !(await verifyBookingSecret(id, secret))) {
+        return c.json({ success: false, message: 'Autorizzazione richiesta', requiresSecret: true }, 403)
+      }
+      authorized = true
+    }
+    if (!authorized) return c.json({ success: false, message: 'Autorizzazione richiesta' }, 403)
+
+    // Admins can set status; non-admin callers cannot
+    const { secret: _secret, status, ...safeData } = data
+    const updatePayload = authorized && authHeader?.startsWith('Bearer ') ? data : safeData
 
     if (data.date || data.time) {
       const date = data.date ?? existing.date
@@ -155,7 +190,7 @@ bookingRouter.put('/booking/:id', async (c) => {
       if (!isAvailable) return c.json({ success: false, message: "L'orario selezionato non è più disponibile." }, 409)
     }
 
-    const updated = await updateBooking(id, data)
+    const updated = await updateBooking(id, updatePayload)
     await sendBookingUpdateEmail(updated, getEnv())
     return c.json({ success: true, message: 'Prenotazione aggiornata con successo', booking: updated })
   } catch (error) {
@@ -225,7 +260,7 @@ bookingRouter.post('/booking/check-availability', async (c) => {
 })
 
 // GET /bookings (lista completa, usato da admin)
-bookingRouter.get('/bookings', async (c) => {
+bookingRouter.get('/bookings', isAdmin, async (c) => {
   try {
     const status = (c.req.query('status') ?? 'all') as 'pending' | 'confirmed' | 'cancelled' | 'all'
     const eventType = c.req.query('eventType')
