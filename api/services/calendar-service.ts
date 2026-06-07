@@ -60,12 +60,22 @@ function isDateInRange(date: string, startDate: string, endDate: string): boolea
 }
 
 /**
- * Returns the opening hours for the active season.
+ * Returns the opening hours for the active season as boolean flags.
  *
  * Each key is an Italian day name (e.g. "lunedì", "sabato").
- * Each value contains optional `morning` and `afternoon` objects with `start` and `end` strings.
+ * Each value indicates whether the morning and/or afternoon session is open.
  */
-export function getActiveOpeningHours(): Record<string, { morning?: { start: string; end: string }; afternoon?: { start: string; end: string } }> {
-  const activeSeason = getActiveSeason()
-  return configData.orari[activeSeason].openingHours
+export function getActiveOpeningHours(): Record<string, { morning: boolean; afternoon: boolean }> {
+  const season = getActiveSeason()
+  const orari = configData.orari[season as keyof typeof configData.orari] as any
+  const rawHours: Record<string, any> = orari?.openingHours ?? {}
+
+  const result: Record<string, { morning: boolean; afternoon: boolean }> = {}
+  for (const [day, sessions] of Object.entries(rawHours)) {
+    result[day] = {
+      morning: !!(sessions as any)?.morning,
+      afternoon: !!(sessions as any)?.afternoon,
+    }
+  }
+  return result
 }
