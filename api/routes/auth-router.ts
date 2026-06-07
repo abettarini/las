@@ -235,17 +235,6 @@ authRouter.get('/auth/google/callback', async (c) => {
   }
 })
 
-// GET /me/bookings
-authRouter.get('/me/bookings', isAuthenticated, async (c) => {
-  try {
-    // Stub — booking-service sarà aggiunto in Fase 3
-    return c.json({ success: true, bookings: [] })
-  } catch (error) {
-    console.error('Errore me/bookings:', error)
-    return c.json({ success: false, message: 'Errore durante il recupero delle prenotazioni' }, 500)
-  }
-})
-
 // PUT /me/profile
 authRouter.put('/me/profile', isAuthenticated, async (c) => {
   try {

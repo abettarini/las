@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import authRouter from './routes/auth-router.js'
+import bookingRouter from './routes/booking-router.js'
 
 const app = new Hono().basePath('/api')
 
@@ -22,5 +23,6 @@ app.use(
 app.get('/', (c) => c.json({ status: 'ok', service: 'tsnlas-api' }))
 
 app.route('/', authRouter)
+app.route('/', bookingRouter)
 
 export default app
