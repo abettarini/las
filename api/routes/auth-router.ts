@@ -1,5 +1,6 @@
 import { Hono } from 'hono'
 import { isAuthenticated } from '../middleware/auth.js'
+import type { UserData } from '../services/user-service.js'
 import {
   sendAuthenticationEmail,
   sendVerificationEmail,
@@ -23,7 +24,10 @@ import {
   type UserProfileData,
 } from '../services/user-service.js'
 
-const authRouter = new Hono()
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+type AuthVariables = { user: UserData }
+const authRouter = new Hono<{ Variables: AuthVariables }>()
 
 function getEnv() {
   return {
@@ -66,6 +70,10 @@ authRouter.post('/auth/register', async (c) => {
 
     const isTokenValid = await verifyTurnstileToken(data.cfTurnstileResponse, env.TURNSTILE_SECRET_KEY, clientIP)
     if (!isTokenValid) return c.json({ success: false, message: 'Verifica di sicurezza fallita' }, 400)
+
+    if (!EMAIL_REGEX.test(data.email)) {
+      return c.json({ success: false, message: 'Formato email non valido' }, 400)
+    }
 
     if (!data.email || !data.emailConfirmation || !data.birthDate ||
         !data.securityQuestion1 || !data.securityAnswer1 ||
@@ -118,8 +126,14 @@ authRouter.post('/auth/login', async (c) => {
     const { email } = await c.req.json() as { email: string }
     if (!email) return c.json({ success: false, message: 'Email mancante' }, 400)
 
+    if (!EMAIL_REGEX.test(email)) {
+      return c.json({ success: false, message: 'Formato email non valido' }, 400)
+    }
+
     const user = await getUserByEmail(email)
-    if (!user) return c.json({ success: false, message: 'Utente non trovato' }, 404)
+    if (!user) {
+      return c.json({ success: true, message: "Se l'email è registrata, riceverai un link di accesso" })
+    }
 
     const env = getEnv()
 
@@ -210,9 +224,10 @@ authRouter.get('/auth/google/callback', async (c) => {
     if (!code || !state) return c.json({ success: false, message: 'Parametri mancanti nella risposta di Google' }, 400)
     const { user, token, googleTokens } = await handleGoogleCallback(code, state, getEnv())
     return c.json({
-      success: true, message: 'Autenticazione completata con successo',
+      success: true,
+      message: 'Autenticazione completata con successo',
       user: { id: user.id, email: user.email, isVerified: user.isVerified, name: user.name, picture: user.picture, roles: user.roles ?? ['ROLE_USER'] },
-      token, accessToken: googleTokens.access_token, idToken: googleTokens.id_token, refreshToken: googleTokens.refresh_token,
+      token,
     })
   } catch (error) {
     console.error('Errore Google callback:', error)
@@ -234,12 +249,9 @@ authRouter.get('/me/bookings', isAuthenticated, async (c) => {
 // PUT /me/profile
 authRouter.put('/me/profile', isAuthenticated, async (c) => {
   try {
-    const authHeader = c.req.header('Authorization')!
-    const token = authHeader.substring(7)
-    const payload = await verifyJWT(token, getEnv())
-    if (!payload?.sub) return c.json({ success: false, message: 'Token non valido' }, 401)
+    const user = c.get('user')
     const profileData = await c.req.json() as UserProfileData
-    const updatedUser = await updateUserProfile(payload.sub, profileData)
+    const updatedUser = await updateUserProfile(user.id, profileData)
     if (!updatedUser) return c.json({ success: false, message: 'Utente non trovato' }, 404)
     return c.json({
       success: true, message: 'Profilo aggiornato con successo',
@@ -260,14 +272,14 @@ authRouter.put('/me/profile', isAuthenticated, async (c) => {
 // PUT /user/settings
 authRouter.put('/user/settings', isAuthenticated, async (c) => {
   try {
-    const authHeader = c.req.header('Authorization')!
-    const token = authHeader.substring(7)
-    const payload = await verifyJWT(token, getEnv())
-    if (!payload?.sub) return c.json({ success: false, message: 'Token non valido' }, 401)
+    const user = c.get('user')
     const { privacyConsent } = await c.req.json() as { privacyConsent?: boolean }
     const settingsData: UserProfileData = {}
     if (privacyConsent !== undefined) settingsData.privacyConsent = privacyConsent
-    const updatedUser = await updateUserProfile(payload.sub, settingsData)
+    if (Object.keys(settingsData).length === 0) {
+      return c.json({ success: false, message: 'Nessun campo da aggiornare' }, 400)
+    }
+    const updatedUser = await updateUserProfile(user.id, settingsData)
     if (!updatedUser) return c.json({ success: false, message: 'Utente non trovato' }, 404)
     return c.json({
       success: true, message: 'Impostazioni aggiornate con successo',
