@@ -2,7 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 // URL dell'API backend
-export const API_URL = import.meta.env.VITE_API_URL || 'https://tsnlas-worker.sistemi-fdb.workers.dev';
+export const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

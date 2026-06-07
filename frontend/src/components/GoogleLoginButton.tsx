@@ -29,22 +29,6 @@ export function GoogleLoginButton({ className, variant = 'outline', size = 'defa
         return;
       }
 
-      // Verifica se siamo in modalità mock (sviluppo locale)
-      if (response.authUrl?.includes('localhost:8787')) {
-        toast.info('Modalità sviluppo rilevata', {
-          description: 'Utilizzo dell\'implementazione mock di Google per lo sviluppo locale',
-        });
-
-        // Simula il flusso di autenticazione Google in modalità sviluppo
-        setTimeout(() => {
-          // Reindirizza direttamente alla pagina di callback con parametri fittizi
-          navigate('/auth/google/callback?code=mock-code&state=' + (response.state || 'mock-state'));
-        }, 1500);
-
-        return;
-      }
-
-      // Reindirizza all'URL di autenticazione Google in produzione
       if (response.authUrl) {
         window.location.href = response.authUrl;
       } else {

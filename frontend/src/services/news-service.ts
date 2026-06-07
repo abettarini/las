@@ -1,7 +1,7 @@
 import { Content } from "@/components/news/news-list";
 import { getAuthToken } from "./auth-service";
 
-const API_URL = import.meta.env.VITE_API_URL || "https://api.tsnlastrasigna.it";
+const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 // Funzione per ottenere tutte le comunicazioni
 export async function getAllNews(): Promise<{ success: boolean; data?: Content[]; message?: string }> {

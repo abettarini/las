@@ -29,12 +29,14 @@ export default async function handler(req: VercelReq, res: ServerResponse) {
     Array.isArray(v) ? v.forEach(val => headers.append(k, val)) : headers.set(k, v)
   }
 
-  const bodyInit: BodyInit | undefined = body?.length
+  const method = req.method ?? 'GET'
+  const canHaveBody = !['GET', 'HEAD'].includes(method.toUpperCase())
+  const bodyInit: BodyInit | undefined = canHaveBody && body?.length
     ? new Uint8Array(body.buffer as ArrayBuffer, body.byteOffset, body.byteLength)
     : undefined
 
   const fetchReq = new Request(url, {
-    method: req.method ?? 'GET',
+    method,
     headers,
     body: bodyInit,
   })
