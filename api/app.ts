@@ -1,5 +1,6 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
+import authRouter from './routes/auth-router.js'
 
 const app = new Hono().basePath('/api')
 
@@ -10,6 +11,7 @@ app.use(
       'http://localhost:5174',
       'https://tsnlas.netlify.app',
       'https://tsnlastrasigna.it',
+      'https://www.tsnlastrasigna.it',
     ],
     allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowHeaders: ['Content-Type', 'Authorization'],
@@ -18,5 +20,7 @@ app.use(
 )
 
 app.get('/', (c) => c.json({ status: 'ok', service: 'tsnlas-api' }))
+
+app.route('/', authRouter)
 
 export default app
