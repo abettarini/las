@@ -91,8 +91,8 @@ adminRouter.put('/admin/users/:id/roles', isAdmin, async (c) => {
     const existing = await getUserById(id)
     if (!existing) return c.json({ success: false, message: 'Utente non trovato' }, 404)
     const { roles } = await c.req.json() as { roles?: string[] }
-    if (!roles || !Array.isArray(roles)) {
-      return c.json({ success: false, message: 'I ruoli devono essere specificati come un array' }, 400)
+    if (!roles || !Array.isArray(roles) || !roles.every(r => typeof r === 'string')) {
+      return c.json({ success: false, message: 'I ruoli devono essere specificati come un array di stringhe' }, 400)
     }
     const updatedUser = await updateUserRoles(id, roles)
     return c.json({ success: true, message: 'Ruoli aggiornati con successo', user: updatedUser })
