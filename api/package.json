@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "generate": "prisma generate --schema ../prisma/schema.prisma",
     "dev": "vercel dev",
     "build": "tsc --noEmit"
   },
