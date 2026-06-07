@@ -12,6 +12,14 @@ interface CalendarsData {
 
 const config = calendarsData as unknown as CalendarsData
 
+/**
+ * Checks if a time slot is available for booking.
+ * Availability is slot-based (exact date+time match), not range-based.
+ * The `end` parameter is accepted for API consistency but not used in queries.
+ *
+ * Without `eventType`: slot is available if no non-cancelled bookings exist at that exact time.
+ * With `eventType`: slot is available if current bookings < maxBookings from calendars.json config.
+ */
 export async function checkTimeAvailability(
   start: Date,
   end: Date,
@@ -33,7 +41,9 @@ export async function checkTimeAvailability(
     return count === 0
   }
 
-  const maxBookings = config.eventTypes[eventType]?.maxBookings ?? 1
+  const eventConfig = config.eventTypes[eventType]
+  if (!eventConfig) console.warn(`[availability] unknown eventType: ${eventType}, defaulting maxBookings to 1`)
+  const maxBookings = eventConfig?.maxBookings ?? 1
   const count = await prisma.booking.count({
     where: {
       status: { not: 'cancelled' },
