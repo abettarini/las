@@ -21,8 +21,8 @@ interface Turno {
 
 interface OpenDay {
   date: string;
-  isMorningOpen: boolean;
-  isAfternoonOpen: boolean;
+  morning: boolean;
+  afternoon: boolean;
 }
 
 export function TurniCalendar() {
@@ -252,7 +252,7 @@ export function TurniCalendar() {
                     onValueChange={(value) => setSelectedTimeSlot(value as 'MORNING' | 'AFTERNOON')}
                     className="grid grid-cols-2 gap-4"
                   >
-                    {getOpenDayInfo(selectedDate)?.isMorningOpen && (
+                    {getOpenDayInfo(selectedDate)?.morning && (
                       <div>
                         <RadioGroupItem 
                           value="MORNING" 
@@ -268,7 +268,7 @@ export function TurniCalendar() {
                       </div>
                     )}
                     
-                    {getOpenDayInfo(selectedDate)?.isAfternoonOpen && (
+                    {getOpenDayInfo(selectedDate)?.afternoon && (
                       <div>
                         <RadioGroupItem 
                           value="AFTERNOON" 

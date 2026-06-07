@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/context/auth-context';
 import { API_URL, cn } from '@/lib/utils';
-import { format, getDaysInMonth, getMonth, getYear, parse, startOfMonth } from 'date-fns';
+import { format, getDaysInMonth, getMonth, getYear, parse } from 'date-fns';
 import { it } from 'date-fns/locale';
 import { Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -19,20 +19,21 @@ interface Turno {
 
 interface OpenDay {
   date: string;
-  isMorningOpen: boolean;
-  isAfternoonOpen: boolean;
+  morning: boolean;
+  afternoon: boolean;
 }
 
 export function TurniMatrix() {
   const { token } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   
-  const [currentMonth, setCurrentMonth] = useState<Date>(() => {
+  const [currentDate, setCurrentDate] = useState<Date>(() => {
     // Recupera il mese dai parametri URL o usa il mese corrente
     const monthParam = searchParams.get('month');
-    if (monthParam) {
+    const yearParam = searchParams.get('year');
+    if (yearParam && monthParam) {
       try {
-        return parse(monthParam, 'yyyy-MM', new Date());
+        return parse(`${yearParam}-${monthParam}`, 'yyyy-MM', new Date());
       } catch (e) {
         return new Date();
       }
@@ -69,7 +70,7 @@ export function TurniMatrix() {
       setIsLoading(true);
       try {
         // Carica i giorni aperti
-        const openDaysResponse = await fetch(`${API_URL}/turni/open-days`, {
+        const openDaysResponse = await fetch(`${API_URL}/turni/open-days?${searchParams}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -85,7 +86,7 @@ export function TurniMatrix() {
         }
         
         // Carica tutti i turni
-        const turniResponse = await fetch(`${API_URL}/turni`, {
+        const turniResponse = await fetch(`${API_URL}/turni?${searchParams}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -112,23 +113,19 @@ export function TurniMatrix() {
     if (token) {
       fetchData();
     }
-  }, [token]);
+  }, [token, setSearchParams]);
 
   // Aggiorna i parametri URL quando cambia il mese
   useEffect(() => {
-    const monthString = format(currentMonth, 'yyyy-MM');
+    const monthString = format(currentDate, 'MM');
+    const yearString = format(currentDate, 'yyyy');
     
     // Mantieni gli altri parametri e aggiorna solo il mese
     const newParams = new URLSearchParams(searchParams);
     newParams.set('month', monthString);
+    newParams.set('year', yearString);
     setSearchParams(newParams, { replace: true });
-  }, [currentMonth, setSearchParams]);
-
-  // Funzione per verificare se un giorno è aperto
-  const isOpenDay = (date: string): boolean => {
-    return openDays.some(day => day.date === date);
-  };
-
+  }, [currentDate, setSearchParams]);
   // Funzione per ottenere le informazioni di un giorno aperto
   const getOpenDayInfo = (date: string): OpenDay | undefined => {
     return openDays.find(day => day.date === date);
@@ -150,19 +147,16 @@ export function TurniMatrix() {
   };
 
   // Funzione per gestire il click su una cella
-  const handleCellClick = (day: number, timeSlot: 'MORNING' | 'AFTERNOON') => {
-    const selectedDate = new Date(getYear(currentMonth), getMonth(currentMonth), day);
-    const formattedDate = format(selectedDate, 'yyyy-MM-dd');
+  const handleCellClick = (day: number) => {
+    const selectedDate = new Date(getYear(currentDate), getMonth(currentDate), day);
     
     // Se la cella è già selezionata, deselezionala
-    if (selectedDay === day && selectedTimeSlot === timeSlot) {
+    if (selectedDay === day) {
       setSelectedDay(null);
-      setSelectedTimeSlot(null);
       
       // Rimuovi i parametri date e timeSlot dall'URL
       const newParams = new URLSearchParams(searchParams);
-      newParams.delete('date');
-      newParams.delete('timeSlot');
+      newParams.delete('day');
       setSearchParams(newParams, { replace: true });
       
       toast.info('Filtro rimosso');
@@ -170,30 +164,24 @@ export function TurniMatrix() {
     }
     
     setSelectedDay(day);
-    setSelectedTimeSlot(timeSlot);
     
     // Aggiorna i parametri URL
     const newParams = new URLSearchParams(searchParams);
-    newParams.set('date', formattedDate);
-    newParams.set('timeSlot', timeSlot);
+    newParams.set('day', day.toString());
     setSearchParams(newParams, { replace: true });
     
     toast.info('Filtro applicato', {
-      description: `Selezionato ${format(selectedDate, 'd MMMM yyyy', { locale: it })} - ${timeSlot === 'MORNING' ? 'Mattina' : 'Pomeriggio'}`
+      description: `Selezionato ${format(selectedDate, 'd MMMM yyyy', { locale: it })}`
     });
   };
 
   // Genera le celle della matrice usando CSS Grid
   const generateMatrix = () => {
-    const daysInMonth = getDaysInMonth(currentMonth);
-    const firstDayOfMonth = startOfMonth(currentMonth);
-    const year = getYear(currentMonth);
-    const month = getMonth(currentMonth);
+    const daysInMonth = getDaysInMonth(currentDate);
+    const year = getYear(currentDate);
+    const month = getMonth(currentDate);
     
     const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-    
-    // Calcola il numero di colonne necessarie (1 per l'intestazione + giorni del mese)
-    const gridColumns = daysInMonth + 1;
     
     return (
       <div className="overflow-x-auto pb-2">
@@ -209,11 +197,24 @@ export function TurniMatrix() {
           <div className="p-1 bg-muted font-medium text-left">Turno / Giorno 1</div>
           
           {/* Header row - days */}
-          {days.map(day => (
-            <div key={day} className="p-1 bg-muted font-medium text-center">
+          {days.map(day => {
+            const date = new Date(year, month, day);
+            const dateString = format(date, 'yyyy-MM-dd');
+            const openDay = getOpenDayInfo(dateString);
+            const isOpen = openDay?.morning;
+            
+            return (<div 
+              key={day}
+              className={cn(
+                "p-1 bg-muted font-medium text-center shadow-sm hover:shadow-md transition-shadow flex items-center justify-center",
+                isOpen ? "cursor-pointer" : "cursor-not-allowed",
+                selectedDay === day && "bg-primary text-white",
+              )}
+              onClick={() => isOpen && handleCellClick(day)}
+            >
               {day}
-            </div>
-          ))}
+            </div>)
+          })}
           
           {/* Morning row - label */}
           <div className="p-1 bg-muted font-medium">Mattina</div>
@@ -223,18 +224,17 @@ export function TurniMatrix() {
             const date = new Date(year, month, day);
             const dateString = format(date, 'yyyy-MM-dd');
             const openDay = getOpenDayInfo(dateString);
-            const isOpen = openDay?.isMorningOpen;
+            const isOpen = openDay?.morning;
             const count = isOpen ? countShiftRegistrations(dateString, 'MORNING') : 0;
             
             return (
               <div 
                 key={`morning-${day}`} 
                 className={cn(
-                  "p-1 text-center cursor-pointer shadow-sm hover:shadow-md transition-shadow flex items-center justify-center",
+                  "p-1 text-center shadow-sm hover:shadow-md transition-shadow flex items-center justify-center",
                   isOpen ? getCellColor(count) : "bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600",
                   selectedDay === day && selectedTimeSlot === 'MORNING' && "ring-2 ring-primary"
                 )}
-                onClick={() => isOpen && handleCellClick(day, 'MORNING')}
               >
                 {isOpen ? count : ''}
               </div>
@@ -249,18 +249,17 @@ export function TurniMatrix() {
             const date = new Date(year, month, day);
             const dateString = format(date, 'yyyy-MM-dd');
             const openDay = getOpenDayInfo(dateString);
-            const isOpen = openDay?.isAfternoonOpen;
+            const isOpen = openDay?.afternoon;
             const count = isOpen ? countShiftRegistrations(dateString, 'AFTERNOON') : 0;
             
             return (
               <div 
                 key={`afternoon-${day}`} 
                 className={cn(
-                  "p-1 text-center cursor-pointer shadow-sm hover:shadow-md transition-shadow flex items-center justify-center",
+                  "p-1 text-center shadow-sm hover:shadow-md transition-shadow flex items-center justify-center",
                   isOpen ? getCellColor(count) : "bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600",
                   selectedDay === day && selectedTimeSlot === 'AFTERNOON' && "ring-2 ring-primary"
                 )}
-                onClick={() => isOpen && handleCellClick(day, 'AFTERNOON')}
               >
                 {isOpen ? count : ''}
               </div>
@@ -275,7 +274,7 @@ export function TurniMatrix() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Turni - {format(currentMonth, 'MMMM yyyy', { locale: it })}</CardTitle>
+        <CardTitle>Turni Matrix - {format(currentDate, 'MMMM yyyy', { locale: it })}</CardTitle>
         <CardDescription>
           Visualizza il numero di iscrizioni per ogni turno del mese. Clicca su una cella per filtrare.
         </CardDescription>
@@ -298,9 +297,9 @@ export function TurniMatrix() {
                 <button
                   className="px-2 py-1 text-sm border rounded hover:bg-muted"
                   onClick={() => {
-                    const prevMonth = new Date(currentMonth);
+                    const prevMonth = new Date(currentDate);
                     prevMonth.setMonth(prevMonth.getMonth() - 1);
-                    setCurrentMonth(prevMonth);
+                    setCurrentDate(prevMonth);
                   }}
                 >
                   Mese precedente
@@ -308,9 +307,9 @@ export function TurniMatrix() {
                 <button
                   className="px-2 py-1 text-sm border rounded hover:bg-muted"
                   onClick={() => {
-                    const nextMonth = new Date(currentMonth);
+                    const nextMonth = new Date(currentDate);
                     nextMonth.setMonth(nextMonth.getMonth() + 1);
-                    setCurrentMonth(nextMonth);
+                    setCurrentDate(nextMonth);
                   }}
                 >
                   Mese successivo
@@ -318,10 +317,10 @@ export function TurniMatrix() {
               </div>
             </div>
             {generateMatrix()}
-            {selectedDay && selectedTimeSlot && (
+            {selectedDay && (
               <div className="mt-4 p-3 border rounded-md bg-muted/30">
                 <h3 className="font-medium">
-                  Filtro attivo: {format(new Date(getYear(currentMonth), getMonth(currentMonth), selectedDay), 'd MMMM', { locale: it })} - {selectedTimeSlot === 'MORNING' ? 'Mattina' : 'Pomeriggio'}
+                  Filtro attivo: {format(new Date(getYear(currentDate), getMonth(currentDate), selectedDay), 'd MMMM', { locale: it })} - {selectedTimeSlot === 'MORNING' ? 'Mattina' : 'Pomeriggio'}
                 </h3>
                 <button
                   className="mt-2 px-2 py-1 text-sm border rounded hover:bg-muted"
@@ -331,8 +330,7 @@ export function TurniMatrix() {
                     
                     // Rimuovi i parametri date e timeSlot dall'URL
                     const newParams = new URLSearchParams(searchParams);
-                    newParams.delete('date');
-                    newParams.delete('timeSlot');
+                    newParams.delete('day');
                     setSearchParams(newParams, { replace: true });
                     
                     toast.info('Filtro rimosso');

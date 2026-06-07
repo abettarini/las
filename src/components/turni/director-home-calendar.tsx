@@ -21,8 +21,9 @@ interface Turno {
 
 interface OpenDay {
   date: string;
-  isMorningOpen: boolean;
-  isAfternoonOpen: boolean;
+  morning: boolean;
+  dayOfWeek: string;
+  afternoon: boolean;
 }
 
 export function DirectorHomeCalendar() {

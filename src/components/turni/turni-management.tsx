@@ -25,8 +25,8 @@ interface Turno {
 
 interface OpenDay {
   date: string;
-  isMorningOpen: boolean;
-  isAfternoonOpen: boolean;
+  morning: boolean;
+  afternoon: boolean;
 }
 
 interface Director {
@@ -41,13 +41,12 @@ export function TurniManagementComponent() {
   const [selectedDirector, setSelectedDirector] = useState<string>('all');
   const [directors, setDirectors] = useState<Director[]>([]);
   const [turni, setTurni] = useState<Turno[]>([]);
+  const [filteredTurni, setFilteredTurni] = useState<Turno[]>([]);
   const [openDays, setOpenDays] = useState<OpenDay[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCancelling, setIsCancelling] = useState<string | null>(null);
-  const [availableShifts, setAvailableShifts] = useState<{morning: boolean, afternoon: boolean}>({morning: false, afternoon: false});
-  const [showShiftsPanel, setShowShiftsPanel] = useState(false);
   
   // Dialog state
   const [dialogSelectedDirector, setDialogSelectedDirector] = useState<string>('');
@@ -55,7 +54,7 @@ export function TurniManagementComponent() {
 
   // Ottieni i parametri URL
   const [searchParams] = useSearchParams();
-  
+
   // Carica i dati iniziali
   useEffect(() => {
     const fetchData = async () => {
@@ -72,9 +71,9 @@ export function TurniManagementComponent() {
           const directorsData = await directorsResponse.json();
           setDirectors(directorsData);
         }
-        
+
         // Carica i giorni aperti
-        const openDaysResponse = await fetch(`${API_URL}/turni/open-days`, {
+        const openDaysResponse = await fetch(`${API_URL}/turni/open-days?${searchParams}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -86,7 +85,7 @@ export function TurniManagementComponent() {
         }
         
         // Carica tutti i turni
-        const turniResponse = await fetch(`${API_URL}/turni`, {
+        const turniResponse = await fetch(`${API_URL}/turni?${searchParams}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -94,6 +93,7 @@ export function TurniManagementComponent() {
         
         if (turniResponse.ok) {
           const turniData = await turniResponse.json();
+          console.log("Turni caricati:", turniData);
           setTurni(turniData);
         }
       } catch (error) {
@@ -113,41 +113,69 @@ export function TurniManagementComponent() {
   
   // Sincronizza i filtri con i parametri URL
   useEffect(() => {
-    const dateParam = searchParams.get('date');
-    const timeSlotParam = searchParams.get('timeSlot') as 'MORNING' | 'AFTERNOON' | null;
-    
-    if (dateParam) {
+    const fetchData = async () => {
+      setIsLoading(true);
       try {
-        const date = new Date(dateParam);
-        setSelectedDate(date);
-      } catch (e) {
-        console.error("Errore nel parsing della data:", e);
+        // Carica i giorni aperti
+        const openDaysResponse = await fetch(`${API_URL}/turni/open-days?${searchParams}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (openDaysResponse.ok) {
+          const openDaysData = await openDaysResponse.json();
+          setOpenDays(openDaysData);
+        }
+      } catch (error) {
+        console.error("Errore durante il caricamento dei giorni aperti:", error);
+        toast.error("Errore", {
+          description: "Si è verificato un errore durante il caricamento dei giorni aperti"
+        });
+      } finally {
+        setIsLoading(false);
       }
+    };
+
+    if (searchParams.has('director')) {
+      setSelectedDirector(searchParams.get('director') || 'all');
+    } else {
+      setSelectedDirector('all');
     }
-    
-    // Aggiorna il timeSlot nel dialog se necessario
-    if (timeSlotParam === 'MORNING' || timeSlotParam === 'AFTERNOON') {
-      setDialogSelectedTimeSlot(timeSlotParam);
+    if (searchParams.has('year') && searchParams.has('month') && searchParams.has('day')) {
+      fetchData();
+      const year = searchParams.get('year');
+      const month = searchParams.get('month');
+      const day = searchParams.get('day');
+      const date = new Date(`${year}-${month}-${day}`);
+      setSelectedDate(date);
+    } else {
+      setSelectedDate(undefined);
     }
+    // const timeSlotParam = searchParams.get('timeSlot') as 'MORNING' | 'AFTERNOON' | null;
+
+
   }, [searchParams]);
 
-  // Filtra i turni in base ai criteri selezionati
-  const filteredTurni = turni.filter(turno => {
-    let matchesDate = true;
-    let matchesDirector = true;
-    
-    if (selectedDate) {
-      const turnoDate = format(new Date(turno.date), 'yyyy-MM-dd');
-      const filterDate = format(selectedDate, 'yyyy-MM-dd');
-      matchesDate = turnoDate === filterDate;
-    }
-    
-    if (selectedDirector && selectedDirector !== 'all') {
-      matchesDirector = turno.userId === selectedDirector;
-    }
-    
-    return matchesDate && matchesDirector;
-  });
+  useEffect(() => {
+    console.log("Filtrando i turni con data:", selectedDate, "e direttore:", selectedDirector);
+    // Filtra i turni in base ai criteri selezionati
+    setFilteredTurni(turni.filter(turno => {
+      let matchesDate = true;
+      let matchesDirector = true;
+      
+      if (selectedDate) {
+        const turnoDate = format(new Date(turno.date), 'yyyy-MM-dd');
+        const filterDate = format(selectedDate, 'yyyy-MM-dd');
+        matchesDate = turnoDate === filterDate;
+      }
+      
+      if (selectedDirector && selectedDirector !== 'all') {
+        matchesDirector = turno.userId === selectedDirector;
+      }
+      
+      return matchesDate && matchesDirector;
+    }));
+
+  }, [turni, selectedDate, selectedDirector]);
+  
 
   // Funzione per iscrivere un direttore a un turno
   const handleIscriviDirector = async () => {
@@ -186,11 +214,7 @@ export function TurniManagementComponent() {
         setIsDialogOpen(false);
       } else {
         const errorData = await response.json();
-        toast({
-          title: "Errore",
-          description: errorData.message || "Impossibile completare l'iscrizione",
-          variant: "destructive"
-        });
+        toast.error(errorData.message || "Impossibile completare l'iscrizione");
       }
     } catch (error) {
       console.error("Errore durante l'iscrizione al turno:", error);
@@ -217,34 +241,23 @@ export function TurniManagementComponent() {
 
       if (response.ok) {
         setTurni(turni.filter(turno => turno.id !== turnoId));
-        toast({
-          title: "Turno annullato",
-          description: "Il turno è stato annullato con successo",
+        toast.success("Turno annullato",
+          { description: "Il turno è stato annullato con successo",
         });
       } else {
         const errorData = await response.json();
-        toast({
-          title: "Errore",
+        toast.error("Errore",{
           description: errorData.message || "Impossibile annullare il turno",
-          variant: "destructive"
         });
       }
     } catch (error) {
       console.error("Errore durante l'annullamento del turno:", error);
-      toast({
-        title: "Errore",
+      toast.error("Errore", {
         description: "Si è verificato un errore durante l'annullamento",
-        variant: "destructive"
       });
     } finally {
       setIsCancelling(null);
     }
-  };
-
-  // Funzione per verificare se un giorno è aperto
-  const isOpenDay = (date: Date) => {
-    const dateString = format(date, 'yyyy-MM-dd');
-    return openDays.some(day => day.date === dateString);
   };
 
   // Funzione per ottenere le informazioni di un giorno aperto
@@ -252,35 +265,6 @@ export function TurniManagementComponent() {
     const dateString = format(date, 'yyyy-MM-dd');
     return openDays.find(day => day.date === dateString);
   };
-  
-  // Funzione per contare le iscrizioni per un turno specifico
-  const countShiftRegistrations = (date: string, timeSlot: 'MORNING' | 'AFTERNOON'): number => {
-    return turni.filter(turno => 
-      turno.date === date && 
-      turno.timeSlot === timeSlot
-    ).length;
-  };
-  
-  // Aggiorna i turni disponibili quando cambia la data selezionata
-  useEffect(() => {
-    if (selectedDate) {
-      const dateString = format(selectedDate, 'yyyy-MM-dd');
-      const openDay = getOpenDayInfo(selectedDate);
-      
-      if (openDay) {
-        setAvailableShifts({
-          morning: openDay.isMorningOpen,
-          afternoon: openDay.isAfternoonOpen
-        });
-        setShowShiftsPanel(true);
-      } else {
-        setAvailableShifts({morning: false, afternoon: false});
-        setShowShiftsPanel(false);
-      }
-    } else {
-      setShowShiftsPanel(false);
-    }
-  }, [selectedDate, openDays]);
 
   // Renderizza il componente
   return (
@@ -335,7 +319,6 @@ export function TurniManagementComponent() {
                   </SelectContent>
                 </Select>
               </div>
-              
               {selectedDate && (
                 <div className="grid gap-2">
                   <Label>Fascia Oraria</Label>
@@ -344,7 +327,7 @@ export function TurniManagementComponent() {
                     onValueChange={(value) => setDialogSelectedTimeSlot(value as 'MORNING' | 'AFTERNOON')}
                     className="grid grid-cols-2 gap-4"
                   >
-                    {getOpenDayInfo(selectedDate)?.isMorningOpen && (
+                    {getOpenDayInfo(selectedDate)?.morning && (
                       <div>
                         <RadioGroupItem 
                           value="MORNING" 
@@ -360,7 +343,7 @@ export function TurniManagementComponent() {
                       </div>
                     )}
                     
-                    {getOpenDayInfo(selectedDate)?.isAfternoonOpen && (
+                    {getOpenDayInfo(selectedDate)?.afternoon && (
                       <div>
                         <RadioGroupItem 
                           value="AFTERNOON" 
