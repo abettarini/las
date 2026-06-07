@@ -7,8 +7,26 @@ import { readFileSync } from 'fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
+interface DayHours {
+  morning?: { start: string; end: string }
+  afternoon?: { start: string; end: string }
+}
+
+interface SeasonConfig {
+  startDate: string
+  endDate: string
+  openingHours: Record<string, DayHours>
+}
+
+interface CalendarConfig {
+  orari: {
+    orarioEstivo: SeasonConfig
+    orarioInvernale: SeasonConfig
+  }
+}
+
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const configData = JSON.parse(readFileSync(join(__dirname, '../data/calendars.json'), 'utf-8'))
+const configData = JSON.parse(readFileSync(join(__dirname, '../data/calendars.json'), 'utf-8')) as CalendarConfig
 
 /**
  * Determines the active season based on the current date.
@@ -67,14 +85,14 @@ function isDateInRange(date: string, startDate: string, endDate: string): boolea
  */
 export function getActiveOpeningHours(): Record<string, { morning: boolean; afternoon: boolean }> {
   const season = getActiveSeason()
-  const orari = configData.orari[season as keyof typeof configData.orari] as any
-  const rawHours: Record<string, any> = orari?.openingHours ?? {}
+  const orari: SeasonConfig = configData.orari[season as keyof CalendarConfig['orari']]
+  const rawHours: Record<string, DayHours> = orari?.openingHours ?? {}
 
   const result: Record<string, { morning: boolean; afternoon: boolean }> = {}
   for (const [day, sessions] of Object.entries(rawHours)) {
     result[day] = {
-      morning: !!(sessions as any)?.morning,
-      afternoon: !!(sessions as any)?.afternoon,
+      morning: !!sessions?.morning,
+      afternoon: !!sessions?.afternoon,
     }
   }
   return result
