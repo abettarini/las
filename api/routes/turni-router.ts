@@ -51,7 +51,7 @@ turniRouter.get('/open-days', async (c) => {
       }
     }
 
-    return c.json({ success: true, openDays })
+    return c.json(openDays)
   } catch (err) {
     console.error('Errore nel recupero dei giorni aperti:', err)
     return c.json({ success: false, message: 'Errore interno del server' }, 500)
@@ -71,7 +71,7 @@ turniRouter.get('/my-turni', isAuthenticated, async (c) => {
     const day = c.req.query('day')
 
     const turni = await getUserTurni(user.id, year, month, day)
-    return c.json({ success: true, turni })
+    return c.json(turni)
   } catch (err) {
     console.error('Errore nel recupero dei turni personali:', err)
     return c.json({ success: false, message: 'Errore interno del server' }, 500)
@@ -151,7 +151,7 @@ turniRouter.get('/', isAuthenticated, async (c) => {
     }
 
     const turni = await getAllTurni(year, month, day, userIdParam)
-    return c.json({ success: true, turni })
+    return c.json(turni)
   } catch (err) {
     console.error('Errore nel recupero dei turni:', err)
     return c.json({ success: false, message: 'Errore interno del server' }, 500)
