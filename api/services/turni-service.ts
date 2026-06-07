@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library.js'
 import { prisma } from '../lib/prisma.js'
 
@@ -7,6 +8,16 @@ export interface Turno {
   userName: string
   date: string
   timeSlot: 'MORNING' | 'AFTERNOON'
+}
+
+function toTurno(record: { id: string; userId: string; userName: string; date: string; timeSlot: string; createdAt: Date }): Turno {
+  return {
+    id: record.id,
+    userId: record.userId,
+    userName: record.userName,
+    date: record.date,
+    timeSlot: record.timeSlot as 'MORNING' | 'AFTERNOON',
+  }
 }
 
 export async function registerDirector(
@@ -26,7 +37,7 @@ export async function registerDirector(
         timeSlot: turnoData.timeSlot,
       },
     })
-    return turno as unknown as Turno
+    return toTurno(turno)
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError && error.code === 'P2002') {
       throw new Error('Il direttore è già iscritto a questo turno')
@@ -41,7 +52,7 @@ export async function getAllTurni(
   day?: string,
   userId?: string
 ): Promise<Turno[]> {
-  const where: Record<string, unknown> = {}
+  const where: Prisma.TurnoWhereInput = {}
 
   if (year) {
     if (month) {
@@ -64,12 +75,12 @@ export async function getAllTurni(
     orderBy: [{ date: 'asc' }, { timeSlot: 'asc' }],
   })
 
-  return results as unknown as Turno[]
+  return results.map(toTurno)
 }
 
 export async function getTurno(id: string): Promise<Turno | null> {
   const result = await prisma.turno.findUnique({ where: { id } })
-  return result as unknown as Turno | null
+  return result ? toTurno(result) : null
 }
 
 export async function getUserTurni(
@@ -85,7 +96,10 @@ export async function deleteTurno(id: string): Promise<boolean> {
   try {
     await prisma.turno.delete({ where: { id } })
     return true
-  } catch {
-    return false
+  } catch (error) {
+    if (error instanceof PrismaClientKnownRequestError && error.code === 'P2025') {
+      return false
+    }
+    throw error
   }
 }
