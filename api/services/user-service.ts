@@ -102,10 +102,8 @@ function mapUser(u: PrismaUser): UserData {
 }
 
 function generateVerificationToken(): string {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  let result = ''
-  for (let i = 0; i < 32; i++) result += chars.charAt(Math.floor(Math.random() * chars.length))
-  return result
+  const bytes = crypto.getRandomValues(new Uint8Array(24))
+  return btoa(String.fromCharCode(...bytes)).replace(/[+/=]/g, '').slice(0, 32)
 }
 
 export async function createUser(
@@ -162,11 +160,13 @@ export async function verifyUserEmail(token: string): Promise<UserData | null> {
 }
 
 export async function updateUserLastLogin(id: string): Promise<UserData | null> {
-  const updated = await prisma.user.update({
-    where: { id },
-    data: { lastLogin: new Date() },
-  })
-  return mapUser(updated)
+  try {
+    const updated = await prisma.user.update({ where: { id }, data: { lastLogin: new Date() } })
+    return mapUser(updated)
+  } catch (e: any) {
+    if (e?.code === 'P2025') return null
+    throw e
+  }
 }
 
 export async function generateNewVerificationToken(email: string): Promise<UserData | null> {
@@ -197,16 +197,20 @@ export async function verifyAuthToken(
   const user = await getUserById(payload.sub)
   if (!user) return null
   if (payload.email !== user.email) return null
-  if (payload.roles && Array.isArray(payload.roles)) user.roles = payload.roles
   return user
 }
 
 export async function updateUserRoles(userId: string, roles: string[]): Promise<UserData | null> {
-  const updated = await prisma.user.update({
-    where: { id: userId },
-    data: { roles: roles.join(',') },
-  })
-  return mapUser(updated)
+  try {
+    const updated = await prisma.user.update({
+      where: { id: userId },
+      data: { roles: roles.join(',') },
+    })
+    return mapUser(updated)
+  } catch (e: any) {
+    if (e?.code === 'P2025') return null
+    throw e
+  }
 }
 
 export async function updateUserProfile(id: string, profileData: UserProfileData): Promise<UserData | null> {
@@ -227,8 +231,13 @@ export async function updateUserProfile(id: string, profileData: UserProfileData
     data.roles = finalRoles.join(',')
   }
 
-  const updated = await prisma.user.update({ where: { id }, data })
-  return mapUser(updated)
+  try {
+    const updated = await prisma.user.update({ where: { id }, data })
+    return mapUser(updated)
+  } catch (e: any) {
+    if (e?.code === 'P2025') return null
+    throw e
+  }
 }
 
 export async function getAllUsers(
@@ -245,7 +254,7 @@ export async function getAllUsers(
       { name: { contains: options.search, mode: 'insensitive' } },
     ]
   }
-  if (options.role) where.roles = { contains: options.role }
+  if (options.role) where.roles = { contains: options.role, mode: 'insensitive' }
   if (options.isVerified !== undefined) where.isVerified = options.isVerified
   if (options.isSocio !== undefined) where.isSocio = options.isSocio
 
