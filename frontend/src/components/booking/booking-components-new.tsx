@@ -18,7 +18,7 @@ const BookingComponent: React.FC = () => {
   const [cancelSecret, setCancelSecret] = useState<string | null>(null);
 
   // Ottieni l'URL dell'API dall'ambiente
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl = import.meta.env.VITE_API_URL || '/api';
 
   // Funzione per gestire l'invio del form
   const onSubmit = async (data: BookingFormValues) => {
