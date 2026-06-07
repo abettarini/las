@@ -1,0 +1,446 @@
+{
+    "orari": {
+        "orarioEstivo": {
+            "startDate": "04-02",
+            "endDate": "09-30",
+            "eventSchedules": {
+                "visita_dottore": {
+                    "availableDays": {
+                        "Tuesday": [
+                            "09:00",
+                            "11:00",
+                            "14:00"
+                        ],
+                        "Friday": [
+                            "10:00",
+                            "15:00"
+                        ],
+                        "Saturday": [
+                            "09:00",
+                            "11:00",
+                            "16:00"
+                        ],
+                        "Sunday": [
+                            "10:00",
+                            "16:00"
+                        ]
+                    }
+                },
+                "corso_dima": {
+                    "availableDays": {
+                        "Tuesday": [
+                            "10:00",
+                            "15:00"
+                        ],
+                        "Thursday": [
+                            "10:00",
+                            "15:00",
+                            "18:00"
+                        ],
+                        "Saturday": [
+                            "09:00",
+                            "14:00",
+                            "17:00"
+                        ]
+                    }
+                },
+                "taratura_carabina": {
+                    "availableDays": {
+                        "Monday": [
+                            "09:00",
+                            "14:00"
+                        ],
+                        "Friday": [
+                            "14:00",
+                            "16:00",
+                            "18:00"
+                        ],
+                        "Saturday": [
+                            "09:00",
+                            "11:00",
+                            "16:00",
+                            "18:00"
+                        ]
+                    }
+                },
+                "cinghialino_corrente": {
+                    "availableDays": {
+                        "Tuesday": [
+                            "09:00",
+                            "10:00",
+                            "11:00",
+                            "12:00",
+                            "14:00",
+                            "15:00",
+                            "16:00",
+                            "17:00"
+                        ],
+                        "Wednesday": [
+                            "09:00",
+                            "10:00",
+                            "11:00",
+                            "12:00",
+                            "14:00",
+                            "15:00",
+                            "16:00",
+                            "17:00"
+                        ],
+                        "Saturday": [
+                            "09:00",
+                            "10:00",
+                            "11:00",
+                            "12:00",
+                            "14:00",
+                            "15:00",
+                            "16:00",
+                            "17:00"
+                        ],
+                        "Sunday": [
+                            "09:00",
+                            "10:00",
+                            "11:00",
+                            "12:00"
+                        ]
+                    }
+                }
+            },
+            "openingHours": {
+                "lunedì": {
+                    "morning": {
+                        "start": "09:30",
+                        "end": "13:45"
+                    },
+                    "afternoon": {
+                        "start": "15:30",
+                        "end": "18:45"
+                    }
+                },
+                "martedì": {
+                    "morning": {
+                        "start": "09:00",
+                        "end": "12:45"
+                    },
+                    "afternoon": {
+                        "start": "15:00",
+                        "end": "18:45"
+                    }
+                },
+                "giovedì": {
+                    "morning": {
+                        "start": "09:30",
+                        "end": "12:45"
+                    },
+                    "afternoon": {
+                        "start": "13:45",
+                        "end": "16:45"
+                    }
+                },
+                "sabato": {
+                    "morning": {
+                        "start": "09:30",
+                        "end": "12:45"
+                    },
+                    "afternoon": {
+                        "start": "15:30",
+                        "end": "18:45"
+                    }
+                },
+                "domenica": {
+                    "morning": {
+                        "start": "09:30",
+                        "end": "12:45"
+                    }
+                }
+            }
+        },
+        "orarioInvernale": {
+            "startDate": "10-01",
+            "endDate": "04-01",
+            "eventSchedules": {
+                "visita_dottore": {
+                    "availableDays": {
+                        "Tuesday": [
+                            "09:00",
+                            "14:00"
+                        ],
+                        "Friday": [
+                            "10:00",
+                            "15:00"
+                        ],
+                        "Saturday": [
+                            "09:00"
+                        ],
+                        "Sunday": [
+                            "10:00"
+                        ]
+                    }
+                },
+                "corso_dima": {
+                    "availableDays": {
+                        "Tuesday": [
+                            "10:00",
+                            "15:00"
+                        ],
+                        "Thursday": [
+                            "14:00",
+                            "17:00"
+                        ]
+                    }
+                },
+                "taratura_carabina": {
+                    "availableDays": {
+                        "Monday": [
+                            "10:00",
+                            "14:00"
+                        ],
+                        "Friday": [
+                            "14:00",
+                            "16:00"
+                        ]
+                    }
+                },
+                "cinghialino_corrente": {
+                    "availableDays": {
+                        "Tuesday": [
+                            "09:00",
+                            "10:00",
+                            "11:00",
+                            "12:00",
+                            "14:00",
+                            "15:00",
+                            "16:00",
+                            "17:00"
+                        ],
+                        "Wednesday": [
+                            "09:00",
+                            "10:00",
+                            "11:00",
+                            "12:00",
+                            "14:00",
+                            "15:00",
+                            "16:00",
+                            "17:00"
+                        ],
+                        "Saturday": [
+                            "09:00",
+                            "10:00",
+                            "11:00",
+                            "12:00",
+                            "14:00",
+                            "15:00",
+                            "16:00",
+                            "17:00"
+                        ],
+                        "Sunday": [
+                            "09:00",
+                            "10:00",
+                            "11:00",
+                            "12:00"
+                        ]
+                    }
+                }
+            },
+            "openingHours": {
+                "lunedì": {
+                    "morning": {
+                        "start": "09:30",
+                        "end": "13:00"
+                    },
+                    "afternoon": {
+                        "start": "15:00",
+                        "end": "18:00"
+                    }
+                },
+                "martedì": {
+                    "morning": {
+                        "start": "09:00",
+                        "end": "12:45"
+                    },
+                    "afternoon": {
+                        "start": "15:00",
+                        "end": "18:00"
+                    }
+                },
+                "venerdì": {
+                    "morning": {
+                        "start": "09:30",
+                        "end": "12:45"
+                    },
+                    "afternoon": {
+                        "start": "15:00",
+                        "end": "18:00"
+                    }
+                },
+                "sabato": {
+                    "morning": {
+                        "start": "09:30",
+                        "end": "12:45"
+                    }
+                }
+            }
+        }
+    },
+    "calendar": {
+        "chiusureFestive": [
+            {
+                "data": "01-01",
+                "descrizione": "Capodanno"
+            },
+            {
+                "data": "01-06",
+                "descrizione": "Epifania"
+            },
+            {
+                "data": "04-25",
+                "descrizione": "Festa della Liberazione"
+            },
+            {
+                "data": "05-01",
+                "descrizione": "Festa del Lavoro"
+            },
+            {
+                "data": "06-02",
+                "descrizione": "Festa della Repubblica"
+            },
+            {
+                "data": "08-15",
+                "descrizione": "Ferragosto"
+            },
+            {
+                "data": "11-01",
+                "descrizione": "Tutti i Santi"
+            },
+            {
+                "data": "12-08",
+                "descrizione": "Immacolata Concezione"
+            },
+            {
+                "data": "12-25",
+                "descrizione": "Natale"
+            },
+            {
+                "data": "12-26",
+                "descrizione": "Santo Stefano"
+            }
+        ],
+        "chiusureSpeciali": [
+            {
+                "data": "2025-04-02",
+                "descrizione": "Prova"
+            },
+            {
+                "data": "2024-04-21",
+                "descrizione": "Gara Regionale"
+            },
+            {
+                "data": "2024-06-15",
+                "descrizione": "Manutenzione Straordinaria"
+            },
+            {
+                "data": "2024-08-12",
+                "descrizione": "Chiusura Estiva",
+                "dataFine": "2024-08-18"
+            },
+            {
+                "data": "2024-12-24",
+                "descrizione": "Vigilia di Natale",
+                "orarioRidotto": {
+                    "start": "09:30",
+                    "end": "13:00"
+                }
+            },
+            {
+                "data": "2024-12-31",
+                "descrizione": "San Silvestro",
+                "orarioRidotto": {
+                    "start": "09:30",
+                    "end": "13:00"
+                }
+            }
+        ],
+        "apertureEccezionali": [
+            {
+                "data": "2024-05-19",
+                "descrizione": "Gara Nazionale di Tiro",
+                "orario": {
+                    "start": "08:00",
+                    "end": "19:00"
+                }
+            },
+            {
+                "data": "2025-04-01",
+                "descrizione": "Gara Nazionale di Tiro",
+                "orario": {
+                    "start": "08:00",
+                    "end": "19:00"
+                }
+            },
+            {
+                "data": "2024-07-14",
+                "descrizione": "Campionato Regionale",
+                "orario": {
+                    "start": "08:30",
+                    "end": "18:30"
+                }
+            },
+            {
+                "data": "2024-09-22",
+                "descrizione": "Trofeo Autunnale",
+                "orario": {
+                    "start": "09:00",
+                    "end": "17:00"
+                }
+            },
+            {
+                "data": "2024-11-10",
+                "descrizione": "Gara di Beneficenza",
+                "orario": {
+                    "start": "09:30",
+                    "end": "16:30"
+                }
+            }
+        ]
+    },
+    "shootingHours": {
+        "startAfterOpeningMinutes": 30,
+        "endBeforeClosingMinutes": 15
+    },
+    "eventTypes": {
+        "visita_dottore": {
+            "label": "Visita Dottore",
+            "maxBookings": 10,
+            "recommendations": "Portare documenti medici e presentarsi 15 minuti prima.",
+            "minAdvanceBooking": {
+                "value": 24,
+                "unit": "hours"
+            }
+        },
+        "corso_dima": {
+            "label": "Corso DIMA",
+            "maxBookings": 5,
+            "recommendations": "Portare il materiale didattico e arrivare puntuali.",
+            "minAdvanceBooking": {
+                "value": 1,
+                "unit": "days"
+            }
+        },
+        "taratura_carabina": {
+            "label": "Taratura Carabina",
+            "maxBookings": 5,
+            "recommendations": "Portare l'attrezzatura personale e seguire le norme di sicurezza.",
+            "minAdvanceBooking": {
+                "value": 48,
+                "unit": "hours"
+            }
+        },
+        "cinghialino_corrente": {
+            "label": "Cinghialino Corrente",
+            "maxBookings": 8,
+            "recommendations": "Abbigliamento adeguato e rispetto delle regole del campo.",
+            "minAdvanceBooking": {
+                "value": 5,
+                "unit": "days"
+            }
+        }
+    }
+}
