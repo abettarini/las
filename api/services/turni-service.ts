@@ -78,11 +78,6 @@ export async function getAllTurni(
   return results.map(toTurno)
 }
 
-export async function getTurno(id: string): Promise<Turno | null> {
-  const result = await prisma.turno.findUnique({ where: { id } })
-  return result ? toTurno(result) : null
-}
-
 export async function getUserTurni(
   userId: string,
   year?: string,
