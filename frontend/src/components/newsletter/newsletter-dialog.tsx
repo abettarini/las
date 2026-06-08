@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
-    DialogClose,
     DialogContent,
     DialogDescription,
     DialogFooter,
@@ -15,39 +14,54 @@ interface NewsletterDialogProps {
   delayInSeconds?: number;
 }
 
+const STORAGE_KEY_SUBSCRIBED = "newsletter-subscribed";
+const STORAGE_KEY_DISMISSED = "newsletter-dismissed";
+
+const isBlocked = () =>
+  localStorage.getItem(STORAGE_KEY_SUBSCRIBED) === "true" ||
+  sessionStorage.getItem(STORAGE_KEY_DISMISSED) === "true";
+
+const scheduleReshow = (setOpen: (v: boolean) => void) => {
+  const delay = Math.random() * 60_000 + 60_000; // 60–120 s random
+  setTimeout(() => {
+    if (!isBlocked()) setOpen(true);
+  }, delay);
+};
+
 const NewsletterDialog = ({ delayInSeconds = 10 }: NewsletterDialogProps) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    // Check if user has already subscribed or dismissed
-    const hasSubscribed = localStorage.getItem("newsletter-subscribed") === "true";
-    const hasDismissed = sessionStorage.getItem("newsletter-dismissed") === "true";
-
-    if (!hasSubscribed && !hasDismissed) {
-      // Set timer to show dialog after specified delay
-      const timer = setTimeout(() => {
-        setOpen(true);
-      }, delayInSeconds * 1000);
-
-      return () => clearTimeout(timer);
-    }
+    if (isBlocked()) return;
+    const timer = setTimeout(() => setOpen(true), delayInSeconds * 1000);
+    return () => clearTimeout(timer);
   }, [delayInSeconds]);
 
-  const handleSuccess = () => {
-    // Close dialog after successful subscription
-    setTimeout(() => {
-      setOpen(false);
-    }, 1500);
+  // X button, Escape key, backdrop click — reschedule
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (!nextOpen) scheduleReshow(setOpen);
+    setOpen(nextOpen);
   };
 
-  const handleDismiss = () => {
-    // Mark as dismissed for this session
-    sessionStorage.setItem("newsletter-dismissed", "true");
+  // "Non ora, grazie" — closes and reschedules (same as X)
+  const handleNotNow = () => {
+    scheduleReshow(setOpen);
     setOpen(false);
   };
 
+  // "Non mostrare più" — closes and blocks for the whole session
+  const handleNeverShow = () => {
+    sessionStorage.setItem(STORAGE_KEY_DISMISSED, "true");
+    setOpen(false);
+  };
+
+  // Successful subscription — closes; localStorage already set by NewsletterSignup
+  const handleSuccess = () => {
+    setTimeout(() => setOpen(false), 1500);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-md p-0 overflow-hidden">
         <div className="bg-gradient-to-r from-primary/90 to-primary text-white p-6">
           <div className="flex justify-center mb-4">
@@ -78,12 +92,23 @@ const NewsletterDialog = ({ delayInSeconds = 10 }: NewsletterDialogProps) => {
 
           <NewsletterSignup onSuccess={handleSuccess} />
 
-          <DialogFooter className="flex flex-col sm:flex-row gap-2 sm:gap-0 mt-6">
-            <DialogClose asChild>
-              <Button variant="ghost" size="sm" onClick={handleDismiss} className="text-muted-foreground">
-                Non ora, grazie
-              </Button>
-            </DialogClose>
+          <DialogFooter className="flex flex-col sm:flex-row gap-2 mt-6">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleNeverShow}
+              className="text-muted-foreground"
+            >
+              Non mostrare più
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleNotNow}
+              className="text-muted-foreground"
+            >
+              Non ora, grazie
+            </Button>
           </DialogFooter>
         </div>
       </DialogContent>

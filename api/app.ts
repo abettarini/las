@@ -5,6 +5,7 @@ import bookingRouter from './routes/booking-router.js'
 import adminRouter from './routes/admin-router.js'
 import { turniRouter } from './routes/turni-router.js'
 import contentRouter from './routes/content-router.js'
+import newsletterRouter from './routes/newsletter-router.js'
 
 const app = new Hono().basePath('/api')
 
@@ -30,5 +31,6 @@ app.route('/', bookingRouter)
 app.route('/', adminRouter)
 app.route('/turni', turniRouter)
 app.route('/', contentRouter)
+app.route('/', newsletterRouter)
 
 export default app

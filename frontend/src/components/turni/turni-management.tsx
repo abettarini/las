@@ -200,8 +200,8 @@ export function TurniManagementComponent() {
       });
 
       if (response.ok) {
-        const newTurno = await response.json();
-        setTurni([...turni, newTurno]);
+        const data = await response.json();
+        setTurni([...turni, data.turno]);
         
         const directorName = directors.find(d => d.id === dialogSelectedDirector)?.name || 'Direttore';
         toast.info('Turno iscritto', {

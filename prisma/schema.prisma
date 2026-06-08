@@ -5,6 +5,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
 }
 
 model User {
@@ -87,4 +88,13 @@ model OAuthState {
   state       String   @id
   redirectUri String
   expiresAt   DateTime
+}
+
+model NewsletterSubscription {
+  id             Int       @id @default(autoincrement())
+  email          String    @unique
+  subscribedAt   DateTime  @default(now())
+  unsubscribedAt DateTime?
+
+  @@index([email])
 }

@@ -7,14 +7,16 @@ const emailSchema = z.string().email({
   message: "Inserisci un indirizzo email valido",
 });
 
+const API_URL = import.meta.env.VITE_API_URL || '/api';
+
 interface NewsletterSignupProps {
   variant?: "default" | "compact";
   onSuccess?: (email: string) => void;
 }
 
-const NewsletterSignup = ({ 
-  variant = "default", 
-  onSuccess 
+const NewsletterSignup = ({
+  variant = "default",
+  onSuccess
 }: NewsletterSignupProps) => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -25,32 +27,31 @@ const NewsletterSignup = ({
     e.preventDefault();
     setError(null);
 
+    const validation = emailSchema.safeParse(email);
+    if (!validation.success) {
+      setError(validation.error.errors[0].message);
+      return;
+    }
+
+    setIsSubmitting(true);
     try {
-      // Validate email
-      emailSchema.parse(email);
-      
-      setIsSubmitting(true);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Success
+      const res = await fetch(`${API_URL}/newsletter/subscribe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Errore di rete');
+      }
+
+      localStorage.setItem("newsletter-subscribed", "true");
       setIsSuccess(true);
       setEmail("");
-      
-      // Store in localStorage that user is subscribed
-      localStorage.setItem("newsletter-subscribed", "true");
-      
-      // Call onSuccess callback if provided
-      if (onSuccess) {
-        onSuccess(email);
-      }
-    } catch (err) {
-      if (err instanceof z.ZodError) {
-        setError(err.errors[0].message);
-      } else {
-        setError("Si è verificato un errore. Riprova più tardi.");
-      }
+
+      if (onSuccess) onSuccess(email);
+    } catch {
+      setError("Si è verificato un errore. Riprova più tardi.");
     } finally {
       setIsSubmitting(false);
     }
@@ -80,8 +81,8 @@ const NewsletterSignup = ({
             <p className="text-red-500 text-sm mt-1">{error}</p>
           )}
         </div>
-        <Button 
-          type="submit" 
+        <Button
+          type="submit"
           disabled={isSubmitting}
           className={variant === "compact" ? "h-9 px-3" : ""}
         >

@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Calendar, ChevronLeft, ClipboardList, FileText, Home, LogOut, Users } from 'lucide-react';
 import { useState } from 'react';
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/auth-context';
 
 interface SidebarItem {
@@ -20,10 +20,8 @@ export default function AdminLayout() {
   const location = useLocation();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
-  // Reindirizza alla home se l'utente non è un amministratore
   if (!hasRole('ROLE_ADMIN')) {
-    navigate('/');
-    return null;
+    return <Navigate to="/" replace />;
   }
 
   const sidebarItems: SidebarItem[] = [
